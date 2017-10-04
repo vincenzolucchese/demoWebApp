@@ -1,0 +1,7 @@
+---
+applications:
+- name: demoBootVince
+  memory: 1024M
+  buildpack: java_buildpack
+  routes:
+  - route: demoBootVince.cfapps.io

@@ -1,0 +1,3 @@
+mysql://bcb93b62a65ca1:451badb3@us-cdbr-iron-east-05.cleardb.net:3306/ad_c6df7c1c7680c2f?reconnect=true
+
+cf create-user-provided-service mysql-db -p '{"uri":"mysql://pippo:pippo@us-cdbr-iron-east-05.cleardb.net:3306/demo?reconnect=true"}'

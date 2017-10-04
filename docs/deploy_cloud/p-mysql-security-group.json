@@ -1,0 +1,7 @@
+[
+  {
+     "ports": "3306",
+     "protocol": "tcp",
+     "destination": "us-cdbr-iron-east-05.cleardb.net"
+  }
+]
