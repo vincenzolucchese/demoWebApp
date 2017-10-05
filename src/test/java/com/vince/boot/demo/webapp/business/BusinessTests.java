@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.vince.boot.demo.webapp.entity.ClientApp;
 import com.vince.boot.demo.webapp.service.CommonAppRepository;
 import com.vince.boot.demo.webapp.service.CommonAppRepositoryImpl;
 
@@ -35,6 +36,19 @@ public class BusinessTests {
 		logger.debug("--");
 		Date data = service.getSysdateFromDBJdbc();
 		logger.debug(""+data);
+	}
+	
+	@Test	
+	public void saveGeneric() {
+		logger.debug("--");
+		ClientApp entity = new ClientApp();
+		entity.setAddress("aa");
+		entity.setEmail("asdas");
+		entity.setUserInsert("aasssddff");
+		entity.setTimeInsert(service.getSysdateFromDBJdbc());
+		entity = serv.save(entity);
+
+		logger.debug(""+entity);
 	}
 
 }

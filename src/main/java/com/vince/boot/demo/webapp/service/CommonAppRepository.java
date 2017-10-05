@@ -7,10 +7,11 @@ import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 import org.springframework.stereotype.Service;
 
 import com.vince.boot.demo.webapp.entity.BaseEntity;
+import com.vince.boot.demo.webapp.entity.ClientApp;
 
 
-@Service
-public interface CommonAppRepository extends JpaRepository<BaseEntity, Long>, QueryDslPredicateExecutor<BaseEntity>{
+//@Service
+public interface CommonAppRepository extends JpaRepository<ClientApp, Long> {
 
 //	public Date getSysdateFromDB();
 }
