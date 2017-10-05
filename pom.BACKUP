@@ -144,6 +144,136 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			
+			<!-- BUILD GENERATE ENTITIES -->
+			<plugin>
+		       <groupId>org.codehaus.mojo</groupId>
+		       <artifactId>hibernate3-maven-plugin</artifactId>
+		       <version>2.2</version>
+		         <configuration>
+		           <components>
+		             <component>
+		               <name>hbm2hbmxml</name>
+		               <implementation>jdbcconfiguration</implementation>
+		               <outputDirectory>target/generated-resources/hibernate3</outputDirectory>
+		             </component>
+		             <component>
+		               <name>hbm2java</name>
+		               <implementation>jdbcconfiguration</implementation>
+		               <outputDirectory>target/generated-sources/hibernate3</outputDirectory>
+		             </component>
+		           </components>
+		           <componentProperties>
+		             <revengfile>src/main/resources/reveng.xml</revengfile>
+		             <propertyfile>src/main/resources/hibernate.properties</propertyfile>
+		             <packagename>com.vince.boot.demo.webapp.entity</packagename>
+		             <jdk5>true</jdk5>
+		             <ejb3>true</ejb3>
+		           </componentProperties>
+		         </configuration>
+		         <dependencies>
+		           <dependency>
+		             <groupId>cglib</groupId>
+		             <artifactId>cglib-nodep</artifactId>
+		             <version>2.2.2</version>
+		           </dependency>
+			      <dependency>
+			        <groupId>mysql</groupId>
+			        <artifactId>mysql-connector-java</artifactId>
+			        <version>5.1.44</version>
+			      </dependency>
+		         </dependencies>
+		       </plugin>
+		    <!--END: BUILD GENERATE ENTITIES -->
+		       
+	        <!-- BUILD GENERATE JOOQ -->
+			<plugin>			
+			  <!-- Specify the maven code generator plugin -->
+			  <!-- Use org.jooq            for the Open Source Edition
+			           org.jooq.pro        for commercial editions, 
+			           org.jooq.pro-java-6 for commercial editions with Java 6 support,
+			           org.jooq.trial      for the free trial edition 
+			         
+			       Note: Only the Open Source Edition is hosted on Maven Central. 
+			             Import the others manually from your distribution -->
+			  <groupId>org.jooq</groupId>
+			  <artifactId>jooq-codegen-maven</artifactId>
+			  <version>3.10.0</version>				
+			  <!-- The plugin should hook into the generate goal -->
+			  <executions>
+			    <execution>
+			      <goals>
+			        <goal>generate</goal>
+			      </goals>
+			    </execution>
+			  </executions>				
+			  <!-- Manage the plugin's dependency. In this example, we'll use a PostgreSQL database -->
+			  <dependencies>
+			      <dependency>
+			        <groupId>mysql</groupId>
+			        <artifactId>mysql-connector-java</artifactId>
+			        <version>5.1.44</version>
+			      </dependency>
+			  </dependencies>				
+			  <!-- Specify the plugin configuration.
+			       The configuration format is the same as for the standalone code generator -->
+			  <configuration>
+			
+			    <!-- JDBC connection parameters -->
+			    <jdbc>
+			      <driver>com.mysql.jdbc.Driver</driver>
+			      <url>jdbc:mysql://localhost/demo</url>
+			      <user>root</user>
+			      <password></password>
+			    </jdbc>
+			
+			    <!-- Generator parameters -->
+			    <generator>
+			      <database>
+			        <name>org.jooq.util.mysql.MySQLDatabase</name>
+			        <includes>.*</includes>
+			        <excludes></excludes>
+			        <!-- In case your database supports catalogs, e.g. SQL Server:
+			        <inputCatalog>public</inputCatalog>
+			          -->
+			        <inputSchema>demo</inputSchema>
+			      </database>
+			      <target>
+			        <packageName>com.vince.boot.demo.webapp.jooq</packageName>
+			        <directory>target/generated-sources/jooq</directory>
+			      </target>
+			    </generator>
+			  </configuration>
+			</plugin>	
+			<!-- END: BUILD GENERATE JOOQ -->	
+				
+		    <!-- BUILD GENERATE Q_ENTITY 
+			<plugin>
+	               <groupId>com.mysema.maven</groupId>
+	               <artifactId>apt-maven-plugin</artifactId>
+	               <version>1.1.3</version>
+	               <executions>
+	                   <execution>
+	                       <goals>
+	                           <goal>process</goal>
+	                       </goals>
+	                       <configuration>
+	                           <outputDirectory>target/generated-sources/querydsl</outputDirectory>
+	                           <processor>com.querydsl.apt.jpa.JPAAnnotationProcessor</processor>
+	                       </configuration>
+	                   </execution>
+	               </executions>
+	               <dependencies>
+	                   <dependency>
+	                       <groupId>com.mysema.querydsl</groupId>
+	                       <artifactId>querydsl-apt</artifactId>
+	                       <version>3.7.4</version>
+	                   </dependency>
+	               </dependencies>
+	           </plugin>
+	           -->
+		    <!-- END: BUILD GENERATE Q_ENTITY -->
+	    			
 		</plugins>
 	</build>
 
