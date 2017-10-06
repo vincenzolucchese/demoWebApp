@@ -11,25 +11,25 @@ import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
- * QRelOrderBlob is a Querydsl query type for RelOrderBlob
+ * QDRelOrderBlob is a Querydsl query type for DRelOrderBlob
  */
 @Generated("com.querydsl.codegen.EntitySerializer")
-public class QRelOrderBlob extends EntityPathBase<RelOrderBlob> {
+public class QDRelOrderBlob extends EntityPathBase<DRelOrderBlob> {
 
-    private static final long serialVersionUID = 855653033L;
+    private static final long serialVersionUID = 1244641695L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 
-    public static final QRelOrderBlob relOrderBlob = new QRelOrderBlob("relOrderBlob");
+    public static final QDRelOrderBlob dRelOrderBlob = new QDRelOrderBlob("dRelOrderBlob");
 
     public final QBaseEntity _super = new QBaseEntity(this);
 
-    public final QBlobStore blobStore;
+    public final QDBlobStore DBlobStore;
+
+    public final QDOrderJob DOrderJob;
 
     //inherited
     public final NumberPath<Long> id = _super.id;
-
-    public final QOrderJob order;
 
     //inherited
     public final DateTimePath<java.util.Date> timeInsert = _super.timeInsert;
@@ -46,26 +46,26 @@ public class QRelOrderBlob extends EntityPathBase<RelOrderBlob> {
     //inherited
     public final DateTimePath<java.util.Date> yearRefer = _super.yearRefer;
 
-    public QRelOrderBlob(String variable) {
-        this(RelOrderBlob.class, forVariable(variable), INITS);
+    public QDRelOrderBlob(String variable) {
+        this(DRelOrderBlob.class, forVariable(variable), INITS);
     }
 
-    public QRelOrderBlob(Path<? extends RelOrderBlob> path) {
+    public QDRelOrderBlob(Path<? extends DRelOrderBlob> path) {
         this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
-    public QRelOrderBlob(PathMetadata metadata) {
+    public QDRelOrderBlob(PathMetadata metadata) {
         this(metadata, PathInits.getFor(metadata, INITS));
     }
 
-    public QRelOrderBlob(PathMetadata metadata, PathInits inits) {
-        this(RelOrderBlob.class, metadata, inits);
+    public QDRelOrderBlob(PathMetadata metadata, PathInits inits) {
+        this(DRelOrderBlob.class, metadata, inits);
     }
 
-    public QRelOrderBlob(Class<? extends RelOrderBlob> type, PathMetadata metadata, PathInits inits) {
+    public QDRelOrderBlob(Class<? extends DRelOrderBlob> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.blobStore = inits.isInitialized("blobStore") ? new QBlobStore(forProperty("blobStore"), inits.get("blobStore")) : null;
-        this.order = inits.isInitialized("order") ? new QOrderJob(forProperty("order"), inits.get("order")) : null;
+        this.DBlobStore = inits.isInitialized("DBlobStore") ? new QDBlobStore(forProperty("DBlobStore"), inits.get("DBlobStore")) : null;
+        this.DOrderJob = inits.isInitialized("DOrderJob") ? new QDOrderJob(forProperty("DOrderJob"), inits.get("DOrderJob")) : null;
     }
 
 }

@@ -11,20 +11,22 @@ import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
- * QRelUserBlob is a Querydsl query type for RelUserBlob
+ * QDRelUserBlob is a Querydsl query type for DRelUserBlob
  */
 @Generated("com.querydsl.codegen.EntitySerializer")
-public class QRelUserBlob extends EntityPathBase<RelUserBlob> {
+public class QDRelUserBlob extends EntityPathBase<DRelUserBlob> {
 
-    private static final long serialVersionUID = 50331562L;
+    private static final long serialVersionUID = 755616244L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 
-    public static final QRelUserBlob relUserBlob = new QRelUserBlob("relUserBlob");
+    public static final QDRelUserBlob dRelUserBlob = new QDRelUserBlob("dRelUserBlob");
 
     public final QBaseEntity _super = new QBaseEntity(this);
 
-    public final QBlobStore blobStore;
+    public final QDBlobStore DBlobStore;
+
+    public final QDUserApp DUserApp;
 
     //inherited
     public final NumberPath<Long> id = _super.id;
@@ -35,8 +37,6 @@ public class QRelUserBlob extends EntityPathBase<RelUserBlob> {
     //inherited
     public final DateTimePath<java.util.Date> timeUpdate = _super.timeUpdate;
 
-    public final QUserApp user;
-
     //inherited
     public final StringPath userInsert = _super.userInsert;
 
@@ -46,26 +46,26 @@ public class QRelUserBlob extends EntityPathBase<RelUserBlob> {
     //inherited
     public final DateTimePath<java.util.Date> yearRefer = _super.yearRefer;
 
-    public QRelUserBlob(String variable) {
-        this(RelUserBlob.class, forVariable(variable), INITS);
+    public QDRelUserBlob(String variable) {
+        this(DRelUserBlob.class, forVariable(variable), INITS);
     }
 
-    public QRelUserBlob(Path<? extends RelUserBlob> path) {
+    public QDRelUserBlob(Path<? extends DRelUserBlob> path) {
         this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
-    public QRelUserBlob(PathMetadata metadata) {
+    public QDRelUserBlob(PathMetadata metadata) {
         this(metadata, PathInits.getFor(metadata, INITS));
     }
 
-    public QRelUserBlob(PathMetadata metadata, PathInits inits) {
-        this(RelUserBlob.class, metadata, inits);
+    public QDRelUserBlob(PathMetadata metadata, PathInits inits) {
+        this(DRelUserBlob.class, metadata, inits);
     }
 
-    public QRelUserBlob(Class<? extends RelUserBlob> type, PathMetadata metadata, PathInits inits) {
+    public QDRelUserBlob(Class<? extends DRelUserBlob> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.blobStore = inits.isInitialized("blobStore") ? new QBlobStore(forProperty("blobStore"), inits.get("blobStore")) : null;
-        this.user = inits.isInitialized("user") ? new QUserApp(forProperty("user"), inits.get("user")) : null;
+        this.DBlobStore = inits.isInitialized("DBlobStore") ? new QDBlobStore(forProperty("DBlobStore"), inits.get("DBlobStore")) : null;
+        this.DUserApp = inits.isInitialized("DUserApp") ? new QDUserApp(forProperty("DUserApp"), inits.get("DUserApp")) : null;
     }
 
 }

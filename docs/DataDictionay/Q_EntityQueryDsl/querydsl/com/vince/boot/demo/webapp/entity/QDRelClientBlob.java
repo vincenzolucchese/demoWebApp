@@ -11,22 +11,22 @@ import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
- * QRelClientBlob is a Querydsl query type for RelClientBlob
+ * QDRelClientBlob is a Querydsl query type for DRelClientBlob
  */
 @Generated("com.querydsl.codegen.EntitySerializer")
-public class QRelClientBlob extends EntityPathBase<RelClientBlob> {
+public class QDRelClientBlob extends EntityPathBase<DRelClientBlob> {
 
-    private static final long serialVersionUID = 1127950122L;
+    private static final long serialVersionUID = 301696756L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 
-    public static final QRelClientBlob relClientBlob = new QRelClientBlob("relClientBlob");
+    public static final QDRelClientBlob dRelClientBlob = new QDRelClientBlob("dRelClientBlob");
 
     public final QBaseEntity _super = new QBaseEntity(this);
 
-    public final QBlobStore blobStore;
+    public final QDBlobStore DBlobStore;
 
-    public final QClientApp client;
+    public final QDClientApp DClientApp;
 
     //inherited
     public final NumberPath<Long> id = _super.id;
@@ -46,26 +46,26 @@ public class QRelClientBlob extends EntityPathBase<RelClientBlob> {
     //inherited
     public final DateTimePath<java.util.Date> yearRefer = _super.yearRefer;
 
-    public QRelClientBlob(String variable) {
-        this(RelClientBlob.class, forVariable(variable), INITS);
+    public QDRelClientBlob(String variable) {
+        this(DRelClientBlob.class, forVariable(variable), INITS);
     }
 
-    public QRelClientBlob(Path<? extends RelClientBlob> path) {
+    public QDRelClientBlob(Path<? extends DRelClientBlob> path) {
         this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
-    public QRelClientBlob(PathMetadata metadata) {
+    public QDRelClientBlob(PathMetadata metadata) {
         this(metadata, PathInits.getFor(metadata, INITS));
     }
 
-    public QRelClientBlob(PathMetadata metadata, PathInits inits) {
-        this(RelClientBlob.class, metadata, inits);
+    public QDRelClientBlob(PathMetadata metadata, PathInits inits) {
+        this(DRelClientBlob.class, metadata, inits);
     }
 
-    public QRelClientBlob(Class<? extends RelClientBlob> type, PathMetadata metadata, PathInits inits) {
+    public QDRelClientBlob(Class<? extends DRelClientBlob> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.blobStore = inits.isInitialized("blobStore") ? new QBlobStore(forProperty("blobStore"), inits.get("blobStore")) : null;
-        this.client = inits.isInitialized("client") ? new QClientApp(forProperty("client")) : null;
+        this.DBlobStore = inits.isInitialized("DBlobStore") ? new QDBlobStore(forProperty("DBlobStore"), inits.get("DBlobStore")) : null;
+        this.DClientApp = inits.isInitialized("DClientApp") ? new QDClientApp(forProperty("DClientApp")) : null;
     }
 
 }

@@ -7,25 +7,24 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.Generated;
 import com.querydsl.core.types.Path;
-import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
- * QTypeDocument is a Querydsl query type for TypeDocument
+ * QDSystemProps is a Querydsl query type for DSystemProps
  */
 @Generated("com.querydsl.codegen.EntitySerializer")
-public class QTypeDocument extends EntityPathBase<TypeDocument> {
+public class QDSystemProps extends EntityPathBase<DSystemProps> {
 
-    private static final long serialVersionUID = 193678764L;
+    private static final long serialVersionUID = -1592454988L;
 
-    public static final QTypeDocument typeDocument = new QTypeDocument("typeDocument");
+    public static final QDSystemProps dSystemProps = new QDSystemProps("dSystemProps");
 
     public final QBaseEntity _super = new QBaseEntity(this);
 
-    public final SetPath<BlobStore, QBlobStore> blobStores = this.<BlobStore, QBlobStore>createSet("blobStores", BlobStore.class, QBlobStore.class, PathInits.DIRECT2);
-
     //inherited
     public final NumberPath<Long> id = _super.id;
+
+    public final StringPath keyProp = createString("keyProp");
 
     //inherited
     public final DateTimePath<java.util.Date> timeInsert = _super.timeInsert;
@@ -33,29 +32,27 @@ public class QTypeDocument extends EntityPathBase<TypeDocument> {
     //inherited
     public final DateTimePath<java.util.Date> timeUpdate = _super.timeUpdate;
 
-    public final StringPath typeCode = createString("typeCode");
-
-    public final StringPath typeDescription = createString("typeDescription");
-
     //inherited
     public final StringPath userInsert = _super.userInsert;
 
     //inherited
     public final StringPath userUpdate = _super.userUpdate;
 
+    public final StringPath valueProp = createString("valueProp");
+
     //inherited
     public final DateTimePath<java.util.Date> yearRefer = _super.yearRefer;
 
-    public QTypeDocument(String variable) {
-        super(TypeDocument.class, forVariable(variable));
+    public QDSystemProps(String variable) {
+        super(DSystemProps.class, forVariable(variable));
     }
 
-    public QTypeDocument(Path<? extends TypeDocument> path) {
+    public QDSystemProps(Path<? extends DSystemProps> path) {
         super(path.getType(), path.getMetadata());
     }
 
-    public QTypeDocument(PathMetadata metadata) {
-        super(TypeDocument.class, metadata);
+    public QDSystemProps(PathMetadata metadata) {
+        super(DSystemProps.class, metadata);
     }
 
 }

@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.vince.boot.demo.webapp.entity.ClientApp;
+import com.vince.boot.demo.webapp.entity.DClientApp;
 import com.vince.boot.demo.webapp.service.CommonAppRepository;
 import com.vince.boot.demo.webapp.service.CommonAppRepositoryImpl;
 
@@ -40,12 +40,29 @@ public class BusinessTests {
 	
 	@Test	
 	public void saveGeneric() {
+//		logger.debug("--");
+//		TableDemo entity = new TableDemo();
+//		entity.setUserInsert("aasssddff");
+//		entity.setTimeInsert(service.getSysdateFromDBJdbc());
+//		entity = serv.save(entity);
+//
+//		logger.debug(""+entity);
+	}
+	
+	@Test	
+	public void saveClientApp() {
 		logger.debug("--");
-		ClientApp entity = new ClientApp();
-		entity.setAddress("aa");
-		entity.setEmail("asdas");
+		Date data = service.getSysdateFromDBJdbc();
+		DClientApp entity = new DClientApp();
+		entity.setId(12l);
+		entity.setName("name");
+		entity.setPiva("name");
+		entity.setAddress("fsdfs");
+		entity.setZipcode("123");
+		entity.setNotes("sdcsdfsdf");
+		entity.setYearRefer(data);
 		entity.setUserInsert("aasssddff");
-		entity.setTimeInsert(service.getSysdateFromDBJdbc());
+		entity.setTimeInsert(data);
 		entity = serv.save(entity);
 
 		logger.debug(""+entity);

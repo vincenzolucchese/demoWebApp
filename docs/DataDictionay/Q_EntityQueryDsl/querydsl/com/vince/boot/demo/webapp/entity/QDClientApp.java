@@ -11,18 +11,22 @@ import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
- * QClientApp is a Querydsl query type for ClientApp
+ * QDClientApp is a Querydsl query type for DClientApp
  */
 @Generated("com.querydsl.codegen.EntitySerializer")
-public class QClientApp extends EntityPathBase<ClientApp> {
+public class QDClientApp extends EntityPathBase<DClientApp> {
 
-    private static final long serialVersionUID = 816887423L;
+    private static final long serialVersionUID = 375163721L;
 
-    public static final QClientApp clientApp = new QClientApp("clientApp");
+    public static final QDClientApp dClientApp = new QDClientApp("dClientApp");
 
     public final QBaseEntity _super = new QBaseEntity(this);
 
     public final StringPath address = createString("address");
+
+    public final SetPath<DOrderJob, QDOrderJob> DOrderJobs = this.<DOrderJob, QDOrderJob>createSet("DOrderJobs", DOrderJob.class, QDOrderJob.class, PathInits.DIRECT2);
+
+    public final SetPath<DRelClientBlob, QDRelClientBlob> DRelClientBlobs = this.<DRelClientBlob, QDRelClientBlob>createSet("DRelClientBlobs", DRelClientBlob.class, QDRelClientBlob.class, PathInits.DIRECT2);
 
     public final StringPath email = createString("email");
 
@@ -33,13 +37,9 @@ public class QClientApp extends EntityPathBase<ClientApp> {
 
     public final StringPath notes = createString("notes");
 
-    public final SetPath<OrderJob, QOrderJob> orders = this.<OrderJob, QOrderJob>createSet("orders", OrderJob.class, QOrderJob.class, PathInits.DIRECT2);
-
     public final StringPath phone = createString("phone");
 
     public final StringPath piva = createString("piva");
-
-    public final SetPath<RelClientBlob, QRelClientBlob> relClientBlobs = this.<RelClientBlob, QRelClientBlob>createSet("relClientBlobs", RelClientBlob.class, QRelClientBlob.class, PathInits.DIRECT2);
 
     //inherited
     public final DateTimePath<java.util.Date> timeInsert = _super.timeInsert;
@@ -58,16 +58,16 @@ public class QClientApp extends EntityPathBase<ClientApp> {
 
     public final StringPath zipcode = createString("zipcode");
 
-    public QClientApp(String variable) {
-        super(ClientApp.class, forVariable(variable));
+    public QDClientApp(String variable) {
+        super(DClientApp.class, forVariable(variable));
     }
 
-    public QClientApp(Path<? extends ClientApp> path) {
+    public QDClientApp(Path<? extends DClientApp> path) {
         super(path.getType(), path.getMetadata());
     }
 
-    public QClientApp(PathMetadata metadata) {
-        super(ClientApp.class, metadata);
+    public QDClientApp(PathMetadata metadata) {
+        super(DClientApp.class, metadata);
     }
 
 }

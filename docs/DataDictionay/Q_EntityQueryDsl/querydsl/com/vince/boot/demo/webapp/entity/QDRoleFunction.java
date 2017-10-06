@@ -11,27 +11,23 @@ import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
- * QRoleUser is a Querydsl query type for RoleUser
+ * QDRoleFunction is a Querydsl query type for DRoleFunction
  */
 @Generated("com.querydsl.codegen.EntitySerializer")
-public class QRoleUser extends EntityPathBase<RoleUser> {
+public class QDRoleFunction extends EntityPathBase<DRoleFunction> {
 
-    private static final long serialVersionUID = 375409688L;
+    private static final long serialVersionUID = -1875549029L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 
-    public static final QRoleUser roleUser = new QRoleUser("roleUser");
+    public static final QDRoleFunction dRoleFunction = new QDRoleFunction("dRoleFunction");
 
     public final QBaseEntity _super = new QBaseEntity(this);
 
+    public final QDRoleUser DRoleUser;
+
     //inherited
     public final NumberPath<Long> id = _super.id;
-
-    public final StringPath roleCode = createString("roleCode");
-
-    public final StringPath roleDescription = createString("roleDescription");
-
-    public final QRoleFunction roleFunction;
 
     //inherited
     public final DateTimePath<java.util.Date> timeInsert = _super.timeInsert;
@@ -42,33 +38,31 @@ public class QRoleUser extends EntityPathBase<RoleUser> {
     //inherited
     public final StringPath userInsert = _super.userInsert;
 
-    public final SetPath<UserApp, QUserApp> users = this.<UserApp, QUserApp>createSet("users", UserApp.class, QUserApp.class, PathInits.DIRECT2);
-
     //inherited
     public final StringPath userUpdate = _super.userUpdate;
 
     //inherited
     public final DateTimePath<java.util.Date> yearRefer = _super.yearRefer;
 
-    public QRoleUser(String variable) {
-        this(RoleUser.class, forVariable(variable), INITS);
+    public QDRoleFunction(String variable) {
+        this(DRoleFunction.class, forVariable(variable), INITS);
     }
 
-    public QRoleUser(Path<? extends RoleUser> path) {
+    public QDRoleFunction(Path<? extends DRoleFunction> path) {
         this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
-    public QRoleUser(PathMetadata metadata) {
+    public QDRoleFunction(PathMetadata metadata) {
         this(metadata, PathInits.getFor(metadata, INITS));
     }
 
-    public QRoleUser(PathMetadata metadata, PathInits inits) {
-        this(RoleUser.class, metadata, inits);
+    public QDRoleFunction(PathMetadata metadata, PathInits inits) {
+        this(DRoleFunction.class, metadata, inits);
     }
 
-    public QRoleUser(Class<? extends RoleUser> type, PathMetadata metadata, PathInits inits) {
+    public QDRoleFunction(Class<? extends DRoleFunction> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.roleFunction = inits.isInitialized("roleFunction") ? new QRoleFunction(forProperty("roleFunction"), inits.get("roleFunction")) : null;
+        this.DRoleUser = inits.isInitialized("DRoleUser") ? new QDRoleUser(forProperty("DRoleUser")) : null;
     }
 
 }

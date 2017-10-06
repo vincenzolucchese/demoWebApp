@@ -11,20 +11,24 @@ import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
- * QUserApp is a Querydsl query type for UserApp
+ * QDUserApp is a Querydsl query type for DUserApp
  */
 @Generated("com.querydsl.codegen.EntitySerializer")
-public class QUserApp extends EntityPathBase<UserApp> {
+public class QDUserApp extends EntityPathBase<DUserApp> {
 
-    private static final long serialVersionUID = -1789020993L;
+    private static final long serialVersionUID = 346829833L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 
-    public static final QUserApp userApp = new QUserApp("userApp");
+    public static final QDUserApp dUserApp = new QDUserApp("dUserApp");
 
     public final QBaseEntity _super = new QBaseEntity(this);
 
     public final StringPath address = createString("address");
+
+    public final SetPath<DRelUserBlob, QDRelUserBlob> DRelUserBlobs = this.<DRelUserBlob, QDRelUserBlob>createSet("DRelUserBlobs", DRelUserBlob.class, QDRelUserBlob.class, PathInits.DIRECT2);
+
+    public final QDRoleUser DRoleUser;
 
     public final StringPath email = createString("email");
 
@@ -38,10 +42,6 @@ public class QUserApp extends EntityPathBase<UserApp> {
     public final StringPath lastName = createString("lastName");
 
     public final StringPath password = createString("password");
-
-    public final SetPath<RelUserBlob, QRelUserBlob> relUserBlobs = this.<RelUserBlob, QRelUserBlob>createSet("relUserBlobs", RelUserBlob.class, QRelUserBlob.class, PathInits.DIRECT2);
-
-    public final QRoleUser roleUser;
 
     //inherited
     public final DateTimePath<java.util.Date> timeInsert = _super.timeInsert;
@@ -60,25 +60,25 @@ public class QUserApp extends EntityPathBase<UserApp> {
     //inherited
     public final DateTimePath<java.util.Date> yearRefer = _super.yearRefer;
 
-    public QUserApp(String variable) {
-        this(UserApp.class, forVariable(variable), INITS);
+    public QDUserApp(String variable) {
+        this(DUserApp.class, forVariable(variable), INITS);
     }
 
-    public QUserApp(Path<? extends UserApp> path) {
+    public QDUserApp(Path<? extends DUserApp> path) {
         this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
-    public QUserApp(PathMetadata metadata) {
+    public QDUserApp(PathMetadata metadata) {
         this(metadata, PathInits.getFor(metadata, INITS));
     }
 
-    public QUserApp(PathMetadata metadata, PathInits inits) {
-        this(UserApp.class, metadata, inits);
+    public QDUserApp(PathMetadata metadata, PathInits inits) {
+        this(DUserApp.class, metadata, inits);
     }
 
-    public QUserApp(Class<? extends UserApp> type, PathMetadata metadata, PathInits inits) {
+    public QDUserApp(Class<? extends DUserApp> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.roleUser = inits.isInitialized("roleUser") ? new QRoleUser(forProperty("roleUser"), inits.get("roleUser")) : null;
+        this.DRoleUser = inits.isInitialized("DRoleUser") ? new QDRoleUser(forProperty("DRoleUser")) : null;
     }
 
 }
