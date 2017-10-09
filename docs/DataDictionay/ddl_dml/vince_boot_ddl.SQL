@@ -1,10 +1,12 @@
-﻿/*
+/*
 Created: 04/08/2017
 Modified: 08/10/2017
 Model: MySQL 5.7
 Database: MySQL 5.7
 */
-
+drop database demo;
+create database demo;
+use demo;
 
 -- Create tables section -------------------------------------------------
 

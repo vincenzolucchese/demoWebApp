@@ -10,9 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.vince.boot.demo.webapp.entity.DClientApp;
-import com.vince.boot.demo.webapp.service.CommonAppRepository;
-import com.vince.boot.demo.webapp.service.CommonAppRepositoryImpl;
+import com.vince.boot.demo.webapp.be.service.BaseEntityRepository;
+import com.vince.boot.demo.webapp.be.service.impl.CommonAppRepositoryImpl;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -21,7 +20,7 @@ public class BusinessTests {
 	private static final Logger logger = LoggerFactory.getLogger(BusinessTests.class);
 	
 	@Autowired
-	CommonAppRepository serv;
+	BaseEntityRepository serv;
 	
 	@Autowired
 	CommonAppRepositoryImpl service;
@@ -49,23 +48,5 @@ public class BusinessTests {
 //		logger.debug(""+entity);
 	}
 	
-	@Test	
-	public void saveClientApp() {
-		logger.debug("--");
-		Date data = service.getSysdateFromDBJdbc();
-		DClientApp entity = new DClientApp();
-		entity.setId(12l);
-		entity.setName("name");
-		entity.setPiva("name");
-		entity.setAddress("fsdfs");
-		entity.setZipcode("123");
-		entity.setNotes("sdcsdfsdf");
-		entity.setYearRefer(data);
-		entity.setUserInsert("aasssddff");
-		entity.setTimeInsert(data);
-		entity = serv.save(entity);
-
-		logger.debug(""+entity);
-	}
 
 }
