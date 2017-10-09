@@ -15,8 +15,9 @@
  */
 package com.vince.boot.demo.webapp.be.service.impl;
 
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -27,12 +28,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.vince.boot.demo.webapp.be.entity.BaseEntity;
 import com.vince.boot.demo.webapp.be.service.BaseEntityRepository;
-import com.vince.boot.demo.webapp.be.service.DBlobStoreRepository;
-import com.vince.boot.demo.webapp.beAndFe.dto.BaseDto;
-import com.vince.boot.demo.webapp.beAndFe.dto.BlobStoreDto;
+import com.vince.boot.demo.webapp.be.service.BlobStoreRepository;
 
 /**
  * Bean Service for common custom implementation about all web app
@@ -51,7 +51,7 @@ public class CommonAppRepositoryImpl extends JdbcDaoSupport {
 	@Autowired
 	BaseEntityRepository baseEntityService;
 	@Autowired
-	DBlobStoreRepository blobStoreService;
+	BlobStoreRepository blobStoreService;
 
 	/**
 	 * Configure the entity manager to be used.	 * 
@@ -77,7 +77,25 @@ public class CommonAppRepositoryImpl extends JdbcDaoSupport {
 	}
 	
 	/**
-	 * Save a entity with the strategy about the web application on the user that is working on datas.
+	 * Save a entity with the strategy about user inserter and updater. get sysdate from db in input.
+	 * @param entity
+	 * @param user
+	 * @return
+	 */
+	public BaseEntity saveCustom(BaseEntity entity, String user, Date dateDB) {
+		if(entity.isNew()){
+			entity.setUserInsert(user);
+			entity.setTimeInsert(dateDB);
+			entity.setYearRefer(dateDB);
+		}else {
+			entity.setUserUpdate(user);
+			entity.setTimeUpdate(dateDB);
+		}		
+		return baseEntityService.save(entity);
+	}
+	
+	/**
+	 * Save a entity with the strategy about user inserter and updater. get sysdate from db.
 	 * @param entity
 	 * @param user
 	 * @return
@@ -96,17 +114,26 @@ public class CommonAppRepositoryImpl extends JdbcDaoSupport {
 	}
 	
 	/**
-	 * Save a blob
-	 * @param baseDto
-	 * @param username
-	 * @throws IOException
+	 * Save a collection of entity.
+	 * @param entity
+	 * @param user
+	 * @return
 	 */
-	public BaseDto saveAttachment(BlobStoreDto dto, String username) throws IOException {
-		
-		
-		
-		return null;
+	@Transactional
+	public List<BaseEntity> saveCustom(Iterable<BaseEntity> entities, String user) {
+		List<BaseEntity> result = new ArrayList<BaseEntity>();
+		if (entities == null) {
+			return result;
+		}
+		Date dateDB = getSysdateFromDBJdbc();
+		for (BaseEntity entity : entities) {
+			result.add(saveCustom(entity, user, dateDB));
+		}
+		return result;
 	}
+	
+	
+
 
 	
 	

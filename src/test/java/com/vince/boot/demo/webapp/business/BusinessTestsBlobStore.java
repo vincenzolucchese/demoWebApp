@@ -1,11 +1,8 @@
 package com.vince.boot.demo.webapp.business;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashSet;
-import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -23,12 +20,9 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.vince.boot.demo.webapp.be.entity.DBlobStore;
 import com.vince.boot.demo.webapp.be.entity.DClientApp;
 import com.vince.boot.demo.webapp.be.entity.DRelClientBlob;
-import com.vince.boot.demo.webapp.be.entity.DTypeDocument;
 import com.vince.boot.demo.webapp.be.entity.QDBlobStore;
-import com.vince.boot.demo.webapp.be.entity.QDClientApp;
-import com.vince.boot.demo.webapp.be.service.DBlobStoreRepository;
-import com.vince.boot.demo.webapp.be.service.DClientAppRepository;
-import com.vince.boot.demo.webapp.be.service.DTypeDocumentRepository;
+import com.vince.boot.demo.webapp.be.service.BlobStoreRepository;
+import com.vince.boot.demo.webapp.be.service.TypeDocumentRepository;
 import com.vince.boot.demo.webapp.be.service.impl.CommonAppRepositoryImpl;
 
 @RunWith(SpringRunner.class)
@@ -41,9 +35,9 @@ public class BusinessTestsBlobStore {
 	CommonAppRepositoryImpl commonService;
 	
 	@Autowired
-	DBlobStoreRepository entityService;
+	BlobStoreRepository entityService;
 	@Autowired
-	DTypeDocumentRepository typeDocEntityService;
+	TypeDocumentRepository typeDocEntityService;
 	
 	@Test
 	public void contextLoads() {
@@ -67,9 +61,7 @@ public class BusinessTestsBlobStore {
 		entity.setFilename("Filename");
 		entity.setFlagActive('1');
 		entity.setDTypeDocument(typeDocEntityService.findOne(1l));
-		
-		entity = (DBlobStore) commonService.saveCustom(entity, "insert");
-		
+		entity = (DBlobStore) commonService.saveCustom(entity, "insert");		
 		
 		logger.debug(""+entity);
 	}
@@ -100,8 +92,7 @@ public class BusinessTestsBlobStore {
 		rel1.setDClientApp(clientapp);
 		rel1 = (DRelClientBlob) commonService.saveCustom(rel1, "insert");
 		
-		blob = entityService.findOne(1l);
-		
+		blob = entityService.findOne(1l);		
 		
 		logger.debug("--- "+blob.getDRelClientBlobs());
 	}

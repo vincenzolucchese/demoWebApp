@@ -6,7 +6,7 @@ import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 import com.vince.boot.demo.webapp.be.entity.DClientApp;
 
 
-public interface DClientAppRepository extends JpaRepository<DClientApp, Long>, QueryDslPredicateExecutor<DClientApp> {
+public interface ClientAppRepository extends JpaRepository<DClientApp, Long>, QueryDslPredicateExecutor<DClientApp> {
 
 	
 }

@@ -13,7 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.vince.boot.demo.webapp.be.entity.DClientApp;
 import com.vince.boot.demo.webapp.be.entity.QDClientApp;
-import com.vince.boot.demo.webapp.be.service.DClientAppRepository;
+import com.vince.boot.demo.webapp.be.service.ClientAppRepository;
 import com.vince.boot.demo.webapp.be.service.impl.CommonAppRepositoryImpl;
 
 @RunWith(SpringRunner.class)
@@ -26,7 +26,7 @@ public class BusinessTestsClientApp {
 	CommonAppRepositoryImpl commonService;
 	
 	@Autowired
-	DClientAppRepository entityService;
+	ClientAppRepository entityService;
 	
 	@Test
 	public void contextLoads() {
