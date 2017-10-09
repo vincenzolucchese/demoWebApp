@@ -2,7 +2,6 @@ package com.vince.boot.demo.webapp.be.service;
 
 import java.util.List;
 
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
 
@@ -13,9 +12,9 @@ import com.vince.boot.demo.webapp.be.entity.DUserApp;
 
 public interface BlobStoreRepository extends CrudRepository<DBlobStore, Long>, QueryDslPredicateExecutor<DBlobStore> {
 
-	List<DBlobStore> findByFlagActiveAndDRelClientBlobs_Client(char flag, DClientApp client);
+	List<DBlobStore> findByFlagActiveAndDRelClientBlobs_DClientApp(char flag, DClientApp client);
 	
-	List<DBlobStore> findByFlagActiveAndDRelUserBlobs_User(char flag, DUserApp user);
+	List<DBlobStore> findByFlagActiveAndDRelUserBlobs_DUserApp(char flag, DUserApp user);
 	
-	List<DBlobStore> findByFlagActiveAndDRelOrderBlobs_Order(char flag, DOrderJob order);
+	List<DBlobStore> findByFlagActiveAndDRelOrderBlobs_DOrderJob(char flag, DOrderJob order);
 }
