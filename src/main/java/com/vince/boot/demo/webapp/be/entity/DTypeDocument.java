@@ -29,6 +29,10 @@ public class DTypeDocument extends BaseEntity {
 	public DTypeDocument() {
 	}
 
+	public DTypeDocument(long l) {
+		super.id = id;
+	}
+
 	@Column(name = "type_code", unique = true, nullable = false, length = 20)
 	public String getTypeCode() {
 		return this.typeCode;

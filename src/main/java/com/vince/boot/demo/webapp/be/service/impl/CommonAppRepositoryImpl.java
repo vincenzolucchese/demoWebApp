@@ -15,6 +15,7 @@
  */
 package com.vince.boot.demo.webapp.be.service.impl;
 
+import java.io.IOException;
 import java.util.Date;
 
 import javax.persistence.EntityManager;
@@ -29,6 +30,9 @@ import org.springframework.stereotype.Component;
 
 import com.vince.boot.demo.webapp.be.entity.BaseEntity;
 import com.vince.boot.demo.webapp.be.service.BaseEntityRepository;
+import com.vince.boot.demo.webapp.be.service.DBlobStoreRepository;
+import com.vince.boot.demo.webapp.beAndFe.dto.BaseDto;
+import com.vince.boot.demo.webapp.beAndFe.dto.BlobStoreDto;
 
 /**
  * Bean Service for common custom implementation about all web app
@@ -46,6 +50,8 @@ public class CommonAppRepositoryImpl extends JdbcDaoSupport {
 	
 	@Autowired
 	BaseEntityRepository baseEntityService;
+	@Autowired
+	DBlobStoreRepository blobStoreService;
 
 	/**
 	 * Configure the entity manager to be used.	 * 
@@ -88,5 +94,22 @@ public class CommonAppRepositoryImpl extends JdbcDaoSupport {
 		}		
 		return baseEntityService.save(entity);
 	}
+	
+	/**
+	 * Save a blob
+	 * @param baseDto
+	 * @param username
+	 * @throws IOException
+	 */
+	public BaseDto saveAttachment(BlobStoreDto dto, String username) throws IOException {
+		
+		
+		
+		return null;
+	}
+
+	
+	
+
 	
 }

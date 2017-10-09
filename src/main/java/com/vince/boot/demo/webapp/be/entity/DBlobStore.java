@@ -37,6 +37,11 @@ public class DBlobStore extends BaseEntity {
 	}
 
 
+	public DBlobStore(Long id) {
+		super.id = id;
+	}
+
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "fk_id_type", nullable = false)
 	public DTypeDocument getDTypeDocument() {
