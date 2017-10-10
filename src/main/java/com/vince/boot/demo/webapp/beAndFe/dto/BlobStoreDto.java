@@ -8,6 +8,7 @@ import org.springframework.beans.BeanUtils;
 
 import com.vince.boot.demo.webapp.be.entity.BaseEntity;
 import com.vince.boot.demo.webapp.be.entity.BlobStore;
+import com.vince.boot.demo.webapp.be.entity.TypeDocument;
 
 
 public class BlobStoreDto extends BaseDto {
@@ -100,27 +101,28 @@ public class BlobStoreDto extends BaseDto {
 		this.relClientBlobs = relClientBlobs;
 	}
 
-	/*
+	/*******************************************
 	 * CONVERTER ENTITY <--> DTO
-	 */
-	@Override
+	 *******************************************/
 	public BaseDto createDtoFromEntity(BaseEntity entity) {
 		if (entity == null) return null;
-		BlobStoreDto dto = new BlobStoreDto();
-		BeanUtils.copyProperties(entity, dto);		
-		// copy objects
-		TypeDocumentDto.createDtoFromEntityStatic(((BlobStore) entity).getTypeDocument());
+		BlobStore entityCast = (BlobStore) entity;
 		
+		BlobStoreDto dto = new BlobStoreDto();
+		BeanUtils.copyProperties(entityCast, dto);		
+		// copy objects
+		dto.setTypeDocument((TypeDocumentDto) new TypeDocumentDto().createDtoFromEntity(entityCast.getTypeDocument()));
 		return dto;
 	}
 
-	@Override
 	public BaseEntity createEntityFromDto(BaseDto dto) {
 		if (dto == null) return null;
+		BlobStoreDto dtoCast = (BlobStoreDto) dto;
+		
 		BlobStore entity = new BlobStore();
-		BeanUtils.copyProperties(dto, entity);
+		BeanUtils.copyProperties(dtoCast, entity);
 		// copy objects
-		TypeDocumentDto.createEntityFromDtoStatic(((BlobStoreDto) dto).getTypeDocument());
+		entity.setTypeDocument((TypeDocument) new TypeDocumentDto().createEntityFromDto(dtoCast.getTypeDocument()));
 		return entity;
 	}
 

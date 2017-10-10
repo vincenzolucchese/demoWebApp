@@ -1,50 +1,30 @@
 package com.vince.boot.demo.webapp.beAndFe.dto;
 
-import org.springframework.beans.BeanUtils;
-
-import com.vince.boot.demo.webapp.be.entity.BaseEntity;
-import com.vince.boot.demo.webapp.be.entity.RelClientBlob;
-
-public class RelClientBlobDto extends BaseDto {
+public class RelClientBlobDto {
 
 	private static final long serialVersionUID = 1L;
-	private ClientAppDto DClientApp;
-	private BlobStoreDto DBlobStore;
+	private ClientAppDto clientApp;
+	private BlobStoreDto blobStore;
 
 	public RelClientBlobDto() {
 	}
 
-	public ClientAppDto getDClientApp() {
-		return this.DClientApp;
+	public ClientAppDto getClientApp() {
+		return this.clientApp;
 	}
 
-	public void setDClientApp(ClientAppDto DClientApp) {
-		this.DClientApp = DClientApp;
+	public void setClientApp(ClientAppDto DClientApp) {
+		this.clientApp = DClientApp;
 	}
 
-	public BlobStoreDto getDBlobStore() {
-		return this.DBlobStore;
+	public BlobStoreDto getBlobStore() {
+		return this.blobStore;
 	}
 
-	public void setDBlobStore(BlobStoreDto DBlobStore) {
-		this.DBlobStore = DBlobStore;
+	public void setBlobStore(BlobStoreDto DBlobStore) {
+		this.blobStore = DBlobStore;
 	}
 
-	/*
-	 * CONVERTER ENTITY <--> DTO
-	 */
-	public static BaseDto createDtoFromEntity(BaseEntity entity) {
-		if (entity == null) return null;
-		RelClientBlobDto dto = new RelClientBlobDto();
-		BeanUtils.copyProperties(entity, dto);
-		return dto;
-	}
 
-	public static BaseEntity createEntityFromDto(BaseDto dto) {
-		if (dto == null) return null;
-		RelClientBlob entity = new RelClientBlob();
-		BeanUtils.copyProperties(dto, entity);
-		return entity;
-	}
 
 }

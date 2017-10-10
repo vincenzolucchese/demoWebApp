@@ -47,7 +47,6 @@ public class TypeDocumentDto extends BaseDto {
 	/*******************************************
 	 * CONVERTER ENTITY <--> DTO
 	 *******************************************/
-	@Override
 	public BaseDto createDtoFromEntity(BaseEntity entity) {
 		if (entity == null) return null;
 		TypeDocumentDto dto = new TypeDocumentDto();
@@ -55,7 +54,6 @@ public class TypeDocumentDto extends BaseDto {
 		return dto;
 	}
 
-	@Override
 	public BaseEntity createEntityFromDto(BaseDto dto) {
 		if (dto == null) return null;
 		TypeDocument entity = new TypeDocument();

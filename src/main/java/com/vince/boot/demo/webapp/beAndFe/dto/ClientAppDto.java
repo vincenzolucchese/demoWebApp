@@ -7,6 +7,7 @@ import org.springframework.beans.BeanUtils;
 
 import com.vince.boot.demo.webapp.be.entity.BaseEntity;
 import com.vince.boot.demo.webapp.be.entity.ClientApp;
+import com.vince.boot.demo.webapp.be.entity.OrderJob;
 
 public class ClientAppDto extends BaseDto {
 
@@ -20,8 +21,8 @@ public class ClientAppDto extends BaseDto {
 	private String phone;
 	private String email;
 
-	private Set<RelClientBlobDto> DRelClientBlobs = new HashSet<RelClientBlobDto>(0);
-	private Set<OrderJobDto> DOrderJobs = new HashSet<OrderJobDto>(0);
+	private Set<RelClientBlobDto> relClientBlobs = new HashSet<RelClientBlobDto>(0);
+	private Set<OrderJobDto> orderJobs = new HashSet<OrderJobDto>(0);
 
 	public ClientAppDto() {
 	}
@@ -82,38 +83,60 @@ public class ClientAppDto extends BaseDto {
 		this.email = email;
 	}
 
-	public Set<RelClientBlobDto> getDRelClientBlobs() {
-		return this.DRelClientBlobs;
+	public Set<RelClientBlobDto> getRelClientBlobs() {
+		return this.relClientBlobs;
 	}
 
-	public void setDRelClientBlobs(Set<RelClientBlobDto> DRelClientBlobs) {
-		this.DRelClientBlobs = DRelClientBlobs;
+	public void setRelClientBlobs(Set<RelClientBlobDto> DRelClientBlobs) {
+		this.relClientBlobs = DRelClientBlobs;
 	}
 
-	public Set<OrderJobDto> getDOrderJobs() {
-		return this.DOrderJobs;
+	public Set<OrderJobDto> getOrderJobs() {
+		return this.orderJobs;
 	}
 
-	public void setDOrderJobs(Set<OrderJobDto> DOrderJobs) {
-		this.DOrderJobs = DOrderJobs;
+	public void setOrderJobs(Set<OrderJobDto> DOrderJobs) {
+		this.orderJobs = DOrderJobs;
 	}
 
-	/*
+	/*******************************************
 	 * CONVERTER ENTITY <--> DTO
-	 */
+	 *******************************************/
 	@Override
 	public BaseDto createDtoFromEntity(BaseEntity entity) {
 		if (entity == null) return null;
+		ClientApp entityCast = (ClientApp) entity;
+		
 		ClientAppDto dto = new ClientAppDto();
-		BeanUtils.copyProperties(entity, dto);
+		BeanUtils.copyProperties(entityCast, dto);
+		
+		if(entityCast.getOrderJobs()!=null){
+			HashSet<OrderJobDto> hash = new HashSet<OrderJobDto>();
+			for (OrderJob each : entityCast.getOrderJobs()) {
+				hash.add((OrderJobDto) new OrderJobDto().createDtoFromEntity(each));
+			}
+			dto.setOrderJobs(hash);
+		}
+		
 		return dto;
 	}
-
+	
 	@Override
 	public BaseEntity createEntityFromDto(BaseDto dto) {
 		if (dto == null) return null;
+		ClientAppDto dtoCast = (ClientAppDto) dto;
+		
 		ClientApp entity = new ClientApp();
 		BeanUtils.copyProperties(dto, entity);
+		
+		if(dtoCast.getOrderJobs()!=null){
+			HashSet<OrderJob> hash = new HashSet<OrderJob>();
+			for (OrderJobDto each : dtoCast.getOrderJobs()) {
+				hash.add((OrderJob) new OrderJobDto().createEntityFromDto(each));
+			}
+			entity.setOrderJobs(hash);
+		}
+		
 		return entity;
 	}
 

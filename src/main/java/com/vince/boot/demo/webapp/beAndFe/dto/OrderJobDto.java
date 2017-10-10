@@ -13,7 +13,7 @@ import com.vince.boot.demo.webapp.be.entity.OrderJob;
 public class OrderJobDto extends BaseDto {
 
 	private static final long serialVersionUID = 1L;
-	private ClientAppDto DClientApp;
+	private ClientAppDto clientApp;
 
 	private String notes;
 	private String codeOrder;
@@ -23,17 +23,17 @@ public class OrderJobDto extends BaseDto {
 	private BigDecimal finalAmount;
 	private Character flagActive;
 	private String address;
-	private Set<RelOrderBlobDto> DRelOrderBlobs = new HashSet<RelOrderBlobDto>(0);
+	private Set<RelOrderBlobDto> relOrderBlobs = new HashSet<RelOrderBlobDto>(0);
 
 	public OrderJobDto() {
 	}
 
-	public ClientAppDto getDClientApp() {
-		return this.DClientApp;
+	public ClientAppDto getClientApp() {
+		return this.clientApp;
 	}
 
-	public void setDClientApp(ClientAppDto DClientApp) {
-		this.DClientApp = DClientApp;
+	public void setClientApp(ClientAppDto DClientApp) {
+		this.clientApp = DClientApp;
 	}
 
 	public String getNotes() {
@@ -92,25 +92,25 @@ public class OrderJobDto extends BaseDto {
 		this.address = address;
 	}
 
-	public Set<RelOrderBlobDto> getDRelOrderBlobs() {
-		return this.DRelOrderBlobs;
+	public Set<RelOrderBlobDto> getRelOrderBlobs() {
+		return this.relOrderBlobs;
 	}
 
-	public void setDRelOrderBlobs(Set<RelOrderBlobDto> DRelOrderBlobs) {
-		this.DRelOrderBlobs = DRelOrderBlobs;
+	public void setRelOrderBlobs(Set<RelOrderBlobDto> DRelOrderBlobs) {
+		this.relOrderBlobs = DRelOrderBlobs;
 	}
 
-	/*
-	 * CONVERTER ENTITY <--> DTO
-	 */
-	public static BaseDto createDtoFromEntity(BaseEntity entity) {
+	/*******************************************
+	 * STATIC ENTITY <--> DTO
+	 *******************************************/
+	public BaseDto createDtoFromEntity(BaseEntity entity) {
 		if (entity == null) return null;
 		OrderJobDto dto = new OrderJobDto();
 		BeanUtils.copyProperties(entity, dto);
 		return dto;
 	}
 
-	public static BaseEntity createEntityFromDto(BaseDto dto) {
+	public BaseEntity createEntityFromDto(BaseDto dto) {
 		if (dto == null) return null;
 		OrderJob entity = new OrderJob();
 		BeanUtils.copyProperties(dto, entity);

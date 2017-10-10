@@ -3,15 +3,10 @@ package com.vince.boot.demo.webapp.beAndFe.dto;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.springframework.beans.BeanUtils;
-
-import com.vince.boot.demo.webapp.be.entity.BaseEntity;
-import com.vince.boot.demo.webapp.be.entity.UserApp;
-
-public class UserAppDto extends BaseDto {
+public class UserAppDto {
 
 	private static final long serialVersionUID = 1L;
-	private RoleUserDto DRoleUser;
+	private RoleUserDto roleUser;
 	private String username;
 
 	private String password;
@@ -21,17 +16,17 @@ public class UserAppDto extends BaseDto {
 	private Long fkIdBlobStore;
 
 	private String address;
-	private Set<RelUserBlobDto> DRelUserBlobs = new HashSet<RelUserBlobDto>(0);
+	private Set<RelUserBlobDto> relUserBlobs = new HashSet<RelUserBlobDto>(0);
 
 	public UserAppDto() {
 	}
 
-	public RoleUserDto getDRoleUser() {
-		return this.DRoleUser;
+	public RoleUserDto getRoleUser() {
+		return this.roleUser;
 	}
 
-	public void setDRoleUser(RoleUserDto DRoleUser) {
-		this.DRoleUser = DRoleUser;
+	public void setRoleUser(RoleUserDto DRoleUser) {
+		this.roleUser = DRoleUser;
 	}
 
 	public String getUsername() {
@@ -90,29 +85,13 @@ public class UserAppDto extends BaseDto {
 		this.address = address;
 	}
 
-	public Set<RelUserBlobDto> getDRelUserBlobs() {
-		return this.DRelUserBlobs;
+	public Set<RelUserBlobDto> getRelUserBlobs() {
+		return this.relUserBlobs;
 	}
 
-	public void setDRelUserBlobs(Set<RelUserBlobDto> DRelUserBlobs) {
-		this.DRelUserBlobs = DRelUserBlobs;
+	public void setRelUserBlobs(Set<RelUserBlobDto> DRelUserBlobs) {
+		this.relUserBlobs = DRelUserBlobs;
 	}
 
-	/*
-	 * CONVERTER ENTITY <--> DTO
-	 */
-	public static BaseDto createDtoFromEntity(BaseEntity entity) {
-		if (entity == null) return null;
-		UserAppDto dto = new UserAppDto();
-		BeanUtils.copyProperties(entity, dto);
-		return dto;
-	}
-
-	public static BaseEntity createEntityFromDto(BaseDto dto) {
-		if (dto == null) return null;
-		UserApp entity = new UserApp();
-		BeanUtils.copyProperties(dto, entity);
-		return entity;
-	}
 
 }

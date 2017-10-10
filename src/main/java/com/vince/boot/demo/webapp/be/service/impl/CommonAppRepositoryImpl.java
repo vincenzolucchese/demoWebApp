@@ -168,23 +168,23 @@ public class CommonAppRepositoryImpl extends JdbcDaoSupport implements BaseEntit
 	 ******************************************************************/
 	@Override
 	public BaseDto saveDto(BaseDto dto) {
-		BaseEntity entity = BaseDto.createEntityFromDtoAbstract(dto);
+		BaseEntity entity = dto.createEntityFromDto(dto);
 		entity = commonAppRepositoryImpl.saveCustom(entity);		
-		return BaseDto.createDtoFromEntityAbstract(entity);
+		return dto.createDtoFromEntity(entity);
 	}
 
 	@Override
 	public BaseDto saveDto(BaseDto dto, String user) {
-		BaseEntity entity = BaseDto.createEntityFromDtoAbstract(dto);
+		BaseEntity entity = dto.createEntityFromDto(dto);
 		entity = commonAppRepositoryImpl.saveCustom(entity, user);		
-		return BaseDto.createDtoFromEntityAbstract(entity);
+		return dto.createDtoFromEntity(entity);
 	}
 
 	@Override
 	public BaseDto saveDto(BaseDto dto, String user, Date date) {
-		BaseEntity entity = BaseDto.createEntityFromDtoAbstract(dto);
+		BaseEntity entity = dto.createEntityFromDto(dto);
 		entity = commonAppRepositoryImpl.saveCustom(entity, user, date);		
-		return BaseDto.createDtoFromEntityAbstract(entity);
+		return dto.createDtoFromEntity(entity);
 	}
 
 	@Override
@@ -220,7 +220,8 @@ public class CommonAppRepositoryImpl extends JdbcDaoSupport implements BaseEntit
 
 	@Override
 	public BaseDto findOneDto(Long id) {		
-		return BaseDto.createDtoFromEntityAbstract(baseEntityRepository.findOne(id));
+//		return BaseDto.createDtoFromEntityAbstract(baseEntityRepository.findOne(id));
+		return null;
 	}
 
 	@Override

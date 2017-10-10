@@ -1,11 +1,6 @@
 package com.vince.boot.demo.webapp.beAndFe.dto;
 
-import org.springframework.beans.BeanUtils;
-
-import com.vince.boot.demo.webapp.be.entity.BaseEntity;
-import com.vince.boot.demo.webapp.be.entity.SystemProps;
-
-public class SystemPropsDto extends BaseDto {
+public class SystemPropsDto {
 
 	private static final long serialVersionUID = 1L;
 
@@ -31,21 +26,5 @@ public class SystemPropsDto extends BaseDto {
 		this.valueProp = valueProp;
 	}
 
-	/*
-	 * CONVERTER ENTITY <--> DTO
-	 */
-	public static BaseDto createDtoFromEntity(BaseEntity entity) {
-		if (entity == null) return null;
-		SystemPropsDto dto = new SystemPropsDto();
-		BeanUtils.copyProperties(entity, dto);
-		return dto;
-	}
-
-	public static BaseEntity createEntityFromDto(BaseDto dto) {
-		if (dto == null) return null;
-		SystemProps entity = new SystemProps();
-		BeanUtils.copyProperties(dto, entity);
-		return entity;
-	}
 
 }
