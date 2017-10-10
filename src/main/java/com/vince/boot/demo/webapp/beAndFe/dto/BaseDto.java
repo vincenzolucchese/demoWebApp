@@ -3,8 +3,12 @@ package com.vince.boot.demo.webapp.beAndFe.dto;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.springframework.beans.BeanUtils;
 
-public class BaseDto implements Serializable {
+import com.vince.boot.demo.webapp.be.entity.BaseEntity;
+
+
+public abstract class BaseDto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -62,6 +66,24 @@ public class BaseDto implements Serializable {
 	public void setYearRefer(Date yearRefer) {
 		this.yearRefer = yearRefer;
 	}
-
-
+	
+	public abstract BaseDto createDtoFromEntity(BaseEntity entity);
+	public abstract BaseEntity createEntityFromDto(BaseDto dto);
+	
+	/*******************************************
+	 * CONVERTER ENTITY <--> DTO
+	 *******************************************/
+	public BaseDto createDtoFromEntityAbstract (BaseEntity entity) {
+		if (entity == null) return null;
+		BaseDto dto = createDtoFromEntity(entity);
+		return dto;
+		
+	}
+	public BaseEntity createEntityFromDtoAbstract (BaseDto dto) {
+		if (dto == null) return null;
+		BaseEntity entity = createEntityFromDto(dto);
+		return entity;
+	}
+	
+	
 }

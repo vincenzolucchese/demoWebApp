@@ -13,20 +13,22 @@ import com.querydsl.core.types.dsl.PathInits;
 import com.querydsl.core.types.dsl.StringPath;
 
 /**
- * QDRoleFunction is a Querydsl query type for DRoleFunction
+ * QDRelOrderBlob is a Querydsl query type for DRelOrderBlob
  */
 @Generated("com.querydsl.codegen.EntitySerializer")
-public class QDRoleFunction extends EntityPathBase<DRoleFunction> {
+public class QRelOrderBlob extends EntityPathBase<RelOrderBlob> {
 
-	private static final long serialVersionUID = -1875549029L;
+	private static final long serialVersionUID = 1244641695L;
 
 	private static final PathInits INITS = PathInits.DIRECT2;
 
-	public static final QDRoleFunction dRoleFunction = new QDRoleFunction("dRoleFunction");
+	public static final QRelOrderBlob dRelOrderBlob = new QRelOrderBlob("dRelOrderBlob");
 
 	public final QBaseEntity _super = new QBaseEntity(this);
 
-	public final QDRoleUser DRoleUser;
+	public final QBlobStore DBlobStore;
+
+	public final QOrderJob DOrderJob;
 
 	// inherited
 	public final NumberPath<Long> id = _super.id;
@@ -46,25 +48,30 @@ public class QDRoleFunction extends EntityPathBase<DRoleFunction> {
 	// inherited
 	public final DateTimePath<java.util.Date> yearRefer = _super.yearRefer;
 
-	public QDRoleFunction(String variable) {
-		this(DRoleFunction.class, forVariable(variable), INITS);
+	public QRelOrderBlob(String variable) {
+		this(RelOrderBlob.class, forVariable(variable), INITS);
 	}
 
-	public QDRoleFunction(Path<? extends DRoleFunction> path) {
+	public QRelOrderBlob(Path<? extends RelOrderBlob> path) {
 		this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
 	}
 
-	public QDRoleFunction(PathMetadata metadata) {
+	public QRelOrderBlob(PathMetadata metadata) {
 		this(metadata, PathInits.getFor(metadata, INITS));
 	}
 
-	public QDRoleFunction(PathMetadata metadata, PathInits inits) {
-		this(DRoleFunction.class, metadata, inits);
+	public QRelOrderBlob(PathMetadata metadata, PathInits inits) {
+		this(RelOrderBlob.class, metadata, inits);
 	}
 
-	public QDRoleFunction(Class<? extends DRoleFunction> type, PathMetadata metadata, PathInits inits) {
+	public QRelOrderBlob(Class<? extends RelOrderBlob> type, PathMetadata metadata, PathInits inits) {
 		super(type, metadata, inits);
-		this.DRoleUser = inits.isInitialized("DRoleUser") ? new QDRoleUser(forProperty("DRoleUser")) : null;
+		this.DBlobStore = inits.isInitialized("DBlobStore")
+				? new QBlobStore(forProperty("DBlobStore"), inits.get("DBlobStore"))
+				: null;
+		this.DOrderJob = inits.isInitialized("DOrderJob")
+				? new QOrderJob(forProperty("DOrderJob"), inits.get("DOrderJob"))
+				: null;
 	}
 
 }

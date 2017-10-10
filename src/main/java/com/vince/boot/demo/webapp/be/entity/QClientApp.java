@@ -17,21 +17,21 @@ import com.querydsl.core.types.dsl.StringPath;
  * QDClientApp is a Querydsl query type for DClientApp
  */
 @Generated("com.querydsl.codegen.EntitySerializer")
-public class QDClientApp extends EntityPathBase<DClientApp> {
+public class QClientApp extends EntityPathBase<ClientApp> {
 
 	private static final long serialVersionUID = 375163721L;
 
-	public static final QDClientApp dClientApp = new QDClientApp("dClientApp");
+	public static final QClientApp dClientApp = new QClientApp("dClientApp");
 
 	public final QBaseEntity _super = new QBaseEntity(this);
 
 	public final StringPath address = createString("address");
 
-	public final SetPath<DOrderJob, QDOrderJob> DOrderJobs = this.<DOrderJob, QDOrderJob>createSet("DOrderJobs",
-			DOrderJob.class, QDOrderJob.class, PathInits.DIRECT2);
+	public final SetPath<OrderJob, QOrderJob> DOrderJobs = this.<OrderJob, QOrderJob>createSet("DOrderJobs",
+			OrderJob.class, QOrderJob.class, PathInits.DIRECT2);
 
-	public final SetPath<DRelClientBlob, QDRelClientBlob> DRelClientBlobs = this
-			.<DRelClientBlob, QDRelClientBlob>createSet("DRelClientBlobs", DRelClientBlob.class, QDRelClientBlob.class,
+	public final SetPath<RelClientBlob, QRelClientBlob> DRelClientBlobs = this
+			.<RelClientBlob, QRelClientBlob>createSet("DRelClientBlobs", RelClientBlob.class, QRelClientBlob.class,
 					PathInits.DIRECT2);
 
 	public final StringPath email = createString("email");
@@ -64,16 +64,16 @@ public class QDClientApp extends EntityPathBase<DClientApp> {
 
 	public final StringPath zipcode = createString("zipcode");
 
-	public QDClientApp(String variable) {
-		super(DClientApp.class, forVariable(variable));
+	public QClientApp(String variable) {
+		super(ClientApp.class, forVariable(variable));
 	}
 
-	public QDClientApp(Path<? extends DClientApp> path) {
+	public QClientApp(Path<? extends ClientApp> path) {
 		super(path.getType(), path.getMetadata());
 	}
 
-	public QDClientApp(PathMetadata metadata) {
-		super(DClientApp.class, metadata);
+	public QClientApp(PathMetadata metadata) {
+		super(ClientApp.class, metadata);
 	}
 
 }

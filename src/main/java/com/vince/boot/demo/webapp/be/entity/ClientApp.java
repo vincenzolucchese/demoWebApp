@@ -16,7 +16,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "d_client_app")
-public class DClientApp extends BaseEntity {
+public class ClientApp extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 
@@ -28,10 +28,14 @@ public class DClientApp extends BaseEntity {
 	private String phone;
 	private String email;
 
-	private Set<DRelClientBlob> DRelClientBlobs = new HashSet<DRelClientBlob>(0);
-	private Set<DOrderJob> DOrderJobs = new HashSet<DOrderJob>(0);
+	private Set<RelClientBlob> relClientBlobs = new HashSet<RelClientBlob>(0);
+	private Set<OrderJob> orderJobs = new HashSet<OrderJob>(0);
 
-	public DClientApp() {
+	public ClientApp() {
+	}
+
+	public ClientApp(Long id) {
+		super.id = id;
 	}
 
 	@Column(name = "name", nullable = false, length = 100)
@@ -97,22 +101,22 @@ public class DClientApp extends BaseEntity {
 		this.email = email;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "DClientApp")
-	public Set<DRelClientBlob> getDRelClientBlobs() {
-		return this.DRelClientBlobs;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "clientApp")
+	public Set<RelClientBlob> getRelClientBlobs() {
+		return this.relClientBlobs;
 	}
 
-	public void setDRelClientBlobs(Set<DRelClientBlob> DRelClientBlobs) {
-		this.DRelClientBlobs = DRelClientBlobs;
+	public void setRelClientBlobs(Set<RelClientBlob> relClientBlobs) {
+		this.relClientBlobs = relClientBlobs;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "DClientApp")
-	public Set<DOrderJob> getDOrderJobs() {
-		return this.DOrderJobs;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "clientApp")
+	public Set<OrderJob> getOrderJobs() {
+		return this.orderJobs;
 	}
 
-	public void setDOrderJobs(Set<DOrderJob> DOrderJobs) {
-		this.DOrderJobs = DOrderJobs;
+	public void setOrderJobs(Set<OrderJob> orderJobs) {
+		this.orderJobs = orderJobs;
 	}
 
 }

@@ -19,13 +19,13 @@ import com.querydsl.core.types.dsl.StringPath;
  * QDBlobStore is a Querydsl query type for DBlobStore
  */
 @Generated("com.querydsl.codegen.EntitySerializer")
-public class QDBlobStore extends EntityPathBase<DBlobStore> {
+public class QBlobStore extends EntityPathBase<BlobStore> {
 
 	private static final long serialVersionUID = -1193072585L;
 
 	private static final PathInits INITS = PathInits.DIRECT2;
 
-	public static final QDBlobStore dBlobStore = new QDBlobStore("dBlobStore");
+	public static final QBlobStore dBlobStore = new QBlobStore("dBlobStore");
 
 	public final QBaseEntity _super = new QBaseEntity(this);
 
@@ -35,17 +35,17 @@ public class QDBlobStore extends EntityPathBase<DBlobStore> {
 
 	public final StringPath description = createString("description");
 
-	public final SetPath<DRelClientBlob, QDRelClientBlob> DRelClientBlobs = this
-			.<DRelClientBlob, QDRelClientBlob>createSet("DRelClientBlobs", DRelClientBlob.class, QDRelClientBlob.class,
+	public final SetPath<RelClientBlob, QRelClientBlob> DRelClientBlobs = this
+			.<RelClientBlob, QRelClientBlob>createSet("DRelClientBlobs", RelClientBlob.class, QRelClientBlob.class,
 					PathInits.DIRECT2);
 
-	public final SetPath<DRelOrderBlob, QDRelOrderBlob> DRelOrderBlobs = this.<DRelOrderBlob, QDRelOrderBlob>createSet(
-			"DRelOrderBlobs", DRelOrderBlob.class, QDRelOrderBlob.class, PathInits.DIRECT2);
+	public final SetPath<RelOrderBlob, QRelOrderBlob> DRelOrderBlobs = this.<RelOrderBlob, QRelOrderBlob>createSet(
+			"DRelOrderBlobs", RelOrderBlob.class, QRelOrderBlob.class, PathInits.DIRECT2);
 
-	public final SetPath<DRelUserBlob, QDRelUserBlob> DRelUserBlobs = this.<DRelUserBlob, QDRelUserBlob>createSet(
-			"DRelUserBlobs", DRelUserBlob.class, QDRelUserBlob.class, PathInits.DIRECT2);
+	public final SetPath<RelUserBlob, QRelUserBlob> DRelUserBlobs = this.<RelUserBlob, QRelUserBlob>createSet(
+			"DRelUserBlobs", RelUserBlob.class, QRelUserBlob.class, PathInits.DIRECT2);
 
-	public final QDTypeDocument DTypeDocument;
+	public final QTypeDocument DTypeDocument;
 
 	public final StringPath filename = createString("filename");
 
@@ -69,25 +69,25 @@ public class QDBlobStore extends EntityPathBase<DBlobStore> {
 	// inherited
 	public final DateTimePath<java.util.Date> yearRefer = _super.yearRefer;
 
-	public QDBlobStore(String variable) {
-		this(DBlobStore.class, forVariable(variable), INITS);
+	public QBlobStore(String variable) {
+		this(BlobStore.class, forVariable(variable), INITS);
 	}
 
-	public QDBlobStore(Path<? extends DBlobStore> path) {
+	public QBlobStore(Path<? extends BlobStore> path) {
 		this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
 	}
 
-	public QDBlobStore(PathMetadata metadata) {
+	public QBlobStore(PathMetadata metadata) {
 		this(metadata, PathInits.getFor(metadata, INITS));
 	}
 
-	public QDBlobStore(PathMetadata metadata, PathInits inits) {
-		this(DBlobStore.class, metadata, inits);
+	public QBlobStore(PathMetadata metadata, PathInits inits) {
+		this(BlobStore.class, metadata, inits);
 	}
 
-	public QDBlobStore(Class<? extends DBlobStore> type, PathMetadata metadata, PathInits inits) {
+	public QBlobStore(Class<? extends BlobStore> type, PathMetadata metadata, PathInits inits) {
 		super(type, metadata, inits);
-		this.DTypeDocument = inits.isInitialized("DTypeDocument") ? new QDTypeDocument(forProperty("DTypeDocument"))
+		this.DTypeDocument = inits.isInitialized("DTypeDocument") ? new QTypeDocument(forProperty("DTypeDocument"))
 				: null;
 	}
 

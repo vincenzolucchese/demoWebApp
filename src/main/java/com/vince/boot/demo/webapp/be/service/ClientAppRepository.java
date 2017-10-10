@@ -3,10 +3,10 @@ package com.vince.boot.demo.webapp.be.service;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 
-import com.vince.boot.demo.webapp.be.entity.DClientApp;
+import com.vince.boot.demo.webapp.be.entity.ClientApp;
 
 
-public interface ClientAppRepository extends JpaRepository<DClientApp, Long>, QueryDslPredicateExecutor<DClientApp> {
+public interface ClientAppRepository extends JpaRepository<ClientApp, Long>, QueryDslPredicateExecutor<ClientApp> {
 
 	
 }

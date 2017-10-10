@@ -3,6 +3,11 @@ package com.vince.boot.demo.webapp.beAndFe.dto;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.beans.BeanUtils;
+
+import com.vince.boot.demo.webapp.be.entity.BaseEntity;
+import com.vince.boot.demo.webapp.be.entity.RoleUser;
+
 public class RoleUserDto extends BaseDto {
 
 	private static final long serialVersionUID = 1L;
@@ -46,6 +51,23 @@ public class RoleUserDto extends BaseDto {
 
 	public void setDRoleFunctions(Set<RoleFunctionDto> DRoleFunctions) {
 		this.DRoleFunctions = DRoleFunctions;
+	}
+
+	/*
+	 * CONVERTER ENTITY <--> DTO
+	 */
+	public static BaseDto createDtoFromEntity(BaseEntity entity) {
+		if (entity == null) return null;
+		RoleUserDto dto = new RoleUserDto();
+		BeanUtils.copyProperties(entity, dto);
+		return dto;
+	}
+
+	public static BaseEntity createEntityFromDto(BaseDto dto) {
+		if (dto == null) return null;
+		RoleUser entity = new RoleUser();
+		BeanUtils.copyProperties(dto, entity);
+		return entity;
 	}
 
 }

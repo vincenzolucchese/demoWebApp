@@ -26,13 +26,18 @@ import javax.sql.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.vince.boot.demo.webapp.be.entity.BaseEntity;
 import com.vince.boot.demo.webapp.be.service.BaseEntityRepository;
+import com.vince.boot.demo.webapp.be.service.BaseEntityToDtoRepository;
 import com.vince.boot.demo.webapp.be.service.BlobStoreRepository;
+import com.vince.boot.demo.webapp.be.service.ClientAppRepository;
+import com.vince.boot.demo.webapp.be.service.TypeDocumentRepository;
+import com.vince.boot.demo.webapp.beAndFe.dto.BaseDto;
 
 /**
  * Bean Service for common custom implementation about all web app
@@ -40,18 +45,25 @@ import com.vince.boot.demo.webapp.be.service.BlobStoreRepository;
  *
  */
 @Component("commonAppRepositoryImpl")
-public class CommonAppRepositoryImpl extends JdbcDaoSupport {
+public class CommonAppRepositoryImpl extends JdbcDaoSupport implements BaseEntityToDtoRepository {
 
 	private static final Logger logger = LoggerFactory.getLogger(CommonAppRepositoryImpl.class);
+	public static final String USER_SYSTEM = "SYSTEM";
 	private static final String GET_SYSDATE_SQL = "SELECT SYSDATE()";
 	
 	@PersistenceContext 
 	private EntityManager em;
 	
 	@Autowired
-	BaseEntityRepository baseEntityService;
+	BaseEntityRepository baseEntityRepository;	
 	@Autowired
-	BlobStoreRepository blobStoreService;
+	CommonAppRepositoryImpl commonAppRepositoryImpl;
+	@Autowired
+	BlobStoreRepository blobStoreRepository;
+	@Autowired
+	TypeDocumentRepository typeDocumentRepository;
+	@Autowired
+	ClientAppRepository clientAppRepository;
 
 	/**
 	 * Configure the entity manager to be used.	 * 
@@ -91,7 +103,7 @@ public class CommonAppRepositoryImpl extends JdbcDaoSupport {
 			entity.setUserUpdate(user);
 			entity.setTimeUpdate(dateDB);
 		}		
-		return baseEntityService.save(entity);
+		return baseEntityRepository.save(entity);
 	}
 	
 	/**
@@ -110,7 +122,26 @@ public class CommonAppRepositoryImpl extends JdbcDaoSupport {
 			entity.setUserUpdate(user);
 			entity.setTimeUpdate(dateDB);
 		}		
-		return baseEntityService.save(entity);
+		return baseEntityRepository.save(entity);
+	}
+	
+	/**
+	 * Save a entity with the strategy about user inserter and updater. get sysdate from db.
+	 * @param entity
+	 * @param user
+	 * @return
+	 */
+	public BaseEntity saveCustom(BaseEntity entity) {
+		Date dateDB = getSysdateFromDBJdbc();
+		if(entity.isNew()){
+			entity.setUserInsert(USER_SYSTEM);
+			entity.setTimeInsert(dateDB);
+			entity.setYearRefer(dateDB);
+		}else {
+			entity.setUserUpdate(USER_SYSTEM);
+			entity.setTimeUpdate(dateDB);
+		}		
+		return baseEntityRepository.save(entity);
 	}
 	
 	/**
@@ -131,12 +162,77 @@ public class CommonAppRepositoryImpl extends JdbcDaoSupport {
 		}
 		return result;
 	}
-	
-	
 
+	/******************************************************************
+	 *************** IMPLEMETATION OF BaseEntityToDtoRepository *******
+	 ******************************************************************/
+	@Override
+	public BaseDto saveDto(BaseDto dto) {
+		BaseEntity entity = BaseDto.createEntityFromDtoAbstract(dto);
+		entity = commonAppRepositoryImpl.saveCustom(entity);		
+		return BaseDto.createDtoFromEntityAbstract(entity);
+	}
 
-	
-	
+	@Override
+	public BaseDto saveDto(BaseDto dto, String user) {
+		BaseEntity entity = BaseDto.createEntityFromDtoAbstract(dto);
+		entity = commonAppRepositoryImpl.saveCustom(entity, user);		
+		return BaseDto.createDtoFromEntityAbstract(entity);
+	}
 
-	
+	@Override
+	public BaseDto saveDto(BaseDto dto, String user, Date date) {
+		BaseEntity entity = BaseDto.createEntityFromDtoAbstract(dto);
+		entity = commonAppRepositoryImpl.saveCustom(entity, user, date);		
+		return BaseDto.createDtoFromEntityAbstract(entity);
+	}
+
+	@Override
+	@Transactional
+	public List<BaseDto> saveDto(Iterable<BaseDto> entitiesDto) {
+		if(entitiesDto == null) return null;
+		List<BaseDto> lista = new ArrayList<BaseDto>();
+		for (BaseDto each : entitiesDto) {
+			lista.add(this.saveDto(each));
+		}
+		return lista;
+	}
+
+	@Override
+	public List<BaseDto> saveDto(Iterable<BaseDto> entitiesDto, String user) {
+		if(entitiesDto == null) return null;
+		List<BaseDto> lista = new ArrayList<BaseDto>();
+		for (BaseDto each : entitiesDto) {
+			lista.add(this.saveDto(each, user));
+		}
+		return lista;
+	}
+
+	@Override
+	public List<BaseDto> saveDto(Iterable<BaseDto> entitiesDto, String user, Date date) {
+		if(entitiesDto == null) return null;
+		List<BaseDto> lista = new ArrayList<BaseDto>();
+		for (BaseDto each : entitiesDto) {
+			lista.add(this.saveDto(each, user, date));
+		}
+		return lista;
+	}
+
+	@Override
+	public BaseDto findOneDto(Long id) {		
+		return BaseDto.createDtoFromEntityAbstract(baseEntityRepository.findOne(id));
+	}
+
+	@Override
+	public List<BaseDto> findAllDto(BaseDto filter) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PagedListHolder<BaseDto> findUsersPagedByCriteria(BaseDto searchBean, int i,
+			Integer displayTagObjectsPerPage, String sort, boolean b) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

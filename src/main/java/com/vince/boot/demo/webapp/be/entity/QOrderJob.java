@@ -18,13 +18,13 @@ import com.querydsl.core.types.dsl.StringPath;
  * QDOrderJob is a Querydsl query type for DOrderJob
  */
 @Generated("com.querydsl.codegen.EntitySerializer")
-public class QDOrderJob extends EntityPathBase<DOrderJob> {
+public class QOrderJob extends EntityPathBase<OrderJob> {
 
 	private static final long serialVersionUID = -631852484L;
 
 	private static final PathInits INITS = PathInits.DIRECT2;
 
-	public static final QDOrderJob dOrderJob = new QDOrderJob("dOrderJob");
+	public static final QOrderJob dOrderJob = new QOrderJob("dOrderJob");
 
 	public final QBaseEntity _super = new QBaseEntity(this);
 
@@ -34,10 +34,10 @@ public class QDOrderJob extends EntityPathBase<DOrderJob> {
 
 	public final DateTimePath<java.util.Date> dataScadenza = createDateTime("dataScadenza", java.util.Date.class);
 
-	public final QDClientApp DClientApp;
+	public final QClientApp DClientApp;
 
-	public final SetPath<DRelOrderBlob, QDRelOrderBlob> DRelOrderBlobs = this.<DRelOrderBlob, QDRelOrderBlob>createSet(
-			"DRelOrderBlobs", DRelOrderBlob.class, QDRelOrderBlob.class, PathInits.DIRECT2);
+	public final SetPath<RelOrderBlob, QRelOrderBlob> DRelOrderBlobs = this.<RelOrderBlob, QRelOrderBlob>createSet(
+			"DRelOrderBlobs", RelOrderBlob.class, QRelOrderBlob.class, PathInits.DIRECT2);
 
 	public final NumberPath<java.math.BigDecimal> finalAmount = createNumber("finalAmount", java.math.BigDecimal.class);
 
@@ -65,25 +65,25 @@ public class QDOrderJob extends EntityPathBase<DOrderJob> {
 	// inherited
 	public final DateTimePath<java.util.Date> yearRefer = _super.yearRefer;
 
-	public QDOrderJob(String variable) {
-		this(DOrderJob.class, forVariable(variable), INITS);
+	public QOrderJob(String variable) {
+		this(OrderJob.class, forVariable(variable), INITS);
 	}
 
-	public QDOrderJob(Path<? extends DOrderJob> path) {
+	public QOrderJob(Path<? extends OrderJob> path) {
 		this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
 	}
 
-	public QDOrderJob(PathMetadata metadata) {
+	public QOrderJob(PathMetadata metadata) {
 		this(metadata, PathInits.getFor(metadata, INITS));
 	}
 
-	public QDOrderJob(PathMetadata metadata, PathInits inits) {
-		this(DOrderJob.class, metadata, inits);
+	public QOrderJob(PathMetadata metadata, PathInits inits) {
+		this(OrderJob.class, metadata, inits);
 	}
 
-	public QDOrderJob(Class<? extends DOrderJob> type, PathMetadata metadata, PathInits inits) {
+	public QOrderJob(Class<? extends OrderJob> type, PathMetadata metadata, PathInits inits) {
 		super(type, metadata, inits);
-		this.DClientApp = inits.isInitialized("DClientApp") ? new QDClientApp(forProperty("DClientApp")) : null;
+		this.DClientApp = inits.isInitialized("DClientApp") ? new QClientApp(forProperty("DClientApp")) : null;
 	}
 
 }

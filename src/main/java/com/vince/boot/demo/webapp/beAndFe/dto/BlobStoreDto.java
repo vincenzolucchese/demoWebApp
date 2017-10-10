@@ -4,11 +4,16 @@ package com.vince.boot.demo.webapp.beAndFe.dto;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.beans.BeanUtils;
+
+import com.vince.boot.demo.webapp.be.entity.BaseEntity;
+import com.vince.boot.demo.webapp.be.entity.BlobStore;
+
 
 public class BlobStoreDto extends BaseDto {
 
 	private static final long serialVersionUID = 1L;
-	private TypeDocumentDto DTypeDocument;
+	private TypeDocumentDto typeDocument;
 
 	private String filename;
 	private char flagActive;
@@ -16,19 +21,19 @@ public class BlobStoreDto extends BaseDto {
 	private String description;
 	private String contentType;
 
-	private Set<RelOrderBlobDto> DRelOrderBlobs = new HashSet<RelOrderBlobDto>(0);
-	private Set<RelUserBlobDto> DRelUserBlobs = new HashSet<RelUserBlobDto>(0);
-	private Set<RelClientBlobDto> DRelClientBlobs = new HashSet<RelClientBlobDto>(0);
+	private Set<RelOrderBlobDto> relOrderBlobs = new HashSet<RelOrderBlobDto>(0);
+	private Set<RelUserBlobDto> relUserBlobs = new HashSet<RelUserBlobDto>(0);
+	private Set<RelClientBlobDto> relClientBlobs = new HashSet<RelClientBlobDto>(0);
 
 	public BlobStoreDto() {
 	}
 
-	public TypeDocumentDto getDTypeDocument() {
-		return this.DTypeDocument;
+	public TypeDocumentDto getTypeDocument() {
+		return this.typeDocument;
 	}
 
-	public void setDTypeDocument(TypeDocumentDto DTypeDocument) {
-		this.DTypeDocument = DTypeDocument;
+	public void setTypeDocument(TypeDocumentDto typeDocument) {
+		this.typeDocument = typeDocument;
 	}
 
 	public String getFilename() {
@@ -71,28 +76,52 @@ public class BlobStoreDto extends BaseDto {
 		this.contentType = contentType;
 	}
 
-	public Set<RelOrderBlobDto> getDRelOrderBlobs() {
-		return this.DRelOrderBlobs;
+	public Set<RelOrderBlobDto> getRelOrderBlobs() {
+		return this.relOrderBlobs;
 	}
 
-	public void setDRelOrderBlobs(Set<RelOrderBlobDto> DRelOrderBlobs) {
-		this.DRelOrderBlobs = DRelOrderBlobs;
+	public void setRelOrderBlobs(Set<RelOrderBlobDto> relOrderBlobs) {
+		this.relOrderBlobs = relOrderBlobs;
 	}
 
-	public Set<RelUserBlobDto> getDRelUserBlobs() {
-		return this.DRelUserBlobs;
+	public Set<RelUserBlobDto> getRelUserBlobs() {
+		return this.relUserBlobs;
 	}
 
-	public void setDRelUserBlobs(Set<RelUserBlobDto> DRelUserBlobs) {
-		this.DRelUserBlobs = DRelUserBlobs;
+	public void setRelUserBlobs(Set<RelUserBlobDto> relUserBlobs) {
+		this.relUserBlobs = relUserBlobs;
 	}
 
-	public Set<RelClientBlobDto> getDRelClientBlobs() {
-		return this.DRelClientBlobs;
+	public Set<RelClientBlobDto> getRelClientBlobs() {
+		return this.relClientBlobs;
 	}
 
-	public void setDRelClientBlobs(Set<RelClientBlobDto> DRelClientBlobs) {
-		this.DRelClientBlobs = DRelClientBlobs;
+	public void setRelClientBlobs(Set<RelClientBlobDto> relClientBlobs) {
+		this.relClientBlobs = relClientBlobs;
+	}
+
+	/*
+	 * CONVERTER ENTITY <--> DTO
+	 */
+	@Override
+	public BaseDto createDtoFromEntity(BaseEntity entity) {
+		if (entity == null) return null;
+		BlobStoreDto dto = new BlobStoreDto();
+		BeanUtils.copyProperties(entity, dto);		
+		// copy objects
+		TypeDocumentDto.createDtoFromEntityStatic(((BlobStore) entity).getTypeDocument());
+		
+		return dto;
+	}
+
+	@Override
+	public BaseEntity createEntityFromDto(BaseDto dto) {
+		if (dto == null) return null;
+		BlobStore entity = new BlobStore();
+		BeanUtils.copyProperties(dto, entity);
+		// copy objects
+		TypeDocumentDto.createEntityFromDtoStatic(((BlobStoreDto) dto).getTypeDocument());
+		return entity;
 	}
 
 }

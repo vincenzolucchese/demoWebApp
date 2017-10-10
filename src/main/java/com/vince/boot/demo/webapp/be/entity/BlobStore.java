@@ -18,10 +18,10 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "d_blob_store")
-public class DBlobStore extends BaseEntity {
+public class BlobStore extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
-	private DTypeDocument DTypeDocument;
+	private TypeDocument typeDocument;
 
 	private String filename;
 	private char flagActive;
@@ -29,27 +29,27 @@ public class DBlobStore extends BaseEntity {
 	private String description;
 	private String contentType;
 
-	private Set<DRelOrderBlob> DRelOrderBlobs = new HashSet<DRelOrderBlob>(0);
-	private Set<DRelUserBlob> DRelUserBlobs = new HashSet<DRelUserBlob>(0);
-	private Set<DRelClientBlob> DRelClientBlobs = new HashSet<DRelClientBlob>(0);
+	private Set<RelOrderBlob> relOrderBlobs = new HashSet<RelOrderBlob>(0);
+	private Set<RelUserBlob> relUserBlobs = new HashSet<RelUserBlob>(0);
+	private Set<RelClientBlob> relClientBlobs = new HashSet<RelClientBlob>(0);
 
-	public DBlobStore() {
+	public BlobStore() {
 	}
 
 
-	public DBlobStore(Long id) {
+	public BlobStore(Long id) {
 		super.id = id;
 	}
 
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "fk_id_type", nullable = false)
-	public DTypeDocument getDTypeDocument() {
-		return this.DTypeDocument;
+	public TypeDocument getTypeDocument() {
+		return this.typeDocument;
 	}
 
-	public void setDTypeDocument(DTypeDocument DTypeDocument) {
-		this.DTypeDocument = DTypeDocument;
+	public void setTypeDocument(TypeDocument typeDocument) {
+		this.typeDocument = typeDocument;
 	}
 
 	@Column(name = "filename", nullable = false, length = 200)
@@ -97,31 +97,31 @@ public class DBlobStore extends BaseEntity {
 		this.contentType = contentType;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "DBlobStore")
-	public Set<DRelOrderBlob> getDRelOrderBlobs() {
-		return this.DRelOrderBlobs;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "blobStore")
+	public Set<RelOrderBlob> getRelOrderBlobs() {
+		return this.relOrderBlobs;
 	}
 
-	public void setDRelOrderBlobs(Set<DRelOrderBlob> DRelOrderBlobs) {
-		this.DRelOrderBlobs = DRelOrderBlobs;
+	public void setRelOrderBlobs(Set<RelOrderBlob> RelOrderBlobs) {
+		this.relOrderBlobs = RelOrderBlobs;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "DBlobStore")
-	public Set<DRelUserBlob> getDRelUserBlobs() {
-		return this.DRelUserBlobs;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "blobStore")
+	public Set<RelUserBlob> getRelUserBlobs() {
+		return this.relUserBlobs;
 	}
 
-	public void setDRelUserBlobs(Set<DRelUserBlob> DRelUserBlobs) {
-		this.DRelUserBlobs = DRelUserBlobs;
+	public void setRelUserBlobs(Set<RelUserBlob> RelUserBlobs) {
+		this.relUserBlobs = RelUserBlobs;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "DBlobStore")
-	public Set<DRelClientBlob> getDRelClientBlobs() {
-		return this.DRelClientBlobs;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "blobStore")
+	public Set<RelClientBlob> getRelClientBlobs() {
+		return this.relClientBlobs;
 	}
 
-	public void setDRelClientBlobs(Set<DRelClientBlob> DRelClientBlobs) {
-		this.DRelClientBlobs = DRelClientBlobs;
+	public void setRelClientBlobs(Set<RelClientBlob> RelClientBlobs) {
+		this.relClientBlobs = RelClientBlobs;
 	}
 
 }

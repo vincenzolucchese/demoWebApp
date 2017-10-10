@@ -9,24 +9,19 @@ import com.querydsl.core.types.PathMetadata;
 import com.querydsl.core.types.dsl.DateTimePath;
 import com.querydsl.core.types.dsl.EntityPathBase;
 import com.querydsl.core.types.dsl.NumberPath;
-import com.querydsl.core.types.dsl.PathInits;
-import com.querydsl.core.types.dsl.SetPath;
 import com.querydsl.core.types.dsl.StringPath;
 
 /**
- * QDTypeDocument is a Querydsl query type for DTypeDocument
+ * QDGeoLocal is a Querydsl query type for DGeoLocal
  */
 @Generated("com.querydsl.codegen.EntitySerializer")
-public class QDTypeDocument extends EntityPathBase<DTypeDocument> {
+public class QGeoLocal extends EntityPathBase<GeoLocal> {
 
-	private static final long serialVersionUID = 582667426L;
+	private static final long serialVersionUID = -50312377L;
 
-	public static final QDTypeDocument dTypeDocument = new QDTypeDocument("dTypeDocument");
+	public static final QGeoLocal dGeoLocal = new QGeoLocal("dGeoLocal");
 
 	public final QBaseEntity _super = new QBaseEntity(this);
-
-	public final SetPath<DBlobStore, QDBlobStore> DBlobStores = this.<DBlobStore, QDBlobStore>createSet("DBlobStores",
-			DBlobStore.class, QDBlobStore.class, PathInits.DIRECT2);
 
 	// inherited
 	public final NumberPath<Long> id = _super.id;
@@ -37,10 +32,6 @@ public class QDTypeDocument extends EntityPathBase<DTypeDocument> {
 	// inherited
 	public final DateTimePath<java.util.Date> timeUpdate = _super.timeUpdate;
 
-	public final StringPath typeCode = createString("typeCode");
-
-	public final StringPath typeDescription = createString("typeDescription");
-
 	// inherited
 	public final StringPath userInsert = _super.userInsert;
 
@@ -50,16 +41,16 @@ public class QDTypeDocument extends EntityPathBase<DTypeDocument> {
 	// inherited
 	public final DateTimePath<java.util.Date> yearRefer = _super.yearRefer;
 
-	public QDTypeDocument(String variable) {
-		super(DTypeDocument.class, forVariable(variable));
+	public QGeoLocal(String variable) {
+		super(GeoLocal.class, forVariable(variable));
 	}
 
-	public QDTypeDocument(Path<? extends DTypeDocument> path) {
+	public QGeoLocal(Path<? extends GeoLocal> path) {
 		super(path.getType(), path.getMetadata());
 	}
 
-	public QDTypeDocument(PathMetadata metadata) {
-		super(DTypeDocument.class, metadata);
+	public QGeoLocal(PathMetadata metadata) {
+		super(GeoLocal.class, metadata);
 	}
 
 }

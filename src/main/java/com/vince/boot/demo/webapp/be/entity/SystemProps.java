@@ -11,14 +11,14 @@ import javax.persistence.UniqueConstraint;
  */
 @Entity
 @Table(name = "d_system_props", uniqueConstraints = @UniqueConstraint(columnNames = "key_prop"))
-public class DSystemProps extends BaseEntity {
+public class SystemProps extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 
 	private String keyProp;
 	private String valueProp;
 
-	public DSystemProps() {
+	public SystemProps() {
 	}
 
 	@Column(name = "key_prop", unique = true, nullable = false, length = 20)

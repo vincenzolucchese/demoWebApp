@@ -5,6 +5,11 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.beans.BeanUtils;
+
+import com.vince.boot.demo.webapp.be.entity.BaseEntity;
+import com.vince.boot.demo.webapp.be.entity.OrderJob;
+
 public class OrderJobDto extends BaseDto {
 
 	private static final long serialVersionUID = 1L;
@@ -93,6 +98,23 @@ public class OrderJobDto extends BaseDto {
 
 	public void setDRelOrderBlobs(Set<RelOrderBlobDto> DRelOrderBlobs) {
 		this.DRelOrderBlobs = DRelOrderBlobs;
+	}
+
+	/*
+	 * CONVERTER ENTITY <--> DTO
+	 */
+	public static BaseDto createDtoFromEntity(BaseEntity entity) {
+		if (entity == null) return null;
+		OrderJobDto dto = new OrderJobDto();
+		BeanUtils.copyProperties(entity, dto);
+		return dto;
+	}
+
+	public static BaseEntity createEntityFromDto(BaseDto dto) {
+		if (dto == null) return null;
+		OrderJob entity = new OrderJob();
+		BeanUtils.copyProperties(dto, entity);
+		return entity;
 	}
 
 }

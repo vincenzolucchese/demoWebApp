@@ -2,19 +2,19 @@ package com.vince.boot.demo.webapp.be.service;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QueryDslPredicateExecutor;
-import org.springframework.data.repository.CrudRepository;
 
-import com.vince.boot.demo.webapp.be.entity.DBlobStore;
-import com.vince.boot.demo.webapp.be.entity.DClientApp;
-import com.vince.boot.demo.webapp.be.entity.DOrderJob;
-import com.vince.boot.demo.webapp.be.entity.DUserApp;
+import com.vince.boot.demo.webapp.be.entity.BlobStore;
+import com.vince.boot.demo.webapp.be.entity.ClientApp;
+import com.vince.boot.demo.webapp.be.entity.OrderJob;
+import com.vince.boot.demo.webapp.be.entity.UserApp;
 
-public interface BlobStoreRepository extends CrudRepository<DBlobStore, Long>, QueryDslPredicateExecutor<DBlobStore> {
+public interface BlobStoreRepository extends JpaRepository<BlobStore, Long>, QueryDslPredicateExecutor<BlobStore> {
 
-	List<DBlobStore> findByFlagActiveAndDRelClientBlobs_DClientApp(char flag, DClientApp client);
+	List<BlobStore> findByFlagActiveAndRelClientBlobs_ClientApp(char flag, ClientApp client);
 	
-	List<DBlobStore> findByFlagActiveAndDRelUserBlobs_DUserApp(char flag, DUserApp user);
+	List<BlobStore> findByFlagActiveAndRelUserBlobs_UserApp(char flag, UserApp user);
 	
-	List<DBlobStore> findByFlagActiveAndDRelOrderBlobs_DOrderJob(char flag, DOrderJob order);
+	List<BlobStore> findByFlagActiveAndRelOrderBlobs_OrderJob(char flag, OrderJob order);
 }

@@ -3,6 +3,11 @@ package com.vince.boot.demo.webapp.beAndFe.dto;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.beans.BeanUtils;
+
+import com.vince.boot.demo.webapp.be.entity.BaseEntity;
+import com.vince.boot.demo.webapp.be.entity.ClientApp;
+
 public class ClientAppDto extends BaseDto {
 
 	private static final long serialVersionUID = 1L;
@@ -91,6 +96,25 @@ public class ClientAppDto extends BaseDto {
 
 	public void setDOrderJobs(Set<OrderJobDto> DOrderJobs) {
 		this.DOrderJobs = DOrderJobs;
+	}
+
+	/*
+	 * CONVERTER ENTITY <--> DTO
+	 */
+	@Override
+	public BaseDto createDtoFromEntity(BaseEntity entity) {
+		if (entity == null) return null;
+		ClientAppDto dto = new ClientAppDto();
+		BeanUtils.copyProperties(entity, dto);
+		return dto;
+	}
+
+	@Override
+	public BaseEntity createEntityFromDto(BaseDto dto) {
+		if (dto == null) return null;
+		ClientApp entity = new ClientApp();
+		BeanUtils.copyProperties(dto, entity);
+		return entity;
 	}
 
 }

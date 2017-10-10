@@ -13,22 +13,22 @@ import com.querydsl.core.types.dsl.PathInits;
 import com.querydsl.core.types.dsl.StringPath;
 
 /**
- * QDRelOrderBlob is a Querydsl query type for DRelOrderBlob
+ * QDRelUserBlob is a Querydsl query type for DRelUserBlob
  */
 @Generated("com.querydsl.codegen.EntitySerializer")
-public class QDRelOrderBlob extends EntityPathBase<DRelOrderBlob> {
+public class QRelUserBlob extends EntityPathBase<RelUserBlob> {
 
-	private static final long serialVersionUID = 1244641695L;
+	private static final long serialVersionUID = 755616244L;
 
 	private static final PathInits INITS = PathInits.DIRECT2;
 
-	public static final QDRelOrderBlob dRelOrderBlob = new QDRelOrderBlob("dRelOrderBlob");
+	public static final QRelUserBlob dRelUserBlob = new QRelUserBlob("dRelUserBlob");
 
 	public final QBaseEntity _super = new QBaseEntity(this);
 
-	public final QDBlobStore DBlobStore;
+	public final QBlobStore DBlobStore;
 
-	public final QDOrderJob DOrderJob;
+	public final QUserApp DUserApp;
 
 	// inherited
 	public final NumberPath<Long> id = _super.id;
@@ -48,29 +48,28 @@ public class QDRelOrderBlob extends EntityPathBase<DRelOrderBlob> {
 	// inherited
 	public final DateTimePath<java.util.Date> yearRefer = _super.yearRefer;
 
-	public QDRelOrderBlob(String variable) {
-		this(DRelOrderBlob.class, forVariable(variable), INITS);
+	public QRelUserBlob(String variable) {
+		this(RelUserBlob.class, forVariable(variable), INITS);
 	}
 
-	public QDRelOrderBlob(Path<? extends DRelOrderBlob> path) {
+	public QRelUserBlob(Path<? extends RelUserBlob> path) {
 		this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
 	}
 
-	public QDRelOrderBlob(PathMetadata metadata) {
+	public QRelUserBlob(PathMetadata metadata) {
 		this(metadata, PathInits.getFor(metadata, INITS));
 	}
 
-	public QDRelOrderBlob(PathMetadata metadata, PathInits inits) {
-		this(DRelOrderBlob.class, metadata, inits);
+	public QRelUserBlob(PathMetadata metadata, PathInits inits) {
+		this(RelUserBlob.class, metadata, inits);
 	}
 
-	public QDRelOrderBlob(Class<? extends DRelOrderBlob> type, PathMetadata metadata, PathInits inits) {
+	public QRelUserBlob(Class<? extends RelUserBlob> type, PathMetadata metadata, PathInits inits) {
 		super(type, metadata, inits);
 		this.DBlobStore = inits.isInitialized("DBlobStore")
-				? new QDBlobStore(forProperty("DBlobStore"), inits.get("DBlobStore"))
+				? new QBlobStore(forProperty("DBlobStore"), inits.get("DBlobStore"))
 				: null;
-		this.DOrderJob = inits.isInitialized("DOrderJob")
-				? new QDOrderJob(forProperty("DOrderJob"), inits.get("DOrderJob"))
+		this.DUserApp = inits.isInitialized("DUserApp") ? new QUserApp(forProperty("DUserApp"), inits.get("DUserApp"))
 				: null;
 	}
 

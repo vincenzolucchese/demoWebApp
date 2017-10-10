@@ -9,34 +9,24 @@ import com.querydsl.core.types.PathMetadata;
 import com.querydsl.core.types.dsl.DateTimePath;
 import com.querydsl.core.types.dsl.EntityPathBase;
 import com.querydsl.core.types.dsl.NumberPath;
-import com.querydsl.core.types.dsl.PathInits;
-import com.querydsl.core.types.dsl.SetPath;
 import com.querydsl.core.types.dsl.StringPath;
 
 /**
- * QDRoleUser is a Querydsl query type for DRoleUser
+ * QDSystemProps is a Querydsl query type for DSystemProps
  */
 @Generated("com.querydsl.codegen.EntitySerializer")
-public class QDRoleUser extends EntityPathBase<DRoleUser> {
+public class QSystemProps extends EntityPathBase<SystemProps> {
 
-	private static final long serialVersionUID = -2132691442L;
+	private static final long serialVersionUID = -1592454988L;
 
-	public static final QDRoleUser dRoleUser = new QDRoleUser("dRoleUser");
+	public static final QSystemProps dSystemProps = new QSystemProps("dSystemProps");
 
 	public final QBaseEntity _super = new QBaseEntity(this);
-
-	public final SetPath<DRoleFunction, QDRoleFunction> DRoleFunctions = this.<DRoleFunction, QDRoleFunction>createSet(
-			"DRoleFunctions", DRoleFunction.class, QDRoleFunction.class, PathInits.DIRECT2);
-
-	public final SetPath<DUserApp, QDUserApp> DUserApps = this.<DUserApp, QDUserApp>createSet("DUserApps",
-			DUserApp.class, QDUserApp.class, PathInits.DIRECT2);
 
 	// inherited
 	public final NumberPath<Long> id = _super.id;
 
-	public final StringPath roleCode = createString("roleCode");
-
-	public final StringPath roleDescription = createString("roleDescription");
+	public final StringPath keyProp = createString("keyProp");
 
 	// inherited
 	public final DateTimePath<java.util.Date> timeInsert = _super.timeInsert;
@@ -50,19 +40,21 @@ public class QDRoleUser extends EntityPathBase<DRoleUser> {
 	// inherited
 	public final StringPath userUpdate = _super.userUpdate;
 
+	public final StringPath valueProp = createString("valueProp");
+
 	// inherited
 	public final DateTimePath<java.util.Date> yearRefer = _super.yearRefer;
 
-	public QDRoleUser(String variable) {
-		super(DRoleUser.class, forVariable(variable));
+	public QSystemProps(String variable) {
+		super(SystemProps.class, forVariable(variable));
 	}
 
-	public QDRoleUser(Path<? extends DRoleUser> path) {
+	public QSystemProps(Path<? extends SystemProps> path) {
 		super(path.getType(), path.getMetadata());
 	}
 
-	public QDRoleUser(PathMetadata metadata) {
-		super(DRoleUser.class, metadata);
+	public QSystemProps(PathMetadata metadata) {
+		super(SystemProps.class, metadata);
 	}
 
 }

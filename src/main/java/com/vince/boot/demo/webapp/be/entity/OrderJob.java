@@ -22,10 +22,10 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "d_order_job")
-public class DOrderJob extends BaseEntity {
+public class OrderJob extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
-	private DClientApp DClientApp;
+	private ClientApp clientApp;
 
 	private String notes;
 	private String codeOrder;
@@ -35,19 +35,19 @@ public class DOrderJob extends BaseEntity {
 	private BigDecimal finalAmount;
 	private Character flagActive;
 	private String address;
-	private Set<DRelOrderBlob> DRelOrderBlobs = new HashSet<DRelOrderBlob>(0);
+	private Set<RelOrderBlob> relOrderBlobs = new HashSet<RelOrderBlob>(0);
 
-	public DOrderJob() {
+	public OrderJob() {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "fk_id_client", nullable = false)
-	public DClientApp getDClientApp() {
-		return this.DClientApp;
+	public ClientApp getClientApp() {
+		return this.clientApp;
 	}
 
-	public void setDClientApp(DClientApp DClientApp) {
-		this.DClientApp = DClientApp;
+	public void setClientApp(ClientApp clientApp) {
+		this.clientApp = clientApp;
 	}
 
 	@Column(name = "notes", nullable = false, length = 2000)
@@ -114,13 +114,13 @@ public class DOrderJob extends BaseEntity {
 		this.address = address;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "DOrderJob")
-	public Set<DRelOrderBlob> getDRelOrderBlobs() {
-		return this.DRelOrderBlobs;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "orderJob")
+	public Set<RelOrderBlob> getRelOrderBlobs() {
+		return this.relOrderBlobs;
 	}
 
-	public void setDRelOrderBlobs(Set<DRelOrderBlob> DRelOrderBlobs) {
-		this.DRelOrderBlobs = DRelOrderBlobs;
+	public void setRelOrderBlobs(Set<RelOrderBlob> relOrderBlobs) {
+		this.relOrderBlobs = relOrderBlobs;
 	}
 
 }

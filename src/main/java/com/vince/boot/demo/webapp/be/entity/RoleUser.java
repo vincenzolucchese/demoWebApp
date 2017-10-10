@@ -17,17 +17,17 @@ import javax.persistence.UniqueConstraint;
  */
 @Entity
 @Table(name = "d_role_user", uniqueConstraints = @UniqueConstraint(columnNames = "role_code"))
-public class DRoleUser extends BaseEntity {
+public class RoleUser extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 
 	private String roleCode;
 	private String roleDescription;
 
-	private Set<DUserApp> DUserApps = new HashSet<DUserApp>(0);
-	private Set<DRoleFunction> DRoleFunctions = new HashSet<DRoleFunction>(0);
+	private Set<UserApp> userApps = new HashSet<UserApp>(0);
+	private Set<RoleFunction> roleFunctions = new HashSet<RoleFunction>(0);
 
-	public DRoleUser() {
+	public RoleUser() {
 	}
 
 	@Column(name = "role_code", unique = true, nullable = false, length = 20)
@@ -48,22 +48,22 @@ public class DRoleUser extends BaseEntity {
 		this.roleDescription = roleDescription;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "DRoleUser")
-	public Set<DUserApp> getDUserApps() {
-		return this.DUserApps;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "roleUser")
+	public Set<UserApp> getUserApps() {
+		return this.userApps;
 	}
 
-	public void setDUserApps(Set<DUserApp> DUserApps) {
-		this.DUserApps = DUserApps;
+	public void setUserApps(Set<UserApp> userApps) {
+		this.userApps = userApps;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "DRoleUser")
-	public Set<DRoleFunction> getDRoleFunctions() {
-		return this.DRoleFunctions;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "roleUser")
+	public Set<RoleFunction> getRoleFunctions() {
+		return this.roleFunctions;
 	}
 
-	public void setDRoleFunctions(Set<DRoleFunction> DRoleFunctions) {
-		this.DRoleFunctions = DRoleFunctions;
+	public void setRoleFunctions(Set<RoleFunction> roleFunctions) {
+		this.roleFunctions = roleFunctions;
 	}
 
 }

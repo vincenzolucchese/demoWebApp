@@ -9,11 +9,11 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "d_geo_local")
-public class DGeoLocal extends BaseEntity {
+public class GeoLocal extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 
-	public DGeoLocal() {
+	public GeoLocal() {
 	}
 
 

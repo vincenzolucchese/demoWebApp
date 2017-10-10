@@ -19,10 +19,10 @@ import javax.persistence.UniqueConstraint;
  */
 @Entity
 @Table(name = "d_user_app", uniqueConstraints = @UniqueConstraint(columnNames = "username"))
-public class DUserApp extends BaseEntity {
+public class UserApp extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
-	private DRoleUser DRoleUser;
+	private RoleUser roleUser;
 	private String username;
 
 	private String password;
@@ -32,19 +32,19 @@ public class DUserApp extends BaseEntity {
 	private Long fkIdBlobStore;
 
 	private String address;
-	private Set<DRelUserBlob> DRelUserBlobs = new HashSet<DRelUserBlob>(0);
+	private Set<RelUserBlob> relUserBlobs = new HashSet<RelUserBlob>(0);
 
-	public DUserApp() {
+	public UserApp() {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "fk_id_role_user", nullable = false)
-	public DRoleUser getDRoleUser() {
-		return this.DRoleUser;
+	public RoleUser getRoleUser() {
+		return this.roleUser;
 	}
 
-	public void setDRoleUser(DRoleUser DRoleUser) {
-		this.DRoleUser = DRoleUser;
+	public void setRoleUser(RoleUser roleUser) {
+		this.roleUser = roleUser;
 	}
 
 	@Column(name = "username", unique = true, nullable = false, length = 100)
@@ -110,13 +110,13 @@ public class DUserApp extends BaseEntity {
 		this.address = address;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "DUserApp")
-	public Set<DRelUserBlob> getDRelUserBlobs() {
-		return this.DRelUserBlobs;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "userApp")
+	public Set<RelUserBlob> getRelUserBlobs() {
+		return this.relUserBlobs;
 	}
 
-	public void setDRelUserBlobs(Set<DRelUserBlob> DRelUserBlobs) {
-		this.DRelUserBlobs = DRelUserBlobs;
+	public void setRelUserBlobs(Set<RelUserBlob> relUserBlobs) {
+		this.relUserBlobs = relUserBlobs;
 	}
 
 }

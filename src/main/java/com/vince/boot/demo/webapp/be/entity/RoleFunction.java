@@ -12,22 +12,22 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "d_role_function")
-public class DRoleFunction extends BaseEntity {
+public class RoleFunction extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
-	private DRoleUser DRoleUser;
+	private RoleUser roleUser;
 
-	public DRoleFunction() {
+	public RoleFunction() {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id", unique = true, nullable = false, insertable = false, updatable = false)
-	public DRoleUser getDRoleUser() {
-		return this.DRoleUser;
+	public RoleUser getRoleUser() {
+		return this.roleUser;
 	}
 
-	public void setDRoleUser(DRoleUser DRoleUser) {
-		this.DRoleUser = DRoleUser;
+	public void setRoleUser(RoleUser roleUser) {
+		this.roleUser = roleUser;
 	}
 
 }

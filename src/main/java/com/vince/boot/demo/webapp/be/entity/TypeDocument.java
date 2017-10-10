@@ -17,19 +17,19 @@ import javax.persistence.UniqueConstraint;
  */
 @Entity
 @Table(name = "d_type_document", uniqueConstraints = @UniqueConstraint(columnNames = "type_code"))
-public class DTypeDocument extends BaseEntity {
+public class TypeDocument extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 
 	private String typeCode;
 	private String typeDescription;
 
-	private Set<DBlobStore> DBlobStores = new HashSet<DBlobStore>(0);
+	private Set<BlobStore> blobStores = new HashSet<BlobStore>(0);
 
-	public DTypeDocument() {
+	public TypeDocument() {
 	}
 
-	public DTypeDocument(long l) {
+	public TypeDocument(long l) {
 		super.id = id;
 	}
 
@@ -51,13 +51,13 @@ public class DTypeDocument extends BaseEntity {
 		this.typeDescription = typeDescription;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "DTypeDocument")
-	public Set<DBlobStore> getDBlobStores() {
-		return this.DBlobStores;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "typeDocument")
+	public Set<BlobStore> getBlobStores() {
+		return this.blobStores;
 	}
 
-	public void setDBlobStores(Set<DBlobStore> DBlobStores) {
-		this.DBlobStores = DBlobStores;
+	public void setBlobStores(Set<BlobStore> blobStores) {
+		this.blobStores = blobStores;
 	}
 
 }
