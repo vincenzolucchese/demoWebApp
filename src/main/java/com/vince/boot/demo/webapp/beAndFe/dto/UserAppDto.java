@@ -3,7 +3,12 @@ package com.vince.boot.demo.webapp.beAndFe.dto;
 import java.util.HashSet;
 import java.util.Set;
 
-public class UserAppDto {
+import org.springframework.beans.BeanUtils;
+
+import com.vince.boot.demo.webapp.be.entity.BaseEntity;
+import com.vince.boot.demo.webapp.be.entity.UserApp;
+
+public class UserAppDto extends BaseDto  {
 
 	private static final long serialVersionUID = 1L;
 	private RoleUserDto roleUser;
@@ -19,6 +24,10 @@ public class UserAppDto {
 	private Set<RelUserBlobDto> relUserBlobs = new HashSet<RelUserBlobDto>(0);
 
 	public UserAppDto() {
+	}
+	
+	public UserAppDto(Long id) {
+		super.id = id;
 	}
 
 	public RoleUserDto getRoleUser() {
@@ -91,6 +100,23 @@ public class UserAppDto {
 
 	public void setRelUserBlobs(Set<RelUserBlobDto> DRelUserBlobs) {
 		this.relUserBlobs = DRelUserBlobs;
+	}
+	
+	/*******************************************
+	 * CONVERTER ENTITY <--> DTO
+	 *******************************************/
+	public UserAppDto createDtoFromEntity(BaseEntity entity) {
+		if (entity == null) return null;
+		UserAppDto dto = new UserAppDto();
+		BeanUtils.copyProperties(entity, dto);
+		return dto;
+	}
+
+	public UserApp createEntityFromDto(BaseDto dto) {
+		if (dto == null) return null;
+		UserApp entity = new UserApp();
+		BeanUtils.copyProperties(dto, entity);
+		return entity;
 	}
 
 

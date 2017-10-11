@@ -1,6 +1,11 @@
 package com.vince.boot.demo.webapp.beAndFe.dto;
 
-public class RelClientBlobDto {
+import org.springframework.beans.BeanUtils;
+
+import com.vince.boot.demo.webapp.be.entity.BaseEntity;
+import com.vince.boot.demo.webapp.be.entity.RelClientBlob;
+
+public class RelClientBlobDto extends BaseDto  {
 
 	private static final long serialVersionUID = 1L;
 	private ClientAppDto clientApp;
@@ -26,5 +31,21 @@ public class RelClientBlobDto {
 	}
 
 
+	/*******************************************
+	 * CONVERTER ENTITY <--> DTO
+	 *******************************************/
+	public RelClientBlobDto createDtoFromEntity(BaseEntity entity) {
+		if (entity == null) return null;
+		RelClientBlobDto dto = new RelClientBlobDto();
+		BeanUtils.copyProperties(entity, dto);
+		return dto;
+	}
+
+	public RelClientBlob createEntityFromDto(BaseDto dto) {
+		if (dto == null) return null;
+		RelClientBlob entity = new RelClientBlob();
+		BeanUtils.copyProperties(dto, entity);
+		return entity;
+	}
 
 }

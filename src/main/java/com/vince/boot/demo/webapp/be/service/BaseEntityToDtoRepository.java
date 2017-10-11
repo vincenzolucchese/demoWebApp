@@ -1,5 +1,6 @@
 package com.vince.boot.demo.webapp.be.service;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -18,8 +19,13 @@ public interface BaseEntityToDtoRepository {
 	List<BaseDto> saveDto(Iterable<BaseDto> entitiesDto, String user);
 	List<BaseDto> saveDto(Iterable<BaseDto> entitiesDto, String user, Date date);
 	
-	BaseDto findOneDto(Long id);
+	BaseDto findOneDto(BaseDto filter);
 	List<BaseDto> findAllDto(BaseDto filter);
 	
-	PagedListHolder<BaseDto> findUsersPagedByCriteria(BaseDto searchBean, int i, Integer displayTagObjectsPerPage, String sort, boolean b) ;
+	PagedListHolder<BaseDto> findDtoPagedByCriteria(BaseDto searchBean, int i, Integer displayTagObjectsPerPage, String sort, boolean b) ;
+	
+	public void saveDocument(BaseDto baseFE, String username) throws IOException;
+	
+	
+	Long deleteDto(BaseDto entityDto);
 }

@@ -8,6 +8,7 @@ import java.util.Set;
 import org.springframework.beans.BeanUtils;
 
 import com.vince.boot.demo.webapp.be.entity.BaseEntity;
+import com.vince.boot.demo.webapp.be.entity.ClientApp;
 import com.vince.boot.demo.webapp.be.entity.OrderJob;
 
 public class OrderJobDto extends BaseDto {
@@ -27,13 +28,17 @@ public class OrderJobDto extends BaseDto {
 
 	public OrderJobDto() {
 	}
+	
+	public OrderJobDto(Long id) {
+		super.id = id;
+	}
 
 	public ClientAppDto getClientApp() {
 		return this.clientApp;
 	}
 
-	public void setClientApp(ClientAppDto DClientApp) {
-		this.clientApp = DClientApp;
+	public void setClientApp(ClientAppDto clientApp) {
+		this.clientApp = clientApp;
 	}
 
 	public String getNotes() {
@@ -105,15 +110,21 @@ public class OrderJobDto extends BaseDto {
 	 *******************************************/
 	public BaseDto createDtoFromEntity(BaseEntity entity) {
 		if (entity == null) return null;
+		OrderJob entityCast = (OrderJob) entity;
+		
 		OrderJobDto dto = new OrderJobDto();
-		BeanUtils.copyProperties(entity, dto);
+		BeanUtils.copyProperties(entityCast, dto);
+		dto.setClientApp((ClientAppDto) new ClientAppDto().createDtoFromEntity(entityCast.getClientApp()));
 		return dto;
 	}
 
 	public BaseEntity createEntityFromDto(BaseDto dto) {
 		if (dto == null) return null;
+		OrderJobDto dtoCast = (OrderJobDto) dto;
+		
 		OrderJob entity = new OrderJob();
-		BeanUtils.copyProperties(dto, entity);
+		BeanUtils.copyProperties(dtoCast, entity);
+		entity.setClientApp((ClientApp) new ClientAppDto().createEntityFromDto(dtoCast.getClientApp()));
 		return entity;
 	}
 

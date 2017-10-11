@@ -15,6 +15,7 @@
  */
 package com.vince.boot.demo.webapp.be.service.impl;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,19 +26,28 @@ import javax.sql.DataSource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.vince.boot.demo.webapp.be.entity.BaseEntity;
+import com.vince.boot.demo.webapp.be.entity.BlobStore;
+import com.vince.boot.demo.webapp.be.entity.TypeDocument;
 import com.vince.boot.demo.webapp.be.service.BaseEntityRepository;
 import com.vince.boot.demo.webapp.be.service.BaseEntityToDtoRepository;
 import com.vince.boot.demo.webapp.be.service.BlobStoreRepository;
 import com.vince.boot.demo.webapp.be.service.ClientAppRepository;
 import com.vince.boot.demo.webapp.be.service.TypeDocumentRepository;
+import com.vince.boot.demo.webapp.be.utility.PageableUtils;
 import com.vince.boot.demo.webapp.beAndFe.dto.BaseDto;
+import com.vince.boot.demo.webapp.beAndFe.dto.BlobStoreDto;
 
 /**
  * Bean Service for common custom implementation about all web app
@@ -90,6 +100,8 @@ public class CommonAppRepositoryImpl extends JdbcDaoSupport implements BaseEntit
 	
 	/**
 	 * Save a entity with the strategy about user inserter and updater. get sysdate from db in input.
+	 * Each Entity extends BaseEntity and Casting on entity in input
+	 * Allow to use only BaseEntityRepository on BaseEntity
 	 * @param entity
 	 * @param user
 	 * @return
@@ -108,6 +120,8 @@ public class CommonAppRepositoryImpl extends JdbcDaoSupport implements BaseEntit
 	
 	/**
 	 * Save a entity with the strategy about user inserter and updater. get sysdate from db.
+	 * Each Entity extends BaseEntity and Casting on entity in input
+	 * Allow to use only BaseEntityRepository on BaseEntity
 	 * @param entity
 	 * @param user
 	 * @return
@@ -127,6 +141,8 @@ public class CommonAppRepositoryImpl extends JdbcDaoSupport implements BaseEntit
 	
 	/**
 	 * Save a entity with the strategy about user inserter and updater. get sysdate from db.
+	 * Each Entity extends BaseEntity and Casting on entity in input
+	 * Allow to use only BaseEntityRepository on BaseEntity
 	 * @param entity
 	 * @param user
 	 * @return
@@ -146,6 +162,8 @@ public class CommonAppRepositoryImpl extends JdbcDaoSupport implements BaseEntit
 	
 	/**
 	 * Save a collection of entity.
+	 * Each Entity extends BaseEntity and Casting on entity in input
+	 * Allow to use only BaseEntityRepository on BaseEntity
 	 * @param entity
 	 * @param user
 	 * @return
@@ -163,9 +181,14 @@ public class CommonAppRepositoryImpl extends JdbcDaoSupport implements BaseEntit
 		return result;
 	}
 
-	/******************************************************************
-	 *************** IMPLEMETATION OF BaseEntityToDtoRepository *******
-	 ******************************************************************/
+	/**********************************************************************************************************
+	 * IMPLEMETATION OF BaseEntityToDtoRepository 
+	 * These method can be used from FE-SIDE that know only about Dtos Bean, mirror of Entities.
+	 * All methods use as primitive repository the BaseEntityRepository with the AutoCasting allow
+	 * to implement the simple CRUD about all Entities.
+	 * Is the abstract method createEntityFromDto of BaseDto that allow the above Autocasting.
+	 * ...working about pageable if is possibile, if not is necessary utilize other JPA pattern. 	
+	 **********************************************************************************************************/
 	@Override
 	public BaseDto saveDto(BaseDto dto) {
 		BaseEntity entity = dto.createEntityFromDto(dto);
@@ -199,6 +222,7 @@ public class CommonAppRepositoryImpl extends JdbcDaoSupport implements BaseEntit
 	}
 
 	@Override
+	@Transactional
 	public List<BaseDto> saveDto(Iterable<BaseDto> entitiesDto, String user) {
 		if(entitiesDto == null) return null;
 		List<BaseDto> lista = new ArrayList<BaseDto>();
@@ -209,6 +233,7 @@ public class CommonAppRepositoryImpl extends JdbcDaoSupport implements BaseEntit
 	}
 
 	@Override
+	@Transactional
 	public List<BaseDto> saveDto(Iterable<BaseDto> entitiesDto, String user, Date date) {
 		if(entitiesDto == null) return null;
 		List<BaseDto> lista = new ArrayList<BaseDto>();
@@ -219,21 +244,80 @@ public class CommonAppRepositoryImpl extends JdbcDaoSupport implements BaseEntit
 	}
 
 	@Override
-	public BaseDto findOneDto(Long id) {		
-//		return BaseDto.createDtoFromEntityAbstract(baseEntityRepository.findOne(id));
-		return null;
+	@Transactional
+	public BaseDto findOneDto(BaseDto filter) {	
+		BaseEntity entity = filter.createEntityFromDto(filter);
+		Example<BaseEntity> example = Example.of(entity);
+		return filter.createDtoFromEntity(baseEntityRepository.findOne(example));
 	}
 
 	@Override
+	@Transactional
 	public List<BaseDto> findAllDto(BaseDto filter) {
-		// TODO Auto-generated method stub
-		return null;
+		List<BaseDto> listaDto = null;
+		BaseEntity entity = filter.createEntityFromDto(filter);
+		Example<BaseEntity> example = Example.of(entity);
+		List<BaseEntity> listaEntity = baseEntityRepository.findAll(example);
+		if(listaEntity !=null) {
+			listaDto = new ArrayList<BaseDto>();
+			for (BaseEntity eachEntity : listaEntity) {
+				listaDto.add(filter.createDtoFromEntity(eachEntity));
+			}
+		}else {
+			listaDto = null;			
+		}
+		return listaDto;
 	}
 
 	@Override
-	public PagedListHolder<BaseDto> findUsersPagedByCriteria(BaseDto searchBean, int i,
-			Integer displayTagObjectsPerPage, String sort, boolean b) {
-		// TODO Auto-generated method stub
-		return null;
+	@Transactional
+	public PagedListHolder<BaseDto> findDtoPagedByCriteria(BaseDto searchBean, int i, Integer displayTagObjectsPerPage, String sort, boolean b) {
+		Pageable pageable = PageableUtils.constructPageSpecification(i, displayTagObjectsPerPage.intValue(), sort, Boolean.valueOf(b));
+		Page<BaseEntity> entityPage = null;
+
+		BaseEntity entity = searchBean.createEntityFromDto(searchBean);
+		Example<BaseEntity> example = Example.of(entity);
+		entityPage = baseEntityRepository.findAll(example, pageable);
+		
+		if(entityPage == null) {
+			return null;
+		}
+		ArrayList<BaseDto> listaDto = new ArrayList<BaseDto>();
+		for (BaseEntity eachEntity : entityPage) {
+			listaDto.add(searchBean.createDtoFromEntity(eachEntity));
+		}
+		PagedListHolder<BaseDto> beanPage = new PagedListHolder<>(listaDto);
+		return beanPage;
+	}
+	
+	@Override
+	public void saveDocument(BaseDto baseFE, String username) throws IOException {
+
+		BlobStore entity = new BlobStore();
+		int posix = baseFE.getFileDocuments().size()-1;
+		BlobStoreDto blobStoreFE = baseFE.getFileDocuments().get(posix);
+
+		MultipartFile multipartFile = blobStoreFE.getFile();
+
+		entity.setFilename(multipartFile.getOriginalFilename());
+		entity.setDescription(blobStoreFE.getDescription());
+		entity.setContentType(multipartFile.getContentType());
+		
+		TypeDocument typeDocument = new TypeDocument(new Long(1));
+		entity.setTypeDocument(typeDocument);
+		entity.setBlobData(multipartFile.getBytes());
+
+		entity = (BlobStore) saveCustom(entity, username);
+		
+		BeanUtils.copyProperties(entity, blobStoreFE);
+		
+		baseFE.getFileDocuments().set(posix, blobStoreFE);
+	}
+
+	@Override
+	public Long deleteDto(BaseDto entityDto) {
+		BaseEntity entity = entityDto.createEntityFromDto(entityDto);
+		baseEntityRepository.delete(entity);
+		return 1l;
 	}
 }

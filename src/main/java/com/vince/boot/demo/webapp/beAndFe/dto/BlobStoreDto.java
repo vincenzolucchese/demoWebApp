@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.vince.boot.demo.webapp.be.entity.BaseEntity;
 import com.vince.boot.demo.webapp.be.entity.BlobStore;
@@ -26,7 +27,14 @@ public class BlobStoreDto extends BaseDto {
 	private Set<RelUserBlobDto> relUserBlobs = new HashSet<RelUserBlobDto>(0);
 	private Set<RelClientBlobDto> relClientBlobs = new HashSet<RelClientBlobDto>(0);
 
+	private MultipartFile file;
+	
+	
 	public BlobStoreDto() {
+	}
+
+	public BlobStoreDto(Long id) {
+		super.id = id;
 	}
 
 	public TypeDocumentDto getTypeDocument() {
@@ -100,6 +108,14 @@ public class BlobStoreDto extends BaseDto {
 	public void setRelClientBlobs(Set<RelClientBlobDto> relClientBlobs) {
 		this.relClientBlobs = relClientBlobs;
 	}
+	
+	public MultipartFile getFile() {
+		return file;
+	}
+
+	public void setFile(MultipartFile file) {
+		this.file = file;
+	}
 
 	/*******************************************
 	 * CONVERTER ENTITY <--> DTO
@@ -125,5 +141,7 @@ public class BlobStoreDto extends BaseDto {
 		entity.setTypeDocument((TypeDocument) new TypeDocumentDto().createEntityFromDto(dtoCast.getTypeDocument()));
 		return entity;
 	}
+
+
 
 }

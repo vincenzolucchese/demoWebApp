@@ -13,6 +13,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -24,6 +25,7 @@ import com.vince.boot.demo.webapp.be.entity.ClientApp;
 import com.vince.boot.demo.webapp.be.entity.QClientApp;
 import com.vince.boot.demo.webapp.be.entity.RelClientBlob;
 import com.vince.boot.demo.webapp.be.entity.TypeDocument;
+import com.vince.boot.demo.webapp.beAndFe.dto.BaseDto;
 import com.vince.boot.demo.webapp.beAndFe.dto.ClientAppDto;
 
 @RunWith(SpringRunner.class)
@@ -57,8 +59,7 @@ public class BusinessTestsClientApp extends BusinessTests {
 	@Rollback(false)
 	public void saveFullClientApp() throws IOException {
 		logger.debug("...STARTING...");
-		String PATH = "src/test/resources/files/";
-		
+				
 		String user = "inserter";
 		Date dateDB = commonAppRepositoryImpl.getSysdateFromDBJdbc();
 		
@@ -71,8 +72,8 @@ public class BusinessTestsClientApp extends BusinessTests {
 		entity.setZipcode("12345");
 		entity.setNotes("setNotes");
 		
-		InputStream fis1 = new FileInputStream(PATH + "immagine1.jpg");
-		InputStream fis2 = new FileInputStream(PATH + "immagine2.jpg");
+		InputStream fis1 = new FileInputStream(PATH_FILES + "immagine1.jpg");
+		InputStream fis2 = new FileInputStream(PATH_FILES + "immagine2.jpg");
 		
 		BlobStore blb1 = new BlobStore();
 		blb1.setBlobData(FileCopyUtils.copyToByteArray(fis1));		
@@ -144,6 +145,20 @@ public class BusinessTestsClientApp extends BusinessTests {
 		dto = (ClientAppDto) commonAppRepositoryImpl.saveDto(dto);
 		
 		logger.debug("-- END --");
+	}
+	
+	@Test	
+	public void findPagebleClientAppDto() {
+		logger.debug("-- Start --");
+		
+		ClientAppDto dto = new ClientAppDto();
+		dto.setName("setName");
+		dto.setPiva("setPiva");
+
+		PagedListHolder<BaseDto> listBeanTable = 
+				commonAppRepositoryImpl.findDtoPagedByCriteria(new ClientAppDto(), 0, 10, "timeInsert", false);
+		
+		logger.debug("-- END --"+listBeanTable.getNrOfElements());
 	}
 	
 

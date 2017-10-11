@@ -27,6 +27,10 @@ public class ClientAppDto extends BaseDto {
 	public ClientAppDto() {
 	}
 
+	public ClientAppDto(Long id) {
+		super.id = id;
+	}
+
 	public String getName() {
 		return this.name;
 	}
@@ -110,12 +114,14 @@ public class ClientAppDto extends BaseDto {
 		ClientAppDto dto = new ClientAppDto();
 		BeanUtils.copyProperties(entityCast, dto);
 		
-		if(entityCast.getOrderJobs()!=null){
-			HashSet<OrderJobDto> hash = new HashSet<OrderJobDto>();
-			for (OrderJob each : entityCast.getOrderJobs()) {
-				hash.add((OrderJobDto) new OrderJobDto().createDtoFromEntity(each));
+		if(isConvertInside) {
+			if(entityCast.getOrderJobs()!=null){
+				HashSet<OrderJobDto> hash = new HashSet<OrderJobDto>();
+				for (OrderJob each : entityCast.getOrderJobs()) {
+					hash.add((OrderJobDto) new OrderJobDto().createDtoFromEntity(each));
+				}
+				dto.setOrderJobs(hash);
 			}
-			dto.setOrderJobs(hash);
 		}
 		
 		return dto;
@@ -129,12 +135,14 @@ public class ClientAppDto extends BaseDto {
 		ClientApp entity = new ClientApp();
 		BeanUtils.copyProperties(dto, entity);
 		
-		if(dtoCast.getOrderJobs()!=null){
-			HashSet<OrderJob> hash = new HashSet<OrderJob>();
-			for (OrderJobDto each : dtoCast.getOrderJobs()) {
-				hash.add((OrderJob) new OrderJobDto().createEntityFromDto(each));
-			}
-			entity.setOrderJobs(hash);
+		if(isConvertInside) {
+			if(dtoCast.getOrderJobs()!=null){
+				HashSet<OrderJob> hash = new HashSet<OrderJob>();
+				for (OrderJobDto each : dtoCast.getOrderJobs()) {
+					hash.add((OrderJob) new OrderJobDto().createEntityFromDto(each));
+				}
+				entity.setOrderJobs(hash);
+			}			
 		}
 		
 		return entity;

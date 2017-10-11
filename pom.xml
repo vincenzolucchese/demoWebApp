@@ -23,6 +23,8 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 		<vaadin.version>8.1.0</vaadin.version>
+		<maps.version>0.2.3</maps.version>
+		<slf4j.version>1.7.25</slf4j.version>
 	</properties>
 
 	<dependencies>
@@ -95,9 +97,7 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
-		</dependency>
-		
-		
+		</dependency>		
 		
 		<!-- MANUALLY '...A MANO...' -->
 		<dependency>
@@ -116,6 +116,16 @@
 		    <groupId>org.springframework.security</groupId>
 		    <artifactId>spring-security-taglibs</artifactId>
 		</dependency>
+		<dependency>
+		    <groupId>com.google.maps</groupId>
+		    <artifactId>google-maps-services</artifactId>
+		   	<version>${maps.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.slf4j</groupId>
+		    <artifactId>slf4j-nop</artifactId>
+		    <version>${slf4j.version}</version>
+		</dependency>		
 		<!-- END: MANUALLY '...A MANO...' -->
 		
 	</dependencies>

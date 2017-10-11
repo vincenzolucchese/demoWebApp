@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.vince.boot.demo.webapp.be.service.BaseEntityRepository;
+import com.vince.boot.demo.webapp.be.service.BaseEntityToDtoRepository;
 import com.vince.boot.demo.webapp.be.service.BlobStoreRepository;
 import com.vince.boot.demo.webapp.be.service.ClientAppRepository;
 import com.vince.boot.demo.webapp.be.service.TypeDocumentRepository;
@@ -22,6 +23,8 @@ public class BusinessTests {
 
 	private static final Logger logger = LoggerFactory.getLogger(BusinessTests.class);
 	
+	public static final String PATH_FILES = "src/test/resources/files/";
+	
 	@Autowired
 	BaseEntityRepository baseEntityRepository;	
 	@Autowired
@@ -32,6 +35,8 @@ public class BusinessTests {
 	TypeDocumentRepository typeDocumentRepository;
 	@Autowired
 	ClientAppRepository clientAppRepository;
+	@Autowired
+	BaseEntityToDtoRepository baseEntityToDtoRepository;
 	
 	@Test
 	public void contextLoads() {

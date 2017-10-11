@@ -3,7 +3,12 @@ package com.vince.boot.demo.webapp.beAndFe.dto;
 import java.util.HashSet;
 import java.util.Set;
 
-public class RoleUserDto  {
+import org.springframework.beans.BeanUtils;
+
+import com.vince.boot.demo.webapp.be.entity.BaseEntity;
+import com.vince.boot.demo.webapp.be.entity.GeoLocal;
+
+public class RoleUserDto extends BaseDto {
 
 	private static final long serialVersionUID = 1L;
 
@@ -36,16 +41,33 @@ public class RoleUserDto  {
 		return this.userApps;
 	}
 
-	public void setUserApps(Set<UserAppDto> DUserApps) {
-		this.userApps = DUserApps;
+	public void setUserApps(Set<UserAppDto> userApps) {
+		this.userApps = userApps;
 	}
 
 	public Set<RoleFunctionDto> getRoleFunctions() {
 		return this.roleFunctions;
 	}
 
-	public void setRoleFunctions(Set<RoleFunctionDto> DRoleFunctions) {
-		this.roleFunctions = DRoleFunctions;
+	public void setRoleFunctions(Set<RoleFunctionDto> roleFunctions) {
+		this.roleFunctions = roleFunctions;
+	}
+	
+	/*******************************************
+	 * CONVERTER ENTITY <--> DTO
+	 *******************************************/
+	public RoleUserDto createDtoFromEntity(BaseEntity entity) {
+		if (entity == null) return null;
+		RoleUserDto dto = new RoleUserDto();
+		BeanUtils.copyProperties(entity, dto);
+		return dto;
+	}
+
+	public BaseEntity createEntityFromDto(BaseDto dto) {
+		if (dto == null) return null;
+		GeoLocal entity = new GeoLocal();
+		BeanUtils.copyProperties(dto, entity);
+		return entity;
 	}
 
 
