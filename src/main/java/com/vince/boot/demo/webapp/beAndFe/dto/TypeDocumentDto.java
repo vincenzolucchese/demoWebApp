@@ -47,38 +47,21 @@ public class TypeDocumentDto extends BaseDto {
 	/*******************************************
 	 * CONVERTER ENTITY <--> DTO
 	 *******************************************/
-	public BaseDto createDtoFromEntity(BaseEntity entity) {
+	public static TypeDocumentDto createDtoFromEntity(TypeDocument entity) {
 		if (entity == null) return null;
 		TypeDocumentDto dto = new TypeDocumentDto();
 		BeanUtils.copyProperties(entity, dto);
 		return dto;
 	}
 
-	public BaseEntity createEntityFromDto(BaseDto dto) {
+	public static TypeDocument createEntityFromDto(TypeDocumentDto dto) {
 		if (dto == null) return null;
 		TypeDocument entity = new TypeDocument();
 		BeanUtils.copyProperties(dto, entity);
 		return entity;
 	}
 	
-	/*******************************************
-	 * STATIC ENTITY <--> DTO
-	 *******************************************/
-	public static BaseDto createDtoFromEntityStatic(BaseEntity entity) {
-		if (entity == null) return null;
-		TypeDocumentDto dto = new TypeDocumentDto();
-		BeanUtils.copyProperties(entity, dto);
-		return dto;
-	}
 
-	public static BaseEntity createEntityFromDtoStatic(BaseDto dto) {
-		if (dto == null) return null;
-		TypeDocument entity = new TypeDocument();
-		BeanUtils.copyProperties(dto, entity);
-		return entity;
-	}
-	
-	
 	
 
 }

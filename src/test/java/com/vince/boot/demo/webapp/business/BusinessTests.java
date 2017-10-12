@@ -11,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.vince.boot.demo.webapp.be.service.BaseEntityRepository;
-import com.vince.boot.demo.webapp.be.service.BaseEntityToDtoRepository;
+import com.vince.boot.demo.webapp.be.service.CommonDtoRepository;
 import com.vince.boot.demo.webapp.be.service.BlobStoreRepository;
 import com.vince.boot.demo.webapp.be.service.ClientAppRepository;
 import com.vince.boot.demo.webapp.be.service.TypeDocumentRepository;
@@ -36,7 +36,7 @@ public class BusinessTests {
 	@Autowired
 	ClientAppRepository clientAppRepository;
 	@Autowired
-	BaseEntityToDtoRepository baseEntityToDtoRepository;
+	CommonDtoRepository baseEntityToDtoRepository;
 	
 	@Test
 	public void contextLoads() {

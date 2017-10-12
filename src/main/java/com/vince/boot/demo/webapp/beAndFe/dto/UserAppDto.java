@@ -105,23 +105,21 @@ public class UserAppDto extends BaseDto  {
 	/*******************************************
 	 * CONVERTER ENTITY <--> DTO
 	 *******************************************/
-	public UserAppDto createDtoFromEntity(BaseEntity entity) {
+	public static UserAppDto createDtoFromEntity(UserApp entity) {
 		if (entity == null) return null;
-		UserApp entityCast = (UserApp) entity;
 		
 		UserAppDto dto = new UserAppDto();
-		BeanUtils.copyProperties(entityCast, dto);
-		dto.setRoleUser(new RoleUserDto().createDtoFromEntity(entityCast.getRoleUser()));
+		BeanUtils.copyProperties(entity, dto);
+		dto.setRoleUser(RoleUserDto.createDtoFromEntity(entity.getRoleUser()));
 		return dto;
 	}
 
-	public UserApp createEntityFromDto(BaseDto dto) {
+	public static UserApp createEntityFromDto(UserAppDto dto) {
 		if (dto == null) return null;
-		UserAppDto dtoCast = (UserAppDto) dto;
 		
 		UserApp entity = new UserApp();
-		BeanUtils.copyProperties(dtoCast, entity);
-		entity.setRoleUser(new RoleUserDto().createEntityFromDto(dtoCast.getRoleUser()));
+		BeanUtils.copyProperties(dto, entity);
+		entity.setRoleUser(RoleUserDto.createEntityFromDto(dto.getRoleUser()));
 		return entity;
 	}
 

@@ -15,14 +15,14 @@ public class GeoLocalDto  extends BaseDto {
 	/*******************************************
 	 * CONVERTER ENTITY <--> DTO
 	 *******************************************/
-	public GeoLocalDto createDtoFromEntity(BaseEntity entity) {
+	public static GeoLocalDto createDtoFromEntity(GeoLocal entity) {
 		if (entity == null) return null;
 		GeoLocalDto dto = new GeoLocalDto();
 		BeanUtils.copyProperties(entity, dto);
 		return dto;
 	}
 
-	public BaseEntity createEntityFromDto(BaseDto dto) {
+	public static GeoLocal createEntityFromDto(GeoLocalDto dto) {
 		if (dto == null) return null;
 		GeoLocal entity = new GeoLocal();
 		BeanUtils.copyProperties(dto, entity);

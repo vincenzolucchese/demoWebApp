@@ -154,11 +154,11 @@ public class BusinessTestsClientApp extends BusinessTests {
 		ClientAppDto dto = new ClientAppDto();
 		dto.setName("setName");
 		dto.setPiva("setPiva");
-
-		PagedListHolder<BaseDto> listBeanTable = 
-				commonAppRepositoryImpl.findDtoPagedByCriteria(new ClientAppDto(), 0, 10, "timeInsert", false);
-		
-		logger.debug("-- END --"+listBeanTable.getNrOfElements());
+//
+//		PagedListHolder<BaseDto> listBeanTable = 
+//				commonAppRepositoryImpl.findDtoPagedByCriteria(new ClientAppDto(), 0, 10, "timeInsert", false);
+//		
+//		logger.debug("-- END --"+listBeanTable.getNrOfElements());
 	}
 	
 

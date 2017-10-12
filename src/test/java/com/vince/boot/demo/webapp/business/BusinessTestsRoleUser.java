@@ -43,10 +43,10 @@ public class BusinessTestsRoleUser extends BusinessTests {
 	public void findPagebleOrderJobDto() {
 		logger.debug("-- Start --");
 		
-		PagedListHolder<BaseDto> listBeanTable = 
-				commonAppRepositoryImpl.findDtoPagedByCriteria(new OrderJobDto(), 0, 10, "timeInsert", false);
-		
-		logger.debug("-- END --"+listBeanTable.getNrOfElements());
+//		PagedListHolder<BaseDto> listBeanTable = 
+//				commonAppRepositoryImpl.findDtoPagedByCriteria(new OrderJobDto(), 0, 10, "timeInsert", false);
+//		
+//		logger.debug("-- END --"+listBeanTable.getNrOfElements());
 	}
 
 }

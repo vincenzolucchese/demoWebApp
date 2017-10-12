@@ -108,23 +108,21 @@ public class OrderJobDto extends BaseDto {
 	/*******************************************
 	 * STATIC ENTITY <--> DTO
 	 *******************************************/
-	public BaseDto createDtoFromEntity(BaseEntity entity) {
+	public static OrderJobDto createDtoFromEntity(OrderJob entity) {
 		if (entity == null) return null;
-		OrderJob entityCast = (OrderJob) entity;
 		
 		OrderJobDto dto = new OrderJobDto();
-		BeanUtils.copyProperties(entityCast, dto);
-		dto.setClientApp((ClientAppDto) new ClientAppDto().createDtoFromEntity(entityCast.getClientApp()));
+		BeanUtils.copyProperties(entity, dto);
+		dto.setClientApp(ClientAppDto.createDtoFromEntity(entity.getClientApp()));
 		return dto;
 	}
 
-	public BaseEntity createEntityFromDto(BaseDto dto) {
+	public static OrderJob createEntityFromDto(OrderJobDto dto) {
 		if (dto == null) return null;
-		OrderJobDto dtoCast = (OrderJobDto) dto;
 		
 		OrderJob entity = new OrderJob();
-		BeanUtils.copyProperties(dtoCast, entity);
-		entity.setClientApp((ClientApp) new ClientAppDto().createEntityFromDto(dtoCast.getClientApp()));
+		BeanUtils.copyProperties(dto, entity);
+		entity.setClientApp(ClientAppDto.createEntityFromDto(dto.getClientApp()));
 		return entity;
 	}
 

@@ -34,14 +34,14 @@ public class SystemPropsDto extends BaseDto  {
 	/*******************************************
 	 * CONVERTER ENTITY <--> DTO
 	 *******************************************/
-	public SystemPropsDto createDtoFromEntity(BaseEntity entity) {
+	public static SystemPropsDto createDtoFromEntity(SystemProps entity) {
 		if (entity == null) return null;
 		SystemPropsDto dto = new SystemPropsDto();
 		BeanUtils.copyProperties(entity, dto);
 		return dto;
 	}
 
-	public SystemProps createEntityFromDto(BaseDto dto) {
+	public static SystemProps createEntityFromDto(SystemPropsDto dto) {
 		if (dto == null) return null;
 		SystemProps entity = new SystemProps();
 		BeanUtils.copyProperties(dto, entity);

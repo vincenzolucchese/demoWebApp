@@ -57,14 +57,14 @@ public class RoleUserDto extends BaseDto {
 	/*******************************************
 	 * CONVERTER ENTITY <--> DTO
 	 *******************************************/
-	public RoleUserDto createDtoFromEntity(BaseEntity entity) {
+	public static RoleUserDto createDtoFromEntity(RoleUser entity) {
 		if (entity == null) return null;
 		RoleUserDto dto = new RoleUserDto();
 		BeanUtils.copyProperties(entity, dto);
 		return dto;
 	}
 
-	public RoleUser createEntityFromDto(BaseDto dto) {
+	public static RoleUser createEntityFromDto(RoleUserDto dto) {
 		if (dto == null) return null;
 		RoleUser entity = new RoleUser();
 		BeanUtils.copyProperties(dto, entity);

@@ -33,14 +33,14 @@ public class RelOrderBlobDto extends BaseDto  {
 	/*******************************************
 	 * CONVERTER ENTITY <--> DTO
 	 *******************************************/
-	public RelOrderBlobDto createDtoFromEntity(BaseEntity entity) {
+	public static RelOrderBlobDto createDtoFromEntity(RelOrderBlob entity) {
 		if (entity == null) return null;
 		RelOrderBlobDto dto = new RelOrderBlobDto();
 		BeanUtils.copyProperties(entity, dto);
 		return dto;
 	}
 
-	public RelOrderBlob createEntityFromDto(BaseDto dto) {
+	public static RelOrderBlob createEntityFromDto(RelOrderBlobDto dto) {
 		if (dto == null) return null;
 		RelOrderBlob entity = new RelOrderBlob();
 		BeanUtils.copyProperties(dto, entity);

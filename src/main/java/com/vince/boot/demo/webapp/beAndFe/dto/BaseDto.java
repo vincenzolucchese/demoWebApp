@@ -12,12 +12,6 @@ public abstract class BaseDto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	/*******************************************
-	 * CONVERTER ENTITY <--> DTO
-	 *******************************************/
-	public abstract BaseDto createDtoFromEntity(BaseEntity entity) ;
-	public abstract BaseEntity createEntityFromDto(BaseDto dto) ;
-
 	protected Boolean isConvertInside = false;
 	protected Long id;
 	protected String userInsert;
@@ -25,10 +19,6 @@ public abstract class BaseDto implements Serializable {
 	protected Date timeInsert;
 	protected Date timeUpdate;
 	protected Date yearRefer;
-	
-	//FIXME: non ok qui
-	protected String state;
-	protected List<BlobStoreDto> fileDocuments = new ArrayList<BlobStoreDto>();
 
 	public Long getId() {
 		return this.id;
@@ -84,18 +74,6 @@ public abstract class BaseDto implements Serializable {
 
 	public void setIsConvertInside(Boolean isConvertInside) {
 		this.isConvertInside = isConvertInside;
-	}
-	public List<BlobStoreDto> getFileDocuments() {
-		return fileDocuments;
-	}
-	public void setFileDocuments(List<BlobStoreDto> fileDocuments) {
-		this.fileDocuments = fileDocuments;
-	}
-	public String getState() {
-		return state;
-	}
-	public void setState(String state) {
-		this.state = state;
 	}
 	
 }

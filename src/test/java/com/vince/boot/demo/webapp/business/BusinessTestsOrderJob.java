@@ -31,24 +31,24 @@ public class BusinessTestsOrderJob extends BusinessTests {
 	@Test	
 	public void saveOrderJobDto() {
 		logger.debug("-- Start --");
-		ClientAppDto dto = new ClientAppDto();
-		dto.setPiva("setPiva");
-		List<BaseDto> lista = baseEntityToDtoRepository.findAllDto(dto);
-		
-		ClientAppDto dto1 = new ClientAppDto(15l);
-		dto1 = (ClientAppDto) baseEntityToDtoRepository.findOneDto(dto1);
-		
-		OrderJobDto orderDto = new OrderJobDto();
-		orderDto.setClientApp(dto1);
-		orderDto.setNotes("adasdasdasd");
-		orderDto = (OrderJobDto) baseEntityToDtoRepository.saveDto(orderDto, "vince");		
-		
-		OrderJobDto orderFilter = new OrderJobDto();
-		orderFilter.setUserInsert("vince");
-		List<BaseDto> listaOrder = baseEntityToDtoRepository.findAllDto(orderFilter);
-		
-		logger.debug("-- END --"+listaOrder.size());
-		logger.debug("-- END --"+lista.size());
+//		ClientAppDto dto = new ClientAppDto();
+//		dto.setPiva("setPiva");
+//		List<BaseDto> lista = baseEntityToDtoRepository.findAllDto(dto);
+//		
+//		ClientAppDto dto1 = new ClientAppDto(15l);
+//		dto1 = (ClientAppDto) baseEntityToDtoRepository.findOneDto(dto1);
+//		
+//		OrderJobDto orderDto = new OrderJobDto();
+//		orderDto.setClientApp(dto1);
+//		orderDto.setNotes("adasdasdasd");
+//		orderDto = (OrderJobDto) baseEntityToDtoRepository.saveDto(orderDto, "vince");		
+//		
+//		OrderJobDto orderFilter = new OrderJobDto();
+//		orderFilter.setUserInsert("vince");
+//		List<BaseDto> listaOrder = baseEntityToDtoRepository.findAllDto(orderFilter);
+//		
+//		logger.debug("-- END --"+listaOrder.size());
+//		logger.debug("-- END --"+lista.size());
 	}
 	
 	
@@ -56,10 +56,10 @@ public class BusinessTestsOrderJob extends BusinessTests {
 	public void findPagebleOrderJobDto() {
 		logger.debug("-- Start --");
 		
-		PagedListHolder<BaseDto> listBeanTable = 
-				commonAppRepositoryImpl.findDtoPagedByCriteria(new OrderJobDto(), 0, 10, "timeInsert", false);
-		
-		logger.debug("-- END --"+listBeanTable.getNrOfElements());
+//		PagedListHolder<BaseDto> listBeanTable = 
+//				commonAppRepositoryImpl.findDtoPagedByCriteria(new OrderJobDto(), 0, 10, "timeInsert", false);
+//		
+//		logger.debug("-- END --"+listBeanTable.getNrOfElements());
 	}
 
 }

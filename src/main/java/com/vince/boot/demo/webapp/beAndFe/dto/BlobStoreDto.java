@@ -27,7 +27,7 @@ public class BlobStoreDto extends BaseDto {
 	private Set<RelUserBlobDto> relUserBlobs = new HashSet<RelUserBlobDto>(0);
 	private Set<RelClientBlobDto> relClientBlobs = new HashSet<RelClientBlobDto>(0);
 
-	private MultipartFile file;
+	private MultipartFile multipartFile;
 	
 	
 	public BlobStoreDto() {
@@ -110,35 +110,33 @@ public class BlobStoreDto extends BaseDto {
 	}
 	
 	public MultipartFile getFile() {
-		return file;
+		return multipartFile;
 	}
 
 	public void setFile(MultipartFile file) {
-		this.file = file;
+		this.multipartFile = file;
 	}
 
 	/*******************************************
 	 * CONVERTER ENTITY <--> DTO
 	 *******************************************/
-	public BaseDto createDtoFromEntity(BaseEntity entity) {
+	public static BlobStoreDto createDtoFromEntity(BlobStore entity) {
 		if (entity == null) return null;
-		BlobStore entityCast = (BlobStore) entity;
 		
 		BlobStoreDto dto = new BlobStoreDto();
-		BeanUtils.copyProperties(entityCast, dto);		
+		BeanUtils.copyProperties(entity, dto);		
 		// copy objects
-		dto.setTypeDocument((TypeDocumentDto) new TypeDocumentDto().createDtoFromEntity(entityCast.getTypeDocument()));
+		dto.setTypeDocument(TypeDocumentDto.createDtoFromEntity(entity.getTypeDocument()));
 		return dto;
 	}
 
-	public BaseEntity createEntityFromDto(BaseDto dto) {
+	public BlobStore createEntityFromDto(BlobStoreDto dto) {
 		if (dto == null) return null;
-		BlobStoreDto dtoCast = (BlobStoreDto) dto;
 		
 		BlobStore entity = new BlobStore();
-		BeanUtils.copyProperties(dtoCast, entity);
+		BeanUtils.copyProperties(dto, entity);
 		// copy objects
-		entity.setTypeDocument((TypeDocument) new TypeDocumentDto().createEntityFromDto(dtoCast.getTypeDocument()));
+		entity.setTypeDocument(TypeDocumentDto.createEntityFromDto(dto.getTypeDocument()));
 		return entity;
 	}
 

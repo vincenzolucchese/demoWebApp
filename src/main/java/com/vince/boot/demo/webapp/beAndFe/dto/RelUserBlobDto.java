@@ -33,14 +33,14 @@ public class RelUserBlobDto extends BaseDto  {
 	/*******************************************
 	 * CONVERTER ENTITY <--> DTO
 	 *******************************************/
-	public RelUserBlobDto createDtoFromEntity(BaseEntity entity) {
+	public static RelUserBlobDto createDtoFromEntity(RelUserBlob entity) {
 		if (entity == null) return null;
 		RelUserBlobDto dto = new RelUserBlobDto();
 		BeanUtils.copyProperties(entity, dto);
 		return dto;
 	}
 
-	public RelUserBlob createEntityFromDto(BaseDto dto) {
+	public static RelUserBlob createEntityFromDto(RelUserBlobDto dto) {
 		if (dto == null) return null;
 		RelUserBlob entity = new RelUserBlob();
 		BeanUtils.copyProperties(dto, entity);

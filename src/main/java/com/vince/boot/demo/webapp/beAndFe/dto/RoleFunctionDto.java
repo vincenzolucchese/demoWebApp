@@ -25,14 +25,14 @@ public class RoleFunctionDto extends BaseDto  {
 	/*******************************************
 	 * CONVERTER ENTITY <--> DTO
 	 *******************************************/
-	public RoleFunctionDto createDtoFromEntity(BaseEntity entity) {
+	public static RoleFunctionDto createDtoFromEntity(RoleFunction entity) {
 		if (entity == null) return null;
 		RoleFunctionDto dto = new RoleFunctionDto();
 		BeanUtils.copyProperties(entity, dto);
 		return dto;
 	}
 
-	public RoleFunction createEntityFromDto(BaseDto dto) {
+	public static RoleFunction createEntityFromDto(RoleFunctionDto dto) {
 		if (dto == null) return null;
 		RoleFunction entity = new RoleFunction();
 		BeanUtils.copyProperties(dto, entity);

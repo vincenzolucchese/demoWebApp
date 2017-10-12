@@ -39,15 +39,23 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.vince.boot.demo.webapp.be.entity.BaseEntity;
 import com.vince.boot.demo.webapp.be.entity.BlobStore;
+import com.vince.boot.demo.webapp.be.entity.ClientApp;
+import com.vince.boot.demo.webapp.be.entity.OrderJob;
 import com.vince.boot.demo.webapp.be.entity.TypeDocument;
+import com.vince.boot.demo.webapp.be.entity.UserApp;
 import com.vince.boot.demo.webapp.be.service.BaseEntityRepository;
-import com.vince.boot.demo.webapp.be.service.BaseEntityToDtoRepository;
+import com.vince.boot.demo.webapp.be.service.CommonDtoRepository;
+import com.vince.boot.demo.webapp.be.service.OrderJobRepository;
 import com.vince.boot.demo.webapp.be.service.BlobStoreRepository;
 import com.vince.boot.demo.webapp.be.service.ClientAppRepository;
 import com.vince.boot.demo.webapp.be.service.TypeDocumentRepository;
+import com.vince.boot.demo.webapp.be.service.UserAppRepository;
 import com.vince.boot.demo.webapp.be.utility.PageableUtils;
 import com.vince.boot.demo.webapp.beAndFe.dto.BaseDto;
 import com.vince.boot.demo.webapp.beAndFe.dto.BlobStoreDto;
+import com.vince.boot.demo.webapp.beAndFe.dto.ClientAppDto;
+import com.vince.boot.demo.webapp.beAndFe.dto.OrderJobDto;
+import com.vince.boot.demo.webapp.beAndFe.dto.UserAppDto;
 
 /**
  * Bean Service for common custom implementation about all web app
@@ -55,7 +63,7 @@ import com.vince.boot.demo.webapp.beAndFe.dto.BlobStoreDto;
  *
  */
 @Component("commonAppRepositoryImpl")
-public class CommonAppRepositoryImpl extends JdbcDaoSupport implements BaseEntityToDtoRepository {
+public class CommonAppRepositoryImpl extends JdbcDaoSupport implements CommonDtoRepository {
 
 	private static final Logger logger = LoggerFactory.getLogger(CommonAppRepositoryImpl.class);
 	public static final String USER_SYSTEM = "SYSTEM";
@@ -74,6 +82,10 @@ public class CommonAppRepositoryImpl extends JdbcDaoSupport implements BaseEntit
 	TypeDocumentRepository typeDocumentRepository;
 	@Autowired
 	ClientAppRepository clientAppRepository;
+	@Autowired
+	UserAppRepository userAppRepository;
+	@Autowired
+	OrderJobRepository orderJobRepository;
 
 	/**
 	 * Configure the entity manager to be used.	 * 
@@ -97,6 +109,449 @@ public class CommonAppRepositoryImpl extends JdbcDaoSupport implements BaseEntit
 		logger.debug("JDBC");
 		return getJdbcTemplate().queryForObject(GET_SYSDATE_SQL, Date.class);
 	}
+	
+
+	@Override
+	public void saveDocument(BlobStoreDto entityDto, String username) throws IOException {
+//		BlobStore entity = new BlobStore();
+//		int posix = entityDto.getFileDocuments().size()-1;
+//		BlobStoreDto blobStoreFE = baseFE.getFileDocuments().get(posix);
+//
+//		MultipartFile multipartFile = blobStoreFE.getFile();
+//
+//		entity.setFilename(multipartFile.getOriginalFilename());
+//		entity.setDescription(blobStoreFE.getDescription());
+//		entity.setContentType(multipartFile.getContentType());
+//		
+//		TypeDocument typeDocument = new TypeDocument(new Long(1));
+//		entity.setTypeDocument(typeDocument);
+//		entity.setBlobData(multipartFile.getBytes());
+//
+//		entity = (BlobStore) saveCustom(entity, username);
+//		
+//		BeanUtils.copyProperties(entity, blobStoreFE);
+//		
+//		baseFE.getFileDocuments().set(posix, blobStoreFE);
+		
+	}
+
+	@Override
+	public UserAppDto saveUserAppDto(UserAppDto entityDto) {
+		UserApp entity = UserAppDto.createEntityFromDto(entityDto);
+		Date dateDB = getSysdateFromDBJdbc();
+		if(entity.isNew()){
+			entity.setUserInsert(USER_SYSTEM);
+			entity.setTimeInsert(dateDB);
+			entity.setYearRefer(dateDB);
+		}else {
+			UserApp temp = userAppRepository.findOne(entity.getId());
+			entity.setUserInsert(temp.getUserInsert());
+			entity.setTimeInsert(temp.getTimeInsert());
+			entity.setYearRefer(temp.getYearRefer());
+			
+			entity.setUserUpdate(USER_SYSTEM);
+			entity.setTimeUpdate(dateDB);
+		}		
+		entity = userAppRepository.save(entity);
+		return UserAppDto.createDtoFromEntity(entity);
+	}
+
+	@Override
+	public UserAppDto saveUserAppDto(UserAppDto entityDto, String user) {
+		UserApp entity = UserAppDto.createEntityFromDto(entityDto);
+		Date dateDB = getSysdateFromDBJdbc();
+		if(entity.isNew()){
+			entity.setUserInsert(user);
+			entity.setTimeInsert(dateDB);
+			entity.setYearRefer(dateDB);
+		}else {
+			UserApp temp = userAppRepository.findOne(entity.getId());
+			entity.setUserInsert(temp.getUserInsert());
+			entity.setTimeInsert(temp.getTimeInsert());
+			entity.setYearRefer(temp.getYearRefer());
+			
+			entity.setUserUpdate(user);
+			entity.setTimeUpdate(dateDB);
+		}		
+		entity = userAppRepository.save(entity);
+		return UserAppDto.createDtoFromEntity(entity);
+	}
+
+	@Override
+	public UserAppDto saveUserAppDto(UserAppDto entityDto, String user, Date date) {
+		UserApp entity = UserAppDto.createEntityFromDto(entityDto);
+		if(entity.isNew()){
+			entity.setUserInsert(user);
+			entity.setTimeInsert(date);
+			entity.setYearRefer(date);
+		}else {
+			UserApp temp = userAppRepository.findOne(entity.getId());
+			entity.setUserInsert(temp.getUserInsert());
+			entity.setTimeInsert(temp.getTimeInsert());
+			entity.setYearRefer(temp.getYearRefer());
+			
+			entity.setUserUpdate(user);
+			entity.setTimeUpdate(date);
+		}		
+		entity = userAppRepository.save(entity);
+		return UserAppDto.createDtoFromEntity(entity);
+	}
+
+	@Override
+	@Transactional
+	public List<UserAppDto> saveUserAppDto(Iterable<UserAppDto> entitiesDto) {
+		if (entitiesDto == null) {
+			return null;
+		}
+		List<UserAppDto> result = new ArrayList<UserAppDto>();
+		for (UserAppDto each : entitiesDto) {
+			result.add(saveUserAppDto(each));
+		}
+		return result;
+	}
+
+	@Override
+	@Transactional
+	public List<UserAppDto> saveUserAppDto(Iterable<UserAppDto> entitiesDto, String user) {
+		if (entitiesDto == null) {
+			return null;
+		}
+		List<UserAppDto> result = new ArrayList<UserAppDto>();
+		Date dateDB = getSysdateFromDBJdbc();
+		for (UserAppDto each : entitiesDto) {
+			result.add(saveUserAppDto(each, user, dateDB));
+		}
+		return result;
+	}
+
+	@Override
+	@Transactional
+	public List<UserAppDto> saveUserAppDto(Iterable<UserAppDto> entitiesDto, String user, Date date) {
+		if (entitiesDto == null) {
+			return null;
+		}
+		List<UserAppDto> result = new ArrayList<UserAppDto>();
+		for (UserAppDto each : entitiesDto) {
+			result.add(saveUserAppDto(each, user, date));
+		}
+		return result;
+	}
+
+	@Override
+	@Transactional
+	public UserAppDto findOneDto(UserAppDto filter) {
+		UserApp entity = UserAppDto.createEntityFromDto(filter);
+		Example<UserApp> example = Example.of(entity);
+		entity = userAppRepository.findOne(example);
+		return UserAppDto.createDtoFromEntity(entity);
+	}
+
+	@Override
+	@Transactional
+	public List<UserAppDto> findAllDto(UserAppDto filter) {
+		UserApp entity = UserAppDto.createEntityFromDto(filter);
+		Example<UserApp> example = Example.of(entity);
+		List<UserApp> listEntity = userAppRepository.findAll(example);
+		if(listEntity==null){
+			return null;
+		}
+		List<UserAppDto> lista = new ArrayList<UserAppDto>();
+		for (UserApp each : listEntity) {
+			lista.add(UserAppDto.createDtoFromEntity(each));
+		}
+		return lista;
+	}
+
+	@Override
+	@Transactional
+	public PagedListHolder<UserAppDto> findDtoPagedByCriteria(UserAppDto searchBean, int i,
+			Integer displayTagObjectsPerPage, String sort, boolean b) {
+		Pageable pageable = PageableUtils.constructPageSpecification(i, displayTagObjectsPerPage.intValue(), sort, Boolean.valueOf(b));
+		Page<UserApp> entityPage = null;
+
+		UserApp entity = UserAppDto.createEntityFromDto(searchBean);
+		Example<UserApp> example = Example.of(entity);
+		entityPage = userAppRepository.findAll(example, pageable);
+		
+		if(entityPage == null) {
+			return null;
+		}
+		ArrayList<UserAppDto> listaDto = new ArrayList<UserAppDto>();
+		for (UserApp eachEntity : entityPage) {
+			listaDto.add(UserAppDto.createDtoFromEntity(eachEntity));
+		}
+		PagedListHolder<UserAppDto> beanPage = new PagedListHolder<UserAppDto>(listaDto);
+		return beanPage;
+	}
+
+	@Override
+	public Long deleteDto(UserAppDto entityDto) {
+		UserApp entity = UserAppDto.createEntityFromDto(entityDto);
+		if(entity.getId()!=null){
+			userAppRepository.delete(entity.getId());
+		}else{
+			userAppRepository.delete(entity);			
+		}		
+		return null;
+	}
+
+	@Override
+	public ClientAppDto saveClientAppDto(ClientAppDto entityDto) {
+		ClientApp entity = ClientAppDto.createEntityFromDto(entityDto);
+		Date dateDB = getSysdateFromDBJdbc();
+		if(entity.isNew()){
+			entity.setUserInsert(USER_SYSTEM);
+			entity.setTimeInsert(dateDB);
+			entity.setYearRefer(dateDB);
+		}else {
+			ClientApp temp = clientAppRepository.findOne(entity.getId());
+			entity.setUserInsert(temp.getUserInsert());
+			entity.setTimeInsert(temp.getTimeInsert());
+			entity.setYearRefer(temp.getYearRefer());
+			
+			entity.setUserUpdate(USER_SYSTEM);
+			entity.setTimeUpdate(dateDB);
+		}		
+		entity = clientAppRepository.save(entity);
+		return ClientAppDto.createDtoFromEntity(entity);
+	}
+
+	@Override
+	public ClientAppDto saveClientAppDto(ClientAppDto entityDto, String user) {
+		ClientApp entity = ClientAppDto.createEntityFromDto(entityDto);
+		Date dateDB = getSysdateFromDBJdbc();
+		if(entity.isNew()){
+			entity.setUserInsert(user);
+			entity.setTimeInsert(dateDB);
+			entity.setYearRefer(dateDB);
+		}else {
+			ClientApp temp = clientAppRepository.findOne(entity.getId());
+			entity.setUserInsert(temp.getUserInsert());
+			entity.setTimeInsert(temp.getTimeInsert());
+			entity.setYearRefer(temp.getYearRefer());
+			
+			entity.setUserUpdate(user);
+			entity.setTimeUpdate(dateDB);
+		}		
+		entity = clientAppRepository.save(entity);
+		return ClientAppDto.createDtoFromEntity(entity);
+	}
+
+	@Override
+	public ClientAppDto saveClientAppDto(ClientAppDto entityDto, String user, Date date) {
+		ClientApp entity = ClientAppDto.createEntityFromDto(entityDto);
+		if(entity.isNew()){
+			entity.setUserInsert(user);
+			entity.setTimeInsert(date);
+			entity.setYearRefer(date);
+		}else {
+			ClientApp temp = clientAppRepository.findOne(entity.getId());
+			entity.setUserInsert(temp.getUserInsert());
+			entity.setTimeInsert(temp.getTimeInsert());
+			entity.setYearRefer(temp.getYearRefer());
+			
+			entity.setUserUpdate(user);
+			entity.setTimeUpdate(date);
+		}		
+		entity = clientAppRepository.save(entity);
+		return ClientAppDto.createDtoFromEntity(entity);
+	}
+
+	@Override
+	public List<ClientAppDto> saveClientAppDto(Iterable<ClientAppDto> entitiesDto) {
+		if (entitiesDto == null) {
+			return null;
+		}
+		List<ClientAppDto> result = new ArrayList<ClientAppDto>();
+		for (ClientAppDto each : entitiesDto) {
+			result.add(saveClientAppDto(each));
+		}
+		return result;
+	}
+
+	@Override
+	public List<ClientAppDto> saveClientAppDto(Iterable<ClientAppDto> entitiesDto, String user) {
+		if (entitiesDto == null) {
+			return null;
+		}
+		List<ClientAppDto> result = new ArrayList<ClientAppDto>();
+		for (ClientAppDto each : entitiesDto) {
+			result.add(saveClientAppDto(each, user, getSysdateFromDBJdbc()));
+		}
+		return result;
+	}
+
+	@Override
+	public List<ClientAppDto> saveClientAppDto(Iterable<ClientAppDto> entitiesDto, String user, Date date) {
+		if (entitiesDto == null) {
+			return null;
+		}
+		List<ClientAppDto> result = new ArrayList<ClientAppDto>();
+		for (ClientAppDto each : entitiesDto) {
+			result.add(saveClientAppDto(each, user, date));
+		}
+		return result;
+	}
+
+	@Override
+	public ClientAppDto findOneDto(ClientAppDto filter) {
+		ClientApp entity = ClientAppDto.createEntityFromDto(filter);
+		Example<ClientApp> example = Example.of(entity);
+		return ClientAppDto.createDtoFromEntity(clientAppRepository.findOne(example));
+	}
+
+	@Override
+	public List<ClientAppDto> findAllDto(ClientAppDto filter) {
+		ClientApp entity = ClientAppDto.createEntityFromDto(filter);
+		Example<ClientApp> example = Example.of(entity);
+		List<ClientApp> listEntity = clientAppRepository.findAll(example);
+		if(listEntity==null){
+			return null;
+		}
+		List<ClientAppDto> lista = new ArrayList<ClientAppDto>();
+		for (ClientApp each : listEntity) {
+			lista.add(ClientAppDto.createDtoFromEntity(each));
+		}
+		return lista;
+	}
+
+	@Override
+	public PagedListHolder<ClientAppDto> findDtoPagedByCriteria(ClientAppDto searchBean, int i,
+			Integer displayTagObjectsPerPage, String sort, boolean b) {
+		Pageable pageable = PageableUtils.constructPageSpecification(i, displayTagObjectsPerPage.intValue(), sort, Boolean.valueOf(b));
+		Page<ClientApp> entityPage = null;
+
+		ClientApp entity = ClientAppDto.createEntityFromDto(searchBean);
+		Example<ClientApp> example = Example.of(entity);
+		entityPage = clientAppRepository.findAll(example, pageable);
+		
+		if(entityPage == null) {
+			return null;
+		}
+		ArrayList<ClientAppDto> listaDto = new ArrayList<ClientAppDto>();
+		for (ClientApp eachEntity : entityPage) {
+			listaDto.add(ClientAppDto.createDtoFromEntity(eachEntity));
+		}
+		PagedListHolder<ClientAppDto> beanPage = new PagedListHolder<ClientAppDto>(listaDto);
+		return beanPage;
+	}
+
+	@Override
+	public Long deleteDto(ClientAppDto entityDto) {
+		ClientApp entity = ClientAppDto.createEntityFromDto(entityDto);
+		if(entity.getId()!=null){
+			clientAppRepository.delete(entity.getId());
+		}else{
+			clientAppRepository.delete(entity);			
+		}		
+		return null;
+	}
+
+	@Override
+	public OrderJobDto saveOrderJobDto(OrderJobDto entityDto) {
+		OrderJob entity = OrderJobDto.createEntityFromDto(entityDto);
+		Date dateDB = getSysdateFromDBJdbc();
+		if(entity.isNew()){
+			entity.setUserInsert(USER_SYSTEM);
+			entity.setTimeInsert(dateDB);
+			entity.setYearRefer(dateDB);
+		}else {
+			OrderJob temp = orderJobRepository.findOne(entity.getId());
+			entity.setUserInsert(temp.getUserInsert());
+			entity.setTimeInsert(temp.getTimeInsert());
+			entity.setYearRefer(temp.getYearRefer());
+			
+			entity.setUserUpdate(USER_SYSTEM);
+			entity.setTimeUpdate(dateDB);
+		}		
+		entity = orderJobRepository.save(entity);
+		return OrderJobDto.createDtoFromEntity(entity);
+	}
+
+	@Override
+	public OrderJobDto saveOrderJobDto(OrderJobDto entityDto, String user) {
+		OrderJob entity = OrderJobDto.createEntityFromDto(entityDto);
+		Date dateDB = getSysdateFromDBJdbc();
+		if(entity.isNew()){
+			entity.setUserInsert(user);
+			entity.setTimeInsert(dateDB);
+			entity.setYearRefer(dateDB);
+		}else {
+			OrderJob temp = orderJobRepository.findOne(entity.getId());
+			entity.setUserInsert(temp.getUserInsert());
+			entity.setTimeInsert(temp.getTimeInsert());
+			entity.setYearRefer(temp.getYearRefer());
+			
+			entity.setUserUpdate(user);
+			entity.setTimeUpdate(dateDB);
+		}		
+		entity = orderJobRepository.save(entity);
+		return OrderJobDto.createDtoFromEntity(entity);
+	}
+
+	@Override
+	public OrderJobDto saveOrderJobDto(OrderJobDto entityDto, String user, Date date) {
+		OrderJob entity = OrderJobDto.createEntityFromDto(entityDto);
+		if(entity.isNew()){
+			entity.setUserInsert(user);
+			entity.setTimeInsert(date);
+			entity.setYearRefer(date);
+		}else {
+			OrderJob temp = orderJobRepository.findOne(entity.getId());
+			entity.setUserInsert(temp.getUserInsert());
+			entity.setTimeInsert(temp.getTimeInsert());
+			entity.setYearRefer(temp.getYearRefer());
+			
+			entity.setUserUpdate(user);
+			entity.setTimeUpdate(date);
+		}		
+		entity = orderJobRepository.save(entity);
+		return OrderJobDto.createDtoFromEntity(entity);
+	}
+
+	@Override
+	public List<OrderJobDto> saveOrderJobDto(Iterable<OrderJobDto> entitiesDto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<OrderJobDto> saveOrderJobDto(Iterable<OrderJobDto> entitiesDto, String user) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<OrderJobDto> saveOrderJobDto(Iterable<OrderJobDto> entitiesDto, String user, Date date) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public OrderJobDto findOneDto(OrderJobDto filter) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<OrderJobDto> findAllDto(OrderJobDto filter) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PagedListHolder<OrderJobDto> findDtoPagedByCriteria(OrderJobDto searchBean, int i,
+			Integer displayTagObjectsPerPage, String sort, boolean b) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Long deleteDto(OrderJobDto entityDto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 	
 	/**
 	 * Save a entity with the strategy about user inserter and updater. get sysdate from db in input.
@@ -303,6 +758,13 @@ public class CommonAppRepositoryImpl extends JdbcDaoSupport implements BaseEntit
 	}
 	
 	@Override
+	public Long deleteDto(BaseDto entityDto) {
+		BaseEntity entity = entityDto.createEntityFromDto(entityDto);
+		baseEntityRepository.delete(entity);
+		return 1l;
+	}
+	
+	@Override
 	public void saveDocument(BaseDto baseFE, String username) throws IOException {
 
 		BlobStore entity = new BlobStore();
@@ -327,9 +789,26 @@ public class CommonAppRepositoryImpl extends JdbcDaoSupport implements BaseEntit
 	}
 
 	@Override
-	public Long deleteDto(BaseDto entityDto) {
-		BaseEntity entity = entityDto.createEntityFromDto(entityDto);
-		baseEntityRepository.delete(entity);
-		return 1l;
+	public BlobStoreDto findOneBlobStoreDto(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public UserAppDto findOneUserAppDto(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ClientAppDto findOneClientAppDto(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public OrderJobDto findOneOrderJobDto(Long id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
