@@ -37,8 +37,20 @@
 					    <tr>
 					      <td>${child.name}</td>
 		                  <td>${child.piva}</td>
-		                  <td>${child.phone}</td>
-		                  <td>${child.email}</td>
+		                  <td>
+		                  	<#if child.phone??>
+		                  		${child.piva}
+	                  		<#else>
+	                  			soka
+		                  	</#if>
+		                  </td>
+		                  <td>
+		                  	<#if child.email??>
+		                  		${child.email}
+	                  		<#else>
+	                  			soka
+		                  	</#if>
+		                  </td>
 		                  <td>
 		                  	<a class="glyphicon glyphicon-zoom-in" href="<@spring.url '/Manage_Clients/InsertUpdateViewDelete/'/>${child.id}/R" title="Read"></a>
 		                    <a class="glyphicon glyphicon-pencil" href="<@spring.url '/Manage_Clients/InsertUpdateViewDelete/'/>${child.id}/U" title="Update"></a>

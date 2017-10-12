@@ -1,14 +1,19 @@
-package com.vince.boot.demo.webapp.fe.dto;
+package com.vince.boot.demo.webapp.fe.fto;
 
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-public class OrderJobFe extends BaseFe {
+import org.springframework.beans.BeanUtils;
+
+import com.vince.boot.demo.webapp.beAndFe.dto.BaseDto;
+import com.vince.boot.demo.webapp.beAndFe.dto.OrderJobDto;
+
+public class OrderJobFto extends BaseFto {
 
 	private static final long serialVersionUID = 1L;
-	private ClientAppFe DClientApp;
+	private ClientAppFto clientApp;
 
 	private String notes;
 	private String codeOrder;
@@ -18,17 +23,21 @@ public class OrderJobFe extends BaseFe {
 	private BigDecimal finalAmount;
 	private Character flagActive;
 	private String address;
-	private Set<RelOrderBlobFe> DRelOrderBlobs = new HashSet<RelOrderBlobFe>(0);
+	private Set<RelOrderBlobFto> relOrderBlobs = new HashSet<RelOrderBlobFto>(0);
 
-	public OrderJobFe() {
+	public OrderJobFto() {
+	}
+	
+	public OrderJobFto(Long id) {
+		super.id = id;
 	}
 
-	public ClientAppFe getDClientApp() {
-		return this.DClientApp;
+	public ClientAppFto getClientApp() {
+		return this.clientApp;
 	}
 
-	public void setDClientApp(ClientAppFe DClientApp) {
-		this.DClientApp = DClientApp;
+	public void setClientApp(ClientAppFto clientApp) {
+		this.clientApp = clientApp;
 	}
 
 	public String getNotes() {
@@ -87,12 +96,31 @@ public class OrderJobFe extends BaseFe {
 		this.address = address;
 	}
 
-	public Set<RelOrderBlobFe> getDRelOrderBlobs() {
-		return this.DRelOrderBlobs;
+	public Set<RelOrderBlobFto> getRelOrderBlobs() {
+		return this.relOrderBlobs;
 	}
 
-	public void setDRelOrderBlobs(Set<RelOrderBlobFe> DRelOrderBlobs) {
-		this.DRelOrderBlobs = DRelOrderBlobs;
+	public void setRelOrderBlobs(Set<RelOrderBlobFto> DRelOrderBlobs) {
+		this.relOrderBlobs = DRelOrderBlobs;
+	}
+
+	/*******************************************
+	 * CONVERTER FTO <--> DTO
+	 *******************************************/
+	public static BaseFto createFtoFromDto(BaseDto dto) {
+		if (dto == null) return null;
+		
+		OrderJobFto fto = new OrderJobFto();
+		BeanUtils.copyProperties(dto, fto);		
+		return fto;
+	}
+
+	public static BaseDto createDtoFromFto(BaseFto fto) {
+		if (fto == null) return null;
+		
+		OrderJobDto dto = new OrderJobDto();
+		BeanUtils.copyProperties(fto, dto);
+		return dto;
 	}
 
 }

@@ -112,6 +112,10 @@ public class CommonAppRepositoryImpl extends JdbcDaoSupport implements BaseEntit
 			entity.setTimeInsert(dateDB);
 			entity.setYearRefer(dateDB);
 		}else {
+			entity.setUserInsert(user);
+			entity.setTimeInsert(dateDB);
+			entity.setYearRefer(dateDB);
+			
 			entity.setUserUpdate(user);
 			entity.setTimeUpdate(dateDB);
 		}		
@@ -133,6 +137,10 @@ public class CommonAppRepositoryImpl extends JdbcDaoSupport implements BaseEntit
 			entity.setTimeInsert(dateDB);
 			entity.setYearRefer(dateDB);
 		}else {
+			entity.setUserInsert(user);
+			entity.setTimeInsert(dateDB);
+			entity.setYearRefer(dateDB);
+			
 			entity.setUserUpdate(user);
 			entity.setTimeUpdate(dateDB);
 		}		
@@ -154,6 +162,10 @@ public class CommonAppRepositoryImpl extends JdbcDaoSupport implements BaseEntit
 			entity.setTimeInsert(dateDB);
 			entity.setYearRefer(dateDB);
 		}else {
+			entity.setUserInsert(USER_SYSTEM);
+			entity.setTimeInsert(dateDB);
+			entity.setYearRefer(dateDB);
+			
 			entity.setUserUpdate(USER_SYSTEM);
 			entity.setTimeUpdate(dateDB);
 		}		

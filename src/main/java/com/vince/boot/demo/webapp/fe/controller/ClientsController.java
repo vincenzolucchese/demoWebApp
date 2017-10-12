@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.vince.boot.demo.webapp.beAndFe.dto.BaseDto;
 import com.vince.boot.demo.webapp.beAndFe.dto.ClientAppDto;
+import com.vince.boot.demo.webapp.fe.fto.BaseFto;
+import com.vince.boot.demo.webapp.fe.fto.ClientAppFto;
 
 
 @Controller
@@ -36,7 +38,7 @@ public class ClientsController extends BaseController {
 			@RequestParam(required = false) String dir,
 			@RequestParam(required = false, name = "ricercaAvanzata", defaultValue = "false") Boolean ricercaAvanzataFlag,
 			ModelMap model,
-			@ModelAttribute("searchForm") BaseDto searchBean,
+			@ModelAttribute("searchForm") ClientAppDto searchBean,
 			Principal principal,
 			HttpServletRequest request) {
 
@@ -119,7 +121,7 @@ public class ClientsController extends BaseController {
 //	}
 
 	@GetMapping(value = {PREFIX_CLIENTS+SUFFIX_CRUD, PREFIX_CLIENTS+SUFFIX_CRUD + "/{ids}/{type}"})
-	public String getRequest(ModelMap model, BaseDto baseFE, @PathVariable Map<String, String> pathVariablesMap) {
+	public String getRequest(ModelMap model, BaseFto baseFE, @PathVariable Map<String, String> pathVariablesMap) {
 		String state = baseFE.getState();
 		Long id = null;
 		
@@ -128,7 +130,7 @@ public class ClientsController extends BaseController {
 		
 		if(!StringUtils.isEmpty(ids)){
 			id = new Long(ids);
-			baseFE = baseEntityToDtoRepository.findOneDto(new ClientAppDto(id));
+			baseFE = ClientAppFto.createFtoFromDto(baseEntityToDtoRepository.findOneDto(new ClientAppDto(id)));
 		}else {
 //			baseFE = new ClientsFE();
 		}
@@ -137,7 +139,7 @@ public class ClientsController extends BaseController {
 			if(!StringUtils.isEmpty(type) ){
 				state = type;
 			}else {
-				baseFE = new ClientAppDto();
+				baseFE = new ClientAppFto();
 				state = "C";
 			}
 		}
@@ -180,21 +182,21 @@ public class ClientsController extends BaseController {
 
 
 	@RequestMapping(value= PREFIX_CLIENTS + SUFFIX_CRUD, method=RequestMethod.POST, params="Delete")
-	public String deletedDocument(@ModelAttribute("baseFE") ClientAppDto baseFE, BindingResult result, ModelMap model, 
+	public String deletedDocument(@ModelAttribute("baseFE") ClientAppFto baseFE, BindingResult result, ModelMap model, 
 			@RequestParam("Delete") String valueDelete) throws IOException{
-		return super.deleteDocument(baseFE, result, model, valueDelete);
+		return super.deleteDocument((baseFE) , result, model, valueDelete);
 	}
 
 	@RequestMapping(value=PREFIX_CLIENTS + SUFFIX_CRUD, method=RequestMethod.POST, params="Download")
-	public String downloaddDocument(@ModelAttribute("baseFE") ClientAppDto baseFE, BindingResult result, ModelMap model, 
+	public String downloaddDocument(@ModelAttribute("baseFE") ClientAppFto baseFE, BindingResult result, ModelMap model, 
 			@RequestParam("Download") String valueDownload, HttpServletResponse response) throws IOException{
 		return super.downloadDocument(baseFE, result, model, valueDownload, response);
 	}
 
 	@RequestMapping(value=PREFIX_CLIENTS + SUFFIX_CRUD, method=RequestMethod.POST, params="Upload")
-	public String uploadDocument(@ModelAttribute("baseFE") ClientAppDto baseFE, BindingResult result, 
+	public String uploadDocument(@ModelAttribute("baseFE") ClientAppFto baseFE, BindingResult result, 
 			ModelMap model, HttpServletRequest request) throws IOException{
-		return super.uploadDocument(baseFE, result, model, request);
+		return super.uploadDocument((baseFE), result, model, request);
 	}
 
 }

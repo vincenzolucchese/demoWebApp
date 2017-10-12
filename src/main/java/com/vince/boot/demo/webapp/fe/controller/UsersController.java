@@ -25,6 +25,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.vince.boot.demo.webapp.beAndFe.dto.BaseDto;
 import com.vince.boot.demo.webapp.beAndFe.dto.UserAppDto;
+import com.vince.boot.demo.webapp.fe.fto.BaseFto;
+import com.vince.boot.demo.webapp.fe.fto.ClientAppFto;
+import com.vince.boot.demo.webapp.fe.fto.UserAppFto;
+
 
 
 @Controller
@@ -38,7 +42,7 @@ public class UsersController extends BaseController {
 			@RequestParam(required = false) String dir,
 			@RequestParam(required = false, name = "ricercaAvanzata", defaultValue = "false") Boolean ricercaAvanzataFlag,
 			ModelMap model,
-			@ModelAttribute("searchForm") BaseDto searchBean,
+			@ModelAttribute("searchForm") UserAppFto searchBean,
 			Principal principal,
 			HttpServletRequest request) {
 
@@ -53,7 +57,7 @@ public class UsersController extends BaseController {
 			model.addAttribute("msgOK", msg);
 		}
 		
-		listBeanTable = baseEntityToDtoRepository.findDtoPagedByCriteria(searchBean, 0, 10, "timeInsert", false);
+		listBeanTable = baseEntityToDtoRepository.findDtoPagedByCriteria(UserAppFto.createDtoFromFto(searchBean), 0, 10, "timeInsert", false);
 
 		request.getSession().setAttribute("listBeanTable",  listBeanTable);
 		
@@ -122,7 +126,7 @@ public class UsersController extends BaseController {
 //	}
 
 	@GetMapping(value = {PREFIX_USERS+SUFFIX_CRUD, PREFIX_USERS+SUFFIX_CRUD + "/{ids}/{type}"})
-	public String getRequest(ModelMap model, BaseDto baseFE, @PathVariable Map<String, String> pathVariablesMap) {
+	public String getRequest(ModelMap model, BaseFto baseFE, @PathVariable Map<String, String> pathVariablesMap) {
 		String state = baseFE.getState();
 		Long id = null;
 		
@@ -131,7 +135,7 @@ public class UsersController extends BaseController {
 		
 		if(!StringUtils.isEmpty(ids)){
 			id = new Long(ids);
-			baseFE = baseEntityToDtoRepository.findOneDto(new UserAppDto(id));
+			baseFE = UserAppFto.createFtoFromDto((UserAppDto) baseEntityToDtoRepository.findOneDto(new UserAppDto(id)));
 		}else {
 //			baseFE = new UsersFE();
 		}
@@ -140,14 +144,14 @@ public class UsersController extends BaseController {
 			if(!StringUtils.isEmpty(type) ){
 				state = type;
 			}else {
-				baseFE = new UserAppDto();
+				baseFE = new UserAppFto();
 				state = "C";
 			}
 		}
 		baseFE.setState(state);			
 		
 		if("C".equals(baseFE.getState()) || "U".equals(baseFE.getState())) {
-			addEmptyBlob(baseFE);
+			addEmptyBlob((baseFE));
 		}
 		
 		model.addAttribute("baseFE", baseFE);
@@ -157,7 +161,7 @@ public class UsersController extends BaseController {
 	
 
 	@PostMapping(PREFIX_USERS+SUFFIX_CRUD)
-	public String postRequest(ModelMap model, @Valid @ModelAttribute("baseFE") UserAppDto baseFE, BindingResult result,
+	public String postRequest(ModelMap model, @Valid @ModelAttribute("baseFE") UserAppFto baseFE, BindingResult result,
 			HttpServletRequest request) {
 		
 		String action = request.getParameter("submit");
@@ -175,7 +179,7 @@ public class UsersController extends BaseController {
 				model.addAttribute("roles", getAllRoles());
 				return PREFIX_USERS+SUFFIX_CRUD;
 			}
-			baseEntityToDtoRepository.saveDto(baseFE, getCurrentUsername());			
+			baseEntityToDtoRepository.saveDto(UserAppFto.createDtoFromFto(baseFE), getCurrentUsername());			
 		}
 		
 		return "redirect:Search/msgOK";
@@ -183,21 +187,21 @@ public class UsersController extends BaseController {
 
 	
 	@RequestMapping(value= PREFIX_USERS + SUFFIX_CRUD, method=RequestMethod.POST, params="Delete")
-	public String deletedDocumentUser(@ModelAttribute("baseFE") UserAppDto baseFE, BindingResult result, ModelMap model, 
+	public String deletedDocumentUser(@ModelAttribute("baseFE") UserAppFto baseFE, BindingResult result, ModelMap model, 
 			@RequestParam("Delete") String valueDelete) throws IOException{
-		return super.deleteDocument(baseFE, result, model, valueDelete);
+		return super.deleteDocument((baseFE), result, model, valueDelete);
 	}
 
 	@RequestMapping(value=PREFIX_USERS + SUFFIX_CRUD, method=RequestMethod.POST, params="Download")
-	public String downloaddDocumentUser(@ModelAttribute("baseFE") UserAppDto baseFE, BindingResult result, ModelMap model, 
+	public String downloaddDocumentUser(@ModelAttribute("baseFE") UserAppFto baseFE, BindingResult result, ModelMap model, 
 			@RequestParam("Download") String valueDownload, HttpServletResponse response) throws IOException{
 		return super.downloadDocument(baseFE, result, model, valueDownload, response);
 	}
 
 	@RequestMapping(value=PREFIX_USERS + SUFFIX_CRUD, method=RequestMethod.POST, params="Upload")
-	public String uploadDocumentUser(@ModelAttribute("baseFE") UserAppDto baseFE, BindingResult result, 
+	public String uploadDocumentUser(@ModelAttribute("baseFE") UserAppFto baseFE, BindingResult result, 
 			ModelMap model, HttpServletRequest request) throws IOException{
-		return super.uploadDocument(baseFE, result, model, request);
+		return super.uploadDocument((baseFE), result, model, request);
 	}
 
 }

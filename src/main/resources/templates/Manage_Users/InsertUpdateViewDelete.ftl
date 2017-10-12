@@ -86,7 +86,7 @@
 	            </div>
 				<div class="col-xs-6 placeholder">
 	             <label class="control-label"><@spring.message 'label.user.role' /></label>
-				 <@spring.formSingleSelect "baseFE.rolesUsers.id", roles, 'class="form-control" required'/>
+				 <@spring.formSingleSelect "baseFE.roleUser.id", roles, 'class="form-control" required'/>
 	             <@spring.showErrors "</br>", "form-control alert-danger" />
 	            </div>
             </div>
@@ -156,7 +156,7 @@
 			<#if baseFE.state!="C">	     		
      			<#-- <button class="btn btn-default btn-primary" name="submit" type="submit" value="backToList">Back</button>
      			-->
-     			<a href="<@spring.url '/Manage_Orders/Search' />" class="btn btn-info" role="button">Back</a>
+     			<a href="<@spring.url '/Manage_Users/Search' />" class="btn btn-info" role="button">Back</a>
      		</#if>
      	  </div>
     	</form>

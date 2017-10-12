@@ -7,6 +7,7 @@ import org.springframework.beans.BeanUtils;
 
 import com.vince.boot.demo.webapp.be.entity.BaseEntity;
 import com.vince.boot.demo.webapp.be.entity.GeoLocal;
+import com.vince.boot.demo.webapp.be.entity.RoleUser;
 
 public class RoleUserDto extends BaseDto {
 
@@ -63,9 +64,9 @@ public class RoleUserDto extends BaseDto {
 		return dto;
 	}
 
-	public BaseEntity createEntityFromDto(BaseDto dto) {
+	public RoleUser createEntityFromDto(BaseDto dto) {
 		if (dto == null) return null;
-		GeoLocal entity = new GeoLocal();
+		RoleUser entity = new RoleUser();
 		BeanUtils.copyProperties(dto, entity);
 		return entity;
 	}

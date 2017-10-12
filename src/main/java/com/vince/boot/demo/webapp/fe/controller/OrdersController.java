@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.vince.boot.demo.webapp.beAndFe.dto.BaseDto;
 import com.vince.boot.demo.webapp.beAndFe.dto.OrderJobDto;
+import com.vince.boot.demo.webapp.fe.fto.BaseFto;
+import com.vince.boot.demo.webapp.fe.fto.OrderJobFto;
 
 
 @Controller
@@ -119,7 +121,7 @@ public class OrdersController extends BaseController {
 //	}
 
 	@GetMapping(value = {PREFIX_ORDERS+SUFFIX_CRUD, PREFIX_ORDERS+SUFFIX_CRUD + "/{ids}/{type}"})
-	public String getRequest(ModelMap model, BaseDto baseFE, @PathVariable Map<String, String> pathVariablesMap) {
+	public String getRequest(ModelMap model, BaseFto baseFE, @PathVariable Map<String, String> pathVariablesMap) {
 		String state = baseFE.getState();
 		Long id = null;
 		
@@ -128,7 +130,7 @@ public class OrdersController extends BaseController {
 		
 		if(!StringUtils.isEmpty(ids)){
 			id = new Long(ids);
-			baseFE = baseEntityToDtoRepository.findOneDto(new OrderJobDto(id));
+			baseFE = OrderJobFto.createFtoFromDto(baseEntityToDtoRepository.findOneDto(new OrderJobDto(id)));
 		}else {
 			
 		}
@@ -137,14 +139,14 @@ public class OrdersController extends BaseController {
 			if(!StringUtils.isEmpty(type) ){
 				state = type;
 			}else {
-				baseFE = new OrderJobDto();
+				baseFE = new OrderJobFto();
 				state = "C";
 			}
 		}
 		baseFE.setState(state);			
 		
 		if("C".equals(baseFE.getState()) || "U".equals(baseFE.getState())) {
-			addEmptyBlob(baseFE);
+			addEmptyBlob((baseFE));
 		}
 		
 		model.addAttribute("baseFE", baseFE);
@@ -183,21 +185,21 @@ public class OrdersController extends BaseController {
 
 	
 	@RequestMapping(value= PREFIX_ORDERS + SUFFIX_CRUD, method=RequestMethod.POST, params="Delete")
-	public String deletedDocumentOrder(@ModelAttribute("baseFE") OrderJobDto baseFE, BindingResult result, ModelMap model, 
+	public String deletedDocumentOrder(@ModelAttribute("baseFE") OrderJobFto baseFE, BindingResult result, ModelMap model, 
 			@RequestParam("Delete") String valueDelete) throws IOException{
-		return super.deleteDocument(baseFE, result, model, valueDelete);
+		return super.deleteDocument((baseFE), result, model, valueDelete);
 	}
 
 	@RequestMapping(value=PREFIX_ORDERS + SUFFIX_CRUD, method=RequestMethod.POST, params="Download")
-	public String downloaddDocumentOrder(@ModelAttribute("baseFE") OrderJobDto baseFE, BindingResult result, ModelMap model, 
+	public String downloaddDocumentOrder(@ModelAttribute("baseFE") OrderJobFto baseFE, BindingResult result, ModelMap model, 
 			@RequestParam("Download") String valueDownload, HttpServletResponse response) throws IOException{
 		return super.downloadDocument(baseFE, result, model, valueDownload, response);
 	}
 
 	@RequestMapping(value=PREFIX_ORDERS + SUFFIX_CRUD, method=RequestMethod.POST, params="Upload")
-	public String uploadDocumentOrder(@ModelAttribute("baseFE") OrderJobDto baseFE, BindingResult result, 
+	public String uploadDocumentOrder(@ModelAttribute("baseFE") OrderJobFto baseFE, BindingResult result, 
 			ModelMap model, HttpServletRequest request) throws IOException{
-		return super.uploadDocument(baseFE, result, model, request);
+		return super.uploadDocument((baseFE), result, model, request);
 	}
 
 }

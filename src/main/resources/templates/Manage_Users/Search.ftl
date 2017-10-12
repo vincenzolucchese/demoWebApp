@@ -38,7 +38,7 @@
 					      <td>${child.username}</td>
 		                  <td>${child.firstName}</td>
 		                  <td>${child.lastName}</td>
-		                  <td>${child.rolesUsers.roleDescription}</td>
+		                  <td>${child.roleUser.roleDescription}</td>
 		                  <td>
 		                  	<a class="glyphicon glyphicon-zoom-in" href="<@spring.url '/Manage_Users/InsertUpdateViewDelete/'/>${child.id}/R" title="Read"></a>
 		                    <a class="glyphicon glyphicon-pencil" href="<@spring.url '/Manage_Users/InsertUpdateViewDelete/'/>${child.id}/U" title="Update"></a>

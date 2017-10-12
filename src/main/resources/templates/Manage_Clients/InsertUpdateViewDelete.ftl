@@ -138,7 +138,7 @@
 			<#if baseFE.state!="C">	     		
      			<#-- <button class="btn btn-default btn-primary" name="submit" type="submit" value="backToList">Back</button>
      			-->
-     			<a href="<@spring.url '/Manage_Orders/Search' />" class="btn btn-info" role="button">Back</a>
+     			<a href="<@spring.url '/Manage_Clients/Search' />" class="btn btn-info" role="button">Back</a>
      		</#if>
      	  </div>
     	</form>

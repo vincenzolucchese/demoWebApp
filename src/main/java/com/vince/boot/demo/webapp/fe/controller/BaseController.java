@@ -27,6 +27,8 @@ import com.vince.boot.demo.webapp.beAndFe.dto.BaseDto;
 import com.vince.boot.demo.webapp.beAndFe.dto.BlobStoreDto;
 import com.vince.boot.demo.webapp.beAndFe.dto.ClientAppDto;
 import com.vince.boot.demo.webapp.beAndFe.dto.RoleUserDto;
+import com.vince.boot.demo.webapp.fe.fto.BaseFto;
+import com.vince.boot.demo.webapp.fe.fto.BlobStoreFto;
 
 public abstract class BaseController {
 	
@@ -79,16 +81,16 @@ public abstract class BaseController {
     	return clientsMap;
     }
     
-    protected void addEmptyBlob(BaseDto baseDto) {
+    protected void addEmptyBlob(BaseFto baseDto) {
     	boolean canAdd = true;
-    	for (BlobStoreDto each : baseDto.getFileDocuments()) {
+    	for (BlobStoreFto each : baseDto.getFileDocuments()) {
 			if(each.getId()==null) {
 				canAdd = false;
 				break;
 			}
 		}
     	if(canAdd) {
-    		baseDto.getFileDocuments().add(new BlobStoreDto());    		
+    		baseDto.getFileDocuments().add(new BlobStoreFto());    		
     	}
     }
         
@@ -97,9 +99,9 @@ public abstract class BaseController {
      * MANAGE FILE
      ********************************************/
     
-    public abstract String getRequest(ModelMap model, BaseDto baseFE, Map<String, String> mappa);
+    public abstract String getRequest(ModelMap model, BaseFto baseFE, Map<String, String> mappa);
     
-	public String deleteDocument(@ModelAttribute("baseFE") BaseDto baseFE, BindingResult result, ModelMap model, 
+	public String deleteDocument(@ModelAttribute("baseFE") BaseFto baseFE, BindingResult result, ModelMap model, 
 			@RequestParam("Delete") String valueDelete) throws IOException{
 
 		Long id = new Long(valueDelete.substring(valueDelete.lastIndexOf("_")+1, valueDelete.length()));
@@ -112,7 +114,7 @@ public abstract class BaseController {
 		return getRequest(model, baseFE, new HashMap<String, String>());
 	}
 
-	public String downloadDocument(@ModelAttribute("baseFE") BaseDto baseFE, BindingResult result, ModelMap model, 
+	public String downloadDocument(@ModelAttribute("baseFE") BaseFto baseFE, BindingResult result, ModelMap model, 
 			@RequestParam("Download") String valueDownload, HttpServletResponse response) throws IOException{
 
 		Long id = new Long(valueDownload.substring(valueDownload.lastIndexOf("_")+1, valueDownload.length()));
@@ -126,7 +128,7 @@ public abstract class BaseController {
  		return null;
 	}
 
-	public String uploadDocument(@ModelAttribute("baseFE") BaseDto baseFE, BindingResult result, 
+	public String uploadDocument(@ModelAttribute("baseFE") BaseFto baseFE, BindingResult result, 
 			ModelMap model, HttpServletRequest request) throws IOException{
 	
 		int posix = baseFE.getFileDocuments().size()-1;
@@ -153,7 +155,7 @@ public abstract class BaseController {
 
 		} 
 
-		baseEntityToDtoRepository.saveDocument(baseFE, getCurrentUsername());
+		baseEntityToDtoRepository.saveDocument(BaseFto.createDtoFromFto(baseFE), getCurrentUsername());
 		return getRequest(model, baseFE, new HashMap<String, String>());
 	}
 
