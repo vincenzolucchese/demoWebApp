@@ -5,7 +5,6 @@ import java.util.Set;
 
 import org.springframework.beans.BeanUtils;
 
-import com.vince.boot.demo.webapp.be.entity.BaseEntity;
 import com.vince.boot.demo.webapp.be.entity.TypeDocument;
 
 public class TypeDocumentDto extends BaseDto {

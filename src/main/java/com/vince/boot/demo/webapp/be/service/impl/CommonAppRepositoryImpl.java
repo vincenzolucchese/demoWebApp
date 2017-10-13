@@ -26,7 +26,6 @@ import javax.sql.DataSource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.data.domain.Example;
@@ -35,26 +34,24 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
-import com.vince.boot.demo.webapp.be.entity.BaseEntity;
-import com.vince.boot.demo.webapp.be.entity.BlobStore;
 import com.vince.boot.demo.webapp.be.entity.ClientApp;
 import com.vince.boot.demo.webapp.be.entity.OrderJob;
-import com.vince.boot.demo.webapp.be.entity.TypeDocument;
+import com.vince.boot.demo.webapp.be.entity.RoleUser;
 import com.vince.boot.demo.webapp.be.entity.UserApp;
 import com.vince.boot.demo.webapp.be.service.BaseEntityRepository;
-import com.vince.boot.demo.webapp.be.service.CommonDtoRepository;
-import com.vince.boot.demo.webapp.be.service.OrderJobRepository;
 import com.vince.boot.demo.webapp.be.service.BlobStoreRepository;
 import com.vince.boot.demo.webapp.be.service.ClientAppRepository;
+import com.vince.boot.demo.webapp.be.service.CommonDtoRepository;
+import com.vince.boot.demo.webapp.be.service.OrderJobRepository;
+import com.vince.boot.demo.webapp.be.service.RoleUserRepository;
 import com.vince.boot.demo.webapp.be.service.TypeDocumentRepository;
 import com.vince.boot.demo.webapp.be.service.UserAppRepository;
 import com.vince.boot.demo.webapp.be.utility.PageableUtils;
-import com.vince.boot.demo.webapp.beAndFe.dto.BaseDto;
 import com.vince.boot.demo.webapp.beAndFe.dto.BlobStoreDto;
 import com.vince.boot.demo.webapp.beAndFe.dto.ClientAppDto;
 import com.vince.boot.demo.webapp.beAndFe.dto.OrderJobDto;
+import com.vince.boot.demo.webapp.beAndFe.dto.RoleUserDto;
 import com.vince.boot.demo.webapp.beAndFe.dto.UserAppDto;
 
 /**
@@ -86,6 +83,8 @@ public class CommonAppRepositoryImpl extends JdbcDaoSupport implements CommonDto
 	UserAppRepository userAppRepository;
 	@Autowired
 	OrderJobRepository orderJobRepository;
+	@Autowired
+	RoleUserRepository roleUserRepository;
 
 	/**
 	 * Configure the entity manager to be used.	 * 
@@ -511,304 +510,131 @@ public class CommonAppRepositoryImpl extends JdbcDaoSupport implements CommonDto
 
 	@Override
 	public List<OrderJobDto> saveOrderJobDto(Iterable<OrderJobDto> entitiesDto) {
-		// TODO Auto-generated method stub
-		return null;
+		if (entitiesDto == null) {
+			return null;
+		}
+		List<OrderJobDto> result = new ArrayList<OrderJobDto>();
+		for (OrderJobDto each : entitiesDto) {
+			result.add(saveOrderJobDto(each, USER_SYSTEM, getSysdateFromDBJdbc()));
+		}
+		return result;
 	}
 
 	@Override
 	public List<OrderJobDto> saveOrderJobDto(Iterable<OrderJobDto> entitiesDto, String user) {
-		// TODO Auto-generated method stub
-		return null;
+		if (entitiesDto == null) {
+			return null;
+		}
+		List<OrderJobDto> result = new ArrayList<OrderJobDto>();
+		for (OrderJobDto each : entitiesDto) {
+			result.add(saveOrderJobDto(each, user, getSysdateFromDBJdbc()));
+		}
+		return result;
 	}
 
 	@Override
 	public List<OrderJobDto> saveOrderJobDto(Iterable<OrderJobDto> entitiesDto, String user, Date date) {
-		// TODO Auto-generated method stub
-		return null;
+		if (entitiesDto == null) {
+			return null;
+		}
+		List<OrderJobDto> result = new ArrayList<OrderJobDto>();
+		for (OrderJobDto each : entitiesDto) {
+			result.add(saveOrderJobDto(each, user, date));
+		}
+		return result;
 	}
 
 	@Override
 	public OrderJobDto findOneDto(OrderJobDto filter) {
-		// TODO Auto-generated method stub
-		return null;
+		OrderJob entity = OrderJobDto.createEntityFromDto(filter);
+		Example<OrderJob> example = Example.of(entity);
+		return OrderJobDto.createDtoFromEntity(orderJobRepository.findOne(example));
 	}
 
 	@Override
 	public List<OrderJobDto> findAllDto(OrderJobDto filter) {
-		// TODO Auto-generated method stub
-		return null;
+		OrderJob entity = OrderJobDto.createEntityFromDto(filter);
+		Example<OrderJob> example = Example.of(entity);
+		List<OrderJob> listEntity = orderJobRepository.findAll(example);
+		if(listEntity==null){
+			return null;
+		}
+		List<OrderJobDto> lista = new ArrayList<OrderJobDto>();
+		for (OrderJob each : listEntity) {
+			lista.add(OrderJobDto.createDtoFromEntity(each));
+		}
+		return lista;
 	}
 
 	@Override
 	public PagedListHolder<OrderJobDto> findDtoPagedByCriteria(OrderJobDto searchBean, int i,
 			Integer displayTagObjectsPerPage, String sort, boolean b) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Long deleteDto(OrderJobDto entityDto) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	
-	/**
-	 * Save a entity with the strategy about user inserter and updater. get sysdate from db in input.
-	 * Each Entity extends BaseEntity and Casting on entity in input
-	 * Allow to use only BaseEntityRepository on BaseEntity
-	 * @param entity
-	 * @param user
-	 * @return
-	 */
-	public BaseEntity saveCustom(BaseEntity entity, String user, Date dateDB) {
-		if(entity.isNew()){
-			entity.setUserInsert(user);
-			entity.setTimeInsert(dateDB);
-			entity.setYearRefer(dateDB);
-		}else {
-			entity.setUserInsert(user);
-			entity.setTimeInsert(dateDB);
-			entity.setYearRefer(dateDB);
-			
-			entity.setUserUpdate(user);
-			entity.setTimeUpdate(dateDB);
-		}		
-		return baseEntityRepository.save(entity);
-	}
-	
-	/**
-	 * Save a entity with the strategy about user inserter and updater. get sysdate from db.
-	 * Each Entity extends BaseEntity and Casting on entity in input
-	 * Allow to use only BaseEntityRepository on BaseEntity
-	 * @param entity
-	 * @param user
-	 * @return
-	 */
-	public BaseEntity saveCustom(BaseEntity entity, String user) {
-		Date dateDB = getSysdateFromDBJdbc();
-		if(entity.isNew()){
-			entity.setUserInsert(user);
-			entity.setTimeInsert(dateDB);
-			entity.setYearRefer(dateDB);
-		}else {
-			entity.setUserInsert(user);
-			entity.setTimeInsert(dateDB);
-			entity.setYearRefer(dateDB);
-			
-			entity.setUserUpdate(user);
-			entity.setTimeUpdate(dateDB);
-		}		
-		return baseEntityRepository.save(entity);
-	}
-	
-	/**
-	 * Save a entity with the strategy about user inserter and updater. get sysdate from db.
-	 * Each Entity extends BaseEntity and Casting on entity in input
-	 * Allow to use only BaseEntityRepository on BaseEntity
-	 * @param entity
-	 * @param user
-	 * @return
-	 */
-	public BaseEntity saveCustom(BaseEntity entity) {
-		Date dateDB = getSysdateFromDBJdbc();
-		if(entity.isNew()){
-			entity.setUserInsert(USER_SYSTEM);
-			entity.setTimeInsert(dateDB);
-			entity.setYearRefer(dateDB);
-		}else {
-			entity.setUserInsert(USER_SYSTEM);
-			entity.setTimeInsert(dateDB);
-			entity.setYearRefer(dateDB);
-			
-			entity.setUserUpdate(USER_SYSTEM);
-			entity.setTimeUpdate(dateDB);
-		}		
-		return baseEntityRepository.save(entity);
-	}
-	
-	/**
-	 * Save a collection of entity.
-	 * Each Entity extends BaseEntity and Casting on entity in input
-	 * Allow to use only BaseEntityRepository on BaseEntity
-	 * @param entity
-	 * @param user
-	 * @return
-	 */
-	@Transactional
-	public List<BaseEntity> saveCustom(Iterable<BaseEntity> entities, String user) {
-		List<BaseEntity> result = new ArrayList<BaseEntity>();
-		if (entities == null) {
-			return result;
-		}
-		Date dateDB = getSysdateFromDBJdbc();
-		for (BaseEntity entity : entities) {
-			result.add(saveCustom(entity, user, dateDB));
-		}
-		return result;
-	}
-
-	/**********************************************************************************************************
-	 * IMPLEMETATION OF BaseEntityToDtoRepository 
-	 * These method can be used from FE-SIDE that know only about Dtos Bean, mirror of Entities.
-	 * All methods use as primitive repository the BaseEntityRepository with the AutoCasting allow
-	 * to implement the simple CRUD about all Entities.
-	 * Is the abstract method createEntityFromDto of BaseDto that allow the above Autocasting.
-	 * ...working about pageable if is possibile, if not is necessary utilize other JPA pattern. 	
-	 **********************************************************************************************************/
-	@Override
-	public BaseDto saveDto(BaseDto dto) {
-		BaseEntity entity = dto.createEntityFromDto(dto);
-		entity = commonAppRepositoryImpl.saveCustom(entity);		
-		return dto.createDtoFromEntity(entity);
-	}
-
-	@Override
-	public BaseDto saveDto(BaseDto dto, String user) {
-		BaseEntity entity = dto.createEntityFromDto(dto);
-		entity = commonAppRepositoryImpl.saveCustom(entity, user);		
-		return dto.createDtoFromEntity(entity);
-	}
-
-	@Override
-	public BaseDto saveDto(BaseDto dto, String user, Date date) {
-		BaseEntity entity = dto.createEntityFromDto(dto);
-		entity = commonAppRepositoryImpl.saveCustom(entity, user, date);		
-		return dto.createDtoFromEntity(entity);
-	}
-
-	@Override
-	@Transactional
-	public List<BaseDto> saveDto(Iterable<BaseDto> entitiesDto) {
-		if(entitiesDto == null) return null;
-		List<BaseDto> lista = new ArrayList<BaseDto>();
-		for (BaseDto each : entitiesDto) {
-			lista.add(this.saveDto(each));
-		}
-		return lista;
-	}
-
-	@Override
-	@Transactional
-	public List<BaseDto> saveDto(Iterable<BaseDto> entitiesDto, String user) {
-		if(entitiesDto == null) return null;
-		List<BaseDto> lista = new ArrayList<BaseDto>();
-		for (BaseDto each : entitiesDto) {
-			lista.add(this.saveDto(each, user));
-		}
-		return lista;
-	}
-
-	@Override
-	@Transactional
-	public List<BaseDto> saveDto(Iterable<BaseDto> entitiesDto, String user, Date date) {
-		if(entitiesDto == null) return null;
-		List<BaseDto> lista = new ArrayList<BaseDto>();
-		for (BaseDto each : entitiesDto) {
-			lista.add(this.saveDto(each, user, date));
-		}
-		return lista;
-	}
-
-	@Override
-	@Transactional
-	public BaseDto findOneDto(BaseDto filter) {	
-		BaseEntity entity = filter.createEntityFromDto(filter);
-		Example<BaseEntity> example = Example.of(entity);
-		return filter.createDtoFromEntity(baseEntityRepository.findOne(example));
-	}
-
-	@Override
-	@Transactional
-	public List<BaseDto> findAllDto(BaseDto filter) {
-		List<BaseDto> listaDto = null;
-		BaseEntity entity = filter.createEntityFromDto(filter);
-		Example<BaseEntity> example = Example.of(entity);
-		List<BaseEntity> listaEntity = baseEntityRepository.findAll(example);
-		if(listaEntity !=null) {
-			listaDto = new ArrayList<BaseDto>();
-			for (BaseEntity eachEntity : listaEntity) {
-				listaDto.add(filter.createDtoFromEntity(eachEntity));
-			}
-		}else {
-			listaDto = null;			
-		}
-		return listaDto;
-	}
-
-	@Override
-	@Transactional
-	public PagedListHolder<BaseDto> findDtoPagedByCriteria(BaseDto searchBean, int i, Integer displayTagObjectsPerPage, String sort, boolean b) {
 		Pageable pageable = PageableUtils.constructPageSpecification(i, displayTagObjectsPerPage.intValue(), sort, Boolean.valueOf(b));
-		Page<BaseEntity> entityPage = null;
+		Page<OrderJob> entityPage = null;
 
-		BaseEntity entity = searchBean.createEntityFromDto(searchBean);
-		Example<BaseEntity> example = Example.of(entity);
-		entityPage = baseEntityRepository.findAll(example, pageable);
+		OrderJob entity = OrderJobDto.createEntityFromDto(searchBean);
+		Example<OrderJob> example = Example.of(entity);
+		entityPage = orderJobRepository.findAll(example, pageable);
 		
 		if(entityPage == null) {
 			return null;
 		}
-		ArrayList<BaseDto> listaDto = new ArrayList<BaseDto>();
-		for (BaseEntity eachEntity : entityPage) {
-			listaDto.add(searchBean.createDtoFromEntity(eachEntity));
+		ArrayList<OrderJobDto> listaDto = new ArrayList<OrderJobDto>();
+		for (OrderJob eachEntity : entityPage) {
+			listaDto.add(OrderJobDto.createDtoFromEntity(eachEntity));
 		}
-		PagedListHolder<BaseDto> beanPage = new PagedListHolder<>(listaDto);
+		PagedListHolder<OrderJobDto> beanPage = new PagedListHolder<OrderJobDto>(listaDto);
 		return beanPage;
 	}
-	
+
 	@Override
-	public Long deleteDto(BaseDto entityDto) {
-		BaseEntity entity = entityDto.createEntityFromDto(entityDto);
-		baseEntityRepository.delete(entity);
-		return 1l;
+	public Long deleteDto(OrderJobDto entityDto) {
+		OrderJob entity = OrderJobDto.createEntityFromDto(entityDto);
+		if(entity.getId()!=null){
+			orderJobRepository.delete(entity.getId());
+		}else{
+			orderJobRepository.delete(entity);			
+		}		
+		return null;
 	}
 	
-	@Override
-	public void saveDocument(BaseDto baseFE, String username) throws IOException {
-
-		BlobStore entity = new BlobStore();
-		int posix = baseFE.getFileDocuments().size()-1;
-		BlobStoreDto blobStoreFE = baseFE.getFileDocuments().get(posix);
-
-		MultipartFile multipartFile = blobStoreFE.getFile();
-
-		entity.setFilename(multipartFile.getOriginalFilename());
-		entity.setDescription(blobStoreFE.getDescription());
-		entity.setContentType(multipartFile.getContentType());
-		
-		TypeDocument typeDocument = new TypeDocument(new Long(1));
-		entity.setTypeDocument(typeDocument);
-		entity.setBlobData(multipartFile.getBytes());
-
-		entity = (BlobStore) saveCustom(entity, username);
-		
-		BeanUtils.copyProperties(entity, blobStoreFE);
-		
-		baseFE.getFileDocuments().set(posix, blobStoreFE);
-	}
-
 	@Override
 	public BlobStoreDto findOneBlobStoreDto(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return BlobStoreDto.createDtoFromEntity(blobStoreRepository.findOne(id));
 	}
 
 	@Override
 	public UserAppDto findOneUserAppDto(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return UserAppDto.createDtoFromEntity(userAppRepository.findOne(id));
 	}
 
 	@Override
 	public ClientAppDto findOneClientAppDto(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return ClientAppDto.createDtoFromEntity(clientAppRepository.findOne(id));
 	}
 
 	@Override
 	public OrderJobDto findOneOrderJobDto(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return OrderJobDto.createDtoFromEntity(orderJobRepository.findOne(id));
+	}
+
+	@Override
+	public RoleUserDto findOneRoleUserDto(Long id) {
+		return RoleUserDto.createDtoFromEntity(roleUserRepository.findOne(id));
+	}
+
+	@Override
+	public List<RoleUserDto> findAllDto(RoleUserDto filter) {
+		RoleUser entity = RoleUserDto.createEntityFromDto(filter);
+		Example<RoleUser> example = Example.of(entity);
+		List<RoleUser> listEntity = roleUserRepository.findAll(example);
+		if(listEntity==null){
+			return null;
+		}
+		List<RoleUserDto> lista = new ArrayList<RoleUserDto>();
+		for (RoleUser each : listEntity) {
+			lista.add(RoleUserDto.createDtoFromEntity(each));
+		}
+		return lista;
 	}
 }

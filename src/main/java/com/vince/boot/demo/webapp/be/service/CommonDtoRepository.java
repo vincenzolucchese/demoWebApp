@@ -6,14 +6,21 @@ import java.util.List;
 
 import org.springframework.beans.support.PagedListHolder;
 
-import com.vince.boot.demo.webapp.beAndFe.dto.BaseDto;
 import com.vince.boot.demo.webapp.beAndFe.dto.BlobStoreDto;
 import com.vince.boot.demo.webapp.beAndFe.dto.ClientAppDto;
 import com.vince.boot.demo.webapp.beAndFe.dto.OrderJobDto;
+import com.vince.boot.demo.webapp.beAndFe.dto.RoleUserDto;
 import com.vince.boot.demo.webapp.beAndFe.dto.UserAppDto;
 
 
 public interface CommonDtoRepository {
+	
+	/*
+	 * RoleUserDto
+	 */
+	RoleUserDto findOneRoleUserDto(Long id);
+	List<RoleUserDto> findAllDto(RoleUserDto filter);
+	
 	/*
 	 * BlobStoreDto
 	 */
@@ -71,24 +78,4 @@ public interface CommonDtoRepository {
 	PagedListHolder<OrderJobDto> findDtoPagedByCriteria(OrderJobDto searchBean, int i, Integer displayTagObjectsPerPage, String sort, boolean b) ;
 	Long deleteDto(OrderJobDto entityDto);
 	
-
-	/*
-	 * to deprecate
-	 */
-	BaseDto saveDto(BaseDto entityDto);
-	BaseDto saveDto(BaseDto entityDto, String user);
-	BaseDto saveDto(BaseDto entityDto, String user, Date date);
-	
-	List<BaseDto> saveDto(Iterable<BaseDto> entitiesDto);
-	List<BaseDto> saveDto(Iterable<BaseDto> entitiesDto, String user);
-	List<BaseDto> saveDto(Iterable<BaseDto> entitiesDto, String user, Date date);
-	
-	BaseDto findOneDto(BaseDto filter);
-	List<BaseDto> findAllDto(BaseDto filter);
-	
-	PagedListHolder<BaseDto> findDtoPagedByCriteria(BaseDto searchBean, int i, Integer displayTagObjectsPerPage, String sort, boolean b) ;
-	
-	public void saveDocument(BaseDto baseFE, String username) throws IOException;	
-	
-	Long deleteDto(BaseDto entityDto);
 }

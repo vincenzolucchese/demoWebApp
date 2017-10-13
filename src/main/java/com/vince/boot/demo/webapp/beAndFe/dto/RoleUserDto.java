@@ -5,8 +5,6 @@ import java.util.Set;
 
 import org.springframework.beans.BeanUtils;
 
-import com.vince.boot.demo.webapp.be.entity.BaseEntity;
-import com.vince.boot.demo.webapp.be.entity.GeoLocal;
 import com.vince.boot.demo.webapp.be.entity.RoleUser;
 
 public class RoleUserDto extends BaseDto {

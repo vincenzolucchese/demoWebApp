@@ -3,10 +3,10 @@ package com.vince.boot.demo.webapp.be.service;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 
-import com.vince.boot.demo.webapp.be.entity.OrderJob;
+import com.vince.boot.demo.webapp.be.entity.RoleUser;
 
 
-public interface OrderJobRepository extends JpaRepository<OrderJob, Long>, QueryDslPredicateExecutor<OrderJob> {
+public interface RoleUserRepository extends JpaRepository<RoleUser, Long>, QueryDslPredicateExecutor<RoleUser> {
 
 	
 }

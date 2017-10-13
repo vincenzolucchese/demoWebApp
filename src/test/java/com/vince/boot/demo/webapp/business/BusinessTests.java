@@ -11,9 +11,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.vince.boot.demo.webapp.be.service.BaseEntityRepository;
-import com.vince.boot.demo.webapp.be.service.CommonDtoRepository;
 import com.vince.boot.demo.webapp.be.service.BlobStoreRepository;
 import com.vince.boot.demo.webapp.be.service.ClientAppRepository;
+import com.vince.boot.demo.webapp.be.service.CommonDtoRepository;
 import com.vince.boot.demo.webapp.be.service.TypeDocumentRepository;
 import com.vince.boot.demo.webapp.be.service.impl.CommonAppRepositoryImpl;
 

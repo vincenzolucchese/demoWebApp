@@ -7,8 +7,6 @@ import java.util.Set;
 
 import org.springframework.beans.BeanUtils;
 
-import com.vince.boot.demo.webapp.be.entity.BaseEntity;
-import com.vince.boot.demo.webapp.be.entity.ClientApp;
 import com.vince.boot.demo.webapp.be.entity.OrderJob;
 
 public class OrderJobDto extends BaseDto {

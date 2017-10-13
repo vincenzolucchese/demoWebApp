@@ -1,24 +1,22 @@
 package com.vince.boot.demo.webapp.beAndFe.dto;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-
-import com.vince.boot.demo.webapp.be.entity.BaseEntity;
 
 
 public abstract class BaseDto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	protected Boolean isConvertInside = false;
 	protected Long id;
 	protected String userInsert;
 	protected String userUpdate;
 	protected Date timeInsert;
 	protected Date timeUpdate;
 	protected Date yearRefer;
+	
+	protected String state;
+	protected Boolean isConvertInside = false;
 
 	public Long getId() {
 		return this.id;
@@ -74,6 +72,14 @@ public abstract class BaseDto implements Serializable {
 
 	public void setIsConvertInside(Boolean isConvertInside) {
 		this.isConvertInside = isConvertInside;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
 	}
 	
 }

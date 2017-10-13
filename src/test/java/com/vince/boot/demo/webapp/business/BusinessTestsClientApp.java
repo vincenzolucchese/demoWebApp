@@ -13,7 +13,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.support.PagedListHolder;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -25,7 +24,6 @@ import com.vince.boot.demo.webapp.be.entity.ClientApp;
 import com.vince.boot.demo.webapp.be.entity.QClientApp;
 import com.vince.boot.demo.webapp.be.entity.RelClientBlob;
 import com.vince.boot.demo.webapp.be.entity.TypeDocument;
-import com.vince.boot.demo.webapp.beAndFe.dto.BaseDto;
 import com.vince.boot.demo.webapp.beAndFe.dto.ClientAppDto;
 
 @RunWith(SpringRunner.class)
@@ -49,7 +47,7 @@ public class BusinessTestsClientApp extends BusinessTests {
 		entity.setAddress("setAddress");
 		entity.setZipcode("12345");
 		entity.setNotes("setNotes");
-		commonAppRepositoryImpl.saveCustom(entity, "insert");
+//		commonAppRepositoryImpl.saveCustom(entity, "insert");
 
 		logger.debug(""+entity);
 	}
@@ -82,7 +80,7 @@ public class BusinessTestsClientApp extends BusinessTests {
 		blb1.setFilename("Filename");
 		blb1.setFlagActive('1');
 		blb1.setTypeDocument(typeDoc);
-		blb1 = (BlobStore) commonAppRepositoryImpl.saveCustom(blb1, user, dateDB);
+//		blb1 = (BlobStore) commonAppRepositoryImpl.saveCustom(blb1, user, dateDB);
 		
 		BlobStore blb2 = new BlobStore();
 		blb2.setBlobData(FileCopyUtils.copyToByteArray(fis2));		
@@ -91,7 +89,7 @@ public class BusinessTestsClientApp extends BusinessTests {
 		blb2.setFilename("Filename");
 		blb2.setFlagActive('1');
 		blb2.setTypeDocument(typeDoc);
-		blb2 = (BlobStore) commonAppRepositoryImpl.saveCustom(blb2, user, dateDB);
+//		blb2 = (BlobStore) commonAppRepositoryImpl.saveCustom(blb2, user, dateDB);
 		
 		HashSet<RelClientBlob> hash = new HashSet<RelClientBlob>();		
 		RelClientBlob rel1 = new RelClientBlob(entity, blb1);
@@ -99,7 +97,7 @@ public class BusinessTestsClientApp extends BusinessTests {
 		hash.add(rel1);
 		hash.add(rel2);		
 		entity.setRelClientBlobs(hash);		
-		commonAppRepositoryImpl.saveCustom(entity, user, dateDB);
+//		commonAppRepositoryImpl.saveCustom(entity, user, dateDB);
 
 		logger.debug(""+entity);
 	}
@@ -109,7 +107,7 @@ public class BusinessTestsClientApp extends BusinessTests {
 		logger.debug("...STARTING...");
 		ClientApp entity = clientAppRepository.findOne(4l);
 		logger.debug(entity.toString());
-		commonAppRepositoryImpl.saveCustom(entity, "update");
+//		commonAppRepositoryImpl.saveCustom(entity, "update");
 
 		logger.debug(""+entity);
 	}
@@ -123,7 +121,7 @@ public class BusinessTestsClientApp extends BusinessTests {
 		BooleanExpression queryExpression = qdsl.userInsert.eq("insert");
 		List<ClientApp> lista = (List<ClientApp>) clientAppRepository.findAll(queryExpression);
 		for (ClientApp each : lista) {
-			commonAppRepositoryImpl.saveCustom(each, "update1");
+//			commonAppRepositoryImpl.saveCustom(each, "update1");
 		}
 		logger.debug(""+lista);
 	}
@@ -142,7 +140,7 @@ public class BusinessTestsClientApp extends BusinessTests {
 		dto.setZipcode("12345");
 		dto.setNotes("setNotes");
 		
-		dto = (ClientAppDto) commonAppRepositoryImpl.saveDto(dto);
+//		dto = (ClientAppDto) commonAppRepositoryImpl.saveDto(dto);
 		
 		logger.debug("-- END --");
 	}

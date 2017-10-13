@@ -1,15 +1,15 @@
 package com.vince.boot.demo.webapp.beAndFe.dto;
 
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.vince.boot.demo.webapp.be.entity.BaseEntity;
 import com.vince.boot.demo.webapp.be.entity.BlobStore;
-import com.vince.boot.demo.webapp.be.entity.TypeDocument;
 
 
 public class BlobStoreDto extends BaseDto {
@@ -28,6 +28,8 @@ public class BlobStoreDto extends BaseDto {
 	private Set<RelClientBlobDto> relClientBlobs = new HashSet<RelClientBlobDto>(0);
 
 	private MultipartFile multipartFile;
+	
+	protected List<BlobStoreDto> fileDocuments = new ArrayList<BlobStoreDto>();
 	
 	
 	public BlobStoreDto() {
@@ -109,12 +111,20 @@ public class BlobStoreDto extends BaseDto {
 		this.relClientBlobs = relClientBlobs;
 	}
 	
-	public MultipartFile getFile() {
+	public MultipartFile getMultipartFile() {
 		return multipartFile;
 	}
 
-	public void setFile(MultipartFile file) {
-		this.multipartFile = file;
+	public void setMultipartFile(MultipartFile multipartFile) {
+		this.multipartFile = multipartFile;
+	}
+
+	public List<BlobStoreDto> getFileDocuments() {
+		return fileDocuments;
+	}
+
+	public void setFileDocuments(List<BlobStoreDto> fileDocuments) {
+		this.fileDocuments = fileDocuments;
 	}
 
 	/*******************************************
@@ -139,7 +149,6 @@ public class BlobStoreDto extends BaseDto {
 		entity.setTypeDocument(TypeDocumentDto.createEntityFromDto(dto.getTypeDocument()));
 		return entity;
 	}
-
 
 
 }

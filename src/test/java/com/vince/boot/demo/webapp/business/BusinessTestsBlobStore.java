@@ -62,7 +62,7 @@ public class BusinessTestsBlobStore extends BusinessTests {
 		entity.setFilename("Filename");
 		entity.setFlagActive('1');
 		entity.setTypeDocument(typeDocumentRepository.findOne(1l));
-		entity = (BlobStore) commonAppRepositoryImpl.saveCustom(entity, "insert");		
+//		entity = (BlobStore) commonAppRepositoryImpl.saveCustom(entity, "insert");		
 		
 		logger.debug(""+entity);
 	}
@@ -86,12 +86,12 @@ public class BusinessTestsBlobStore extends BusinessTests {
 		clientapp.setAddress("setAddress");
 		clientapp.setZipcode("12345");
 		clientapp.setNotes("setNotes");
-		clientapp = (ClientApp) commonAppRepositoryImpl.saveCustom(clientapp, "insert");
+//		clientapp = (ClientApp) commonAppRepositoryImpl.saveCustom(clientapp, "insert");
 
 		RelClientBlob rel1 = new RelClientBlob();
 		rel1.setBlobStore(blob);
 		rel1.setClientApp(clientapp);
-		rel1 = (RelClientBlob) commonAppRepositoryImpl.saveCustom(rel1, "insert");
+//		rel1 = (RelClientBlob) commonAppRepositoryImpl.saveCustom(rel1, "insert");
 		
 		blob = blobStoreRepository.findOne(1l);		
 		

@@ -2,7 +2,6 @@ package com.vince.boot.demo.webapp.beAndFe.dto;
 
 import org.springframework.beans.BeanUtils;
 
-import com.vince.boot.demo.webapp.be.entity.BaseEntity;
 import com.vince.boot.demo.webapp.be.entity.RelClientBlob;
 
 public class RelClientBlobDto extends BaseDto  {
