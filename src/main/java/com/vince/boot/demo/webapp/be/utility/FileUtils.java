@@ -8,15 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-/**
- * Classe che espone funzioni di utilità legate ai file.
- * 
- * @author Simone Verlengia
- * @version 1.1
- * 
- * @comment 1.1 - Aggiunti metodi per lavorare con file e cartelle temporanee. (MEV Infocamere) (Gallani)
- */
-//INTEGRAZIONE-ANEC: classe aggiunta per integrazione ANEC
+
 public class FileUtils {
 	
 	/**

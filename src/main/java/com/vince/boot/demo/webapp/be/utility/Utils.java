@@ -6,16 +6,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.Vector;
 
-/**
- * Classe simbolica destinata a contenere metodi di utilità di utilizzo
- * generale.
- *
- * @author Simone Verlengia
- * @version 3.0.0
- * 
- * @comment 3.0.0 revisione totale della classe. (Verlengia)
- */
-//INTEGRAZIONE-ANEC: classe modificata per integrazione ANEC
+
 public class Utils {
 	
 	/**

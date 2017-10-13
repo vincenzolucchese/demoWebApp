@@ -9,31 +9,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * Classe contenente i metodi di utilità relativi alla manipolazione dei
- * bean e delle loro proprietà.
- *
- * @author  Alessandro Vizzarro
- * @version 1.2.1
- * @comment 1.0.0  - aggiunti metodi: (Vizzarro)
- *                              containProperty(String[] excludedProperties,String property);
- *                              copyProperties(Object dest, Object source, String[] excludedProperties).
- * @comment 1.0.1  - aggiunto metodo copySimpleProperties(Object dest, Object source). (Verlengia)
- * @comment 1.0.3  - aggiunti metodi:  (Verlengia)
- *                              isSimpleType(Class clazz);
- *                              convertToString(Object source).
- * @comment 1.0.4  - aggiunto bugfix ai vari metodi di copia per evitare la trasformazione dei null in valori definiti. (Verlengia)
- * @comment 1.1.0  - aggiunti metodi di utilizzo comune per le proprietà di reflection. (Verlengia)
- * @comment 1.1.1  - riscritti per motivi prestazionali i metodi copyProperties e copySimpleProperties 
- *                              senza l'utilizzo delle commons.beanutils. (Verlengia)
- * @comment 1.2.0  - riscritto per motivi prestazionali il metodo copySimpleProperties implementando un sistema di caching
- * 								per il mapping delle proprietà. (Verlengia)
- * @comment 1.2.1  - modificato metodo copySimpleProperties per ottemperanza segnalazione CAST_186 (CAST_COMMONS). (Verlengia)
- *                   modificato metodo isSimpleTypes per ottemperanza segnalazione CAST_191 + CAST_192 (CAST_COMMONS). (Verlengia)
- *                   modificato metodo getMethod per ottemperanza segnalazione CAST_189 + CAST_190 (CAST_COMMONS). (Verlengia)
- *                   eliminati metodi copyPropertiesOld e copySimplePropertiesOld per ottemperanza segnalazione CAST_184 + CAST_185 + CAST_187 + CAST_188  (CAST_COMMONS). (Verlengia)
- *                   
- */
 public class BeanUtility {
 
 	/* Questo attributo statico viene usato come cache prestazionale per evitare il ripetuto ricalcolo di mapping di simpleproperties tra due classi già mappate in precedenza. */

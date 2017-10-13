@@ -3,12 +3,6 @@ package com.vince.boot.demo.webapp.be.utility;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-/**
- * Classe che mette a disposizione metodi utili per la manipolazione delle eccezioni.
- * 
- * @author Simone Verlengia
- * @version 1.0
- */
 public class ExceptionUtils {
 	
 	/**

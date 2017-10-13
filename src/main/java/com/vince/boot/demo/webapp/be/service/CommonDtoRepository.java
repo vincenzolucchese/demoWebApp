@@ -10,10 +10,17 @@ import com.vince.boot.demo.webapp.beAndFe.dto.BlobStoreDto;
 import com.vince.boot.demo.webapp.beAndFe.dto.ClientAppDto;
 import com.vince.boot.demo.webapp.beAndFe.dto.OrderJobDto;
 import com.vince.boot.demo.webapp.beAndFe.dto.RoleUserDto;
+import com.vince.boot.demo.webapp.beAndFe.dto.TypeDocumentDto;
 import com.vince.boot.demo.webapp.beAndFe.dto.UserAppDto;
 
 
 public interface CommonDtoRepository {
+	
+	/*
+	 * TypeDocumentDto
+	 */
+	TypeDocumentDto findOneTypeDocumentDto(Long id);
+	List<TypeDocumentDto> findAllDto(TypeDocumentDto filter);
 	
 	/*
 	 * RoleUserDto
@@ -25,7 +32,8 @@ public interface CommonDtoRepository {
 	 * BlobStoreDto
 	 */
 	BlobStoreDto findOneBlobStoreDto(Long id);
-	void saveDocument(BlobStoreDto entityDto, String username) throws IOException;
+	BlobStoreDto saveBlobStoreDto(BlobStoreDto entityDto, String username) throws IOException;
+	Long deleteDto(BlobStoreDto entityDto) throws IOException;
 	
 	/*
 	 * UserAppDto
@@ -33,6 +41,8 @@ public interface CommonDtoRepository {
 	UserAppDto saveUserAppDto(UserAppDto entityDto);
 	UserAppDto saveUserAppDto(UserAppDto entityDto, String user);
 	UserAppDto saveUserAppDto(UserAppDto entityDto, String user, Date date);
+	UserAppDto saveUserAppDto(UserAppDto baseFE, String currentUsername, List<BlobStoreDto> listBlobs) throws IOException;
+	
 	List<UserAppDto> saveUserAppDto(Iterable<UserAppDto> entitiesDto);
 	List<UserAppDto> saveUserAppDto(Iterable<UserAppDto> entitiesDto, String user);
 	List<UserAppDto> saveUserAppDto(Iterable<UserAppDto> entitiesDto, String user, Date date);
@@ -47,6 +57,7 @@ public interface CommonDtoRepository {
 	/*
 	 * ClientAppDto
 	 */
+	ClientAppDto saveClientAppDto(ClientAppDto entityDto, String currentUsername, List<BlobStoreDto> listBlobs) throws IOException;
 	ClientAppDto saveClientAppDto(ClientAppDto entityDto);
 	ClientAppDto saveClientAppDto(ClientAppDto entityDto, String user);
 	ClientAppDto saveClientAppDto(ClientAppDto entityDto, String user, Date date);
@@ -64,6 +75,7 @@ public interface CommonDtoRepository {
 	/*
 	 * OrderJobDto
 	 */
+	OrderJobDto saveOrderJobDto(OrderJobDto entityDto, String currentUsername, List<BlobStoreDto> listBlobs) throws IOException;
 	OrderJobDto saveOrderJobDto(OrderJobDto entityDto);
 	OrderJobDto saveOrderJobDto(OrderJobDto entityDto, String user);
 	OrderJobDto saveOrderJobDto(OrderJobDto entityDto, String user, Date date);

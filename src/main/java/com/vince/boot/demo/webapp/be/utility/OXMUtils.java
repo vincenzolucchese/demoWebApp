@@ -3,16 +3,7 @@ package com.vince.boot.demo.webapp.be.utility;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Classe contenente i metodi di utilità relativi alla manipolazione degli 
- * oggetti salvati in formato XML.
- *
- * @author  Simone Verlengia
- * @version 1.0.2
- * @comment 1.0.1 - aggiunti metodi convertStringIdToString, findStringId, findComuneFromLocalizzazioneGeografica, findCapFromLocalizzazioneGeografica (Verlengia).
- * @comment 1.0.2 - aggiunto metodo removeLeadingZerosFromNumericString (Verlengia).
- * @comment 1.0.3 - modificato metodo findId per ottemperanza segnalazione CAST_195 + CAST_196 (CAST_COMMONS). (Verlengia)
- */
+
 public class OXMUtils {
 	
 	private final static String separatoreStandard = " : ";

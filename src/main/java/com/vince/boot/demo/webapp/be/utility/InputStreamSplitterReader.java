@@ -7,19 +7,6 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 
-/**
- * Classe derivata dall'oggetto java.io.InputStreamReader. E' intesa per essere utilizzata come filtro per convertire in tempo reale
- * stream di dati in formato testo fixed-length privi di separatore di riga. Questa classe legge lo stream dati restituendone uno
- * identico ma addizionato di separatori di riga.
- * Per poter istanziare questo reader è necessario indicare sempre la lunghezza massima della riga di intestazione e delle righe
- * dei dati nonchè il codice numerico del carattere da usare come separatore di riga.
- * 
- * N.B.: eventuali caratteri di fine riga già presenti nello stream vengono eliminati.
- *  
- * @author   Simone Verlengia
- * @version  1.0.0
- * @see  InputStreamReader
- */
 public class InputStreamSplitterReader extends InputStreamReader {
 	
 	int headerMaxLength; //lunghezza dell'header

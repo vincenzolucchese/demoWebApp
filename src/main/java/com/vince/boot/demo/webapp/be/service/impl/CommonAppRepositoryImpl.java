@@ -35,15 +35,23 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.vince.boot.demo.webapp.be.entity.BlobStore;
 import com.vince.boot.demo.webapp.be.entity.ClientApp;
 import com.vince.boot.demo.webapp.be.entity.OrderJob;
+import com.vince.boot.demo.webapp.be.entity.RelClientBlob;
+import com.vince.boot.demo.webapp.be.entity.RelOrderBlob;
+import com.vince.boot.demo.webapp.be.entity.RelUserBlob;
 import com.vince.boot.demo.webapp.be.entity.RoleUser;
+import com.vince.boot.demo.webapp.be.entity.TypeDocument;
 import com.vince.boot.demo.webapp.be.entity.UserApp;
 import com.vince.boot.demo.webapp.be.service.BaseEntityRepository;
 import com.vince.boot.demo.webapp.be.service.BlobStoreRepository;
 import com.vince.boot.demo.webapp.be.service.ClientAppRepository;
 import com.vince.boot.demo.webapp.be.service.CommonDtoRepository;
 import com.vince.boot.demo.webapp.be.service.OrderJobRepository;
+import com.vince.boot.demo.webapp.be.service.RelClientBlobRepository;
+import com.vince.boot.demo.webapp.be.service.RelOrderBlobRepository;
+import com.vince.boot.demo.webapp.be.service.RelUserBlobRepository;
 import com.vince.boot.demo.webapp.be.service.RoleUserRepository;
 import com.vince.boot.demo.webapp.be.service.TypeDocumentRepository;
 import com.vince.boot.demo.webapp.be.service.UserAppRepository;
@@ -52,6 +60,7 @@ import com.vince.boot.demo.webapp.beAndFe.dto.BlobStoreDto;
 import com.vince.boot.demo.webapp.beAndFe.dto.ClientAppDto;
 import com.vince.boot.demo.webapp.beAndFe.dto.OrderJobDto;
 import com.vince.boot.demo.webapp.beAndFe.dto.RoleUserDto;
+import com.vince.boot.demo.webapp.beAndFe.dto.TypeDocumentDto;
 import com.vince.boot.demo.webapp.beAndFe.dto.UserAppDto;
 
 /**
@@ -85,7 +94,14 @@ public class CommonAppRepositoryImpl extends JdbcDaoSupport implements CommonDto
 	OrderJobRepository orderJobRepository;
 	@Autowired
 	RoleUserRepository roleUserRepository;
+	@Autowired
+	RelUserBlobRepository relUserBlobRepository;
+	@Autowired
+	RelOrderBlobRepository relOrderBlobRepository;
+	@Autowired
+	RelClientBlobRepository relClientBlobRepository;
 
+	
 	/**
 	 * Configure the entity manager to be used.	 * 
 	 * @param em the {@link EntityManager} to set.
@@ -111,27 +127,56 @@ public class CommonAppRepositoryImpl extends JdbcDaoSupport implements CommonDto
 	
 
 	@Override
-	public void saveDocument(BlobStoreDto entityDto, String username) throws IOException {
-//		BlobStore entity = new BlobStore();
-//		int posix = entityDto.getFileDocuments().size()-1;
-//		BlobStoreDto blobStoreFE = baseFE.getFileDocuments().get(posix);
-//
-//		MultipartFile multipartFile = blobStoreFE.getFile();
-//
-//		entity.setFilename(multipartFile.getOriginalFilename());
-//		entity.setDescription(blobStoreFE.getDescription());
-//		entity.setContentType(multipartFile.getContentType());
-//		
-//		TypeDocument typeDocument = new TypeDocument(new Long(1));
-//		entity.setTypeDocument(typeDocument);
-//		entity.setBlobData(multipartFile.getBytes());
-//
-//		entity = (BlobStore) saveCustom(entity, username);
-//		
-//		BeanUtils.copyProperties(entity, blobStoreFE);
-//		
-//		baseFE.getFileDocuments().set(posix, blobStoreFE);
+	public BlobStoreDto saveBlobStoreDto(BlobStoreDto entityDto, String username) throws IOException {
+		BlobStore entity = BlobStoreDto.createEntityFromDto(entityDto);
+		//FIXME: to dynamic
+		entity.setTypeDocument(typeDocumentRepository.findOne(new Long(1)));
+		Date dateDB = getSysdateFromDBJdbc();
+		entity.setTimeInsert(dateDB);
+		entity.setYearRefer(dateDB);
+		entity.setUserInsert(username);
+		return BlobStoreDto.createDtoFromEntity(blobStoreRepository.save(entity));
+	}
+	
+	/**
+	 * Save a simple DTO that has some Blob relation
+	 * during UPDATE verify that relation exist for removing from persistence and avoid
+	 * multiply of relations
+	 */
+	@Override
+	public UserAppDto saveUserAppDto(UserAppDto entityDto, String currentUsername, List<BlobStoreDto> listBlobs) throws IOException {
+		UserApp entity = UserAppDto.createEntityFromDto(entityDto);
+		Date dateDB = getSysdateFromDBJdbc();
 		
+		for (BlobStoreDto eachBlob : listBlobs) {
+			if(eachBlob.getId()!=null) {				
+				entity.getRelUserBlobs().add(new RelUserBlob(entity, new BlobStore(eachBlob.getId())));				
+			}
+		}				
+		if(entity.isNew()){
+			entity.setUserInsert(currentUsername);
+			entity.setTimeInsert(dateDB);
+			entity.setYearRefer(dateDB);
+		}else {
+			UserApp temp = userAppRepository.findOne(entity.getId());
+			entity.setUserInsert(temp.getUserInsert());
+			entity.setTimeInsert(temp.getTimeInsert());
+			entity.setYearRefer(temp.getYearRefer());
+			
+			if(entity.getRelUserBlobs()!=null) {
+				for (RelUserBlob eachRel : entity.getRelUserBlobs()) {
+					RelUserBlob tempRel =relUserBlobRepository.findByBlobStore_idAndUserApp_id(eachRel.getBlobStore().getId(), temp.getId());
+					if(tempRel!=null) {
+						entity.getRelUserBlobs().remove(eachRel);
+					}
+				}				
+			}
+			
+			entity.setUserUpdate(currentUsername);
+			entity.setTimeUpdate(dateDB);
+		}		
+		entity = userAppRepository.save(entity);
+		return UserAppDto.createDtoFromEntity(entity);
 	}
 
 	@Override
@@ -293,6 +338,48 @@ public class CommonAppRepositoryImpl extends JdbcDaoSupport implements CommonDto
 		}		
 		return null;
 	}
+	
+	
+	/**
+	 * Save a simple DTO that has some Blob relation
+	 * during UPDATE verify that relation exist for removing from persistence and avoid
+	 * multiply of relations
+	 */
+	@Override
+	public ClientAppDto saveClientAppDto(ClientAppDto entityDto, String currentUsername, List<BlobStoreDto> listBlobs) throws IOException {
+		ClientApp entity = ClientAppDto.createEntityFromDto(entityDto);
+		Date dateDB = getSysdateFromDBJdbc();
+		
+		for (BlobStoreDto eachBlob : listBlobs) {
+			if(eachBlob.getId()!=null) {				
+				entity.getRelClientBlobs().add(new RelClientBlob(entity, new BlobStore(eachBlob.getId())));				
+			}
+		}				
+		if(entity.isNew()){
+			entity.setUserInsert(currentUsername);
+			entity.setTimeInsert(dateDB);
+			entity.setYearRefer(dateDB);
+		}else {
+			ClientApp temp = clientAppRepository.findOne(entity.getId());
+			entity.setUserInsert(temp.getUserInsert());
+			entity.setTimeInsert(temp.getTimeInsert());
+			entity.setYearRefer(temp.getYearRefer());
+			
+			if(entity.getRelClientBlobs()!=null) {
+				for (RelClientBlob eachRel : entity.getRelClientBlobs()) {
+					RelClientBlob tempRel = relClientBlobRepository.findByBlobStore_idAndClientApp_id(eachRel.getBlobStore().getId(), temp.getId());
+					if(tempRel!=null) {
+						entity.getRelClientBlobs().remove(eachRel);
+					}
+				}				
+			}
+			
+			entity.setUserUpdate(currentUsername);
+			entity.setTimeUpdate(dateDB);
+		}		
+		entity = clientAppRepository.save(entity);
+		return ClientAppDto.createDtoFromEntity(entity);
+	}
 
 	@Override
 	public ClientAppDto saveClientAppDto(ClientAppDto entityDto) {
@@ -444,6 +531,47 @@ public class CommonAppRepositoryImpl extends JdbcDaoSupport implements CommonDto
 			clientAppRepository.delete(entity);			
 		}		
 		return null;
+	}
+	
+	/**
+	 * Save a simple DTO that has some Blob relation
+	 * during UPDATE verify that relation exist for removing from persistence and avoid
+	 * multiply of relations
+	 */
+	@Override
+	public OrderJobDto saveOrderJobDto(OrderJobDto entityDto, String currentUsername, List<BlobStoreDto> listBlobs) throws IOException {
+		OrderJob entity = OrderJobDto.createEntityFromDto(entityDto);
+		Date dateDB = getSysdateFromDBJdbc();
+		
+		for (BlobStoreDto eachBlob : listBlobs) {
+			if(eachBlob.getId()!=null) {				
+				entity.getRelOrderBlobs().add(new RelOrderBlob(entity, new BlobStore(eachBlob.getId())));				
+			}
+		}				
+		if(entity.isNew()){
+			entity.setUserInsert(currentUsername);
+			entity.setTimeInsert(dateDB);
+			entity.setYearRefer(dateDB);
+		}else {
+			OrderJob temp = orderJobRepository.findOne(entity.getId());
+			entity.setUserInsert(temp.getUserInsert());
+			entity.setTimeInsert(temp.getTimeInsert());
+			entity.setYearRefer(temp.getYearRefer());
+			
+			if(entity.getRelOrderBlobs()!=null) {
+				for (RelOrderBlob eachRel : entity.getRelOrderBlobs()) {
+					RelOrderBlob tempRel = relOrderBlobRepository.findByBlobStore_idAndOrderJob_id(eachRel.getBlobStore().getId(), temp.getId());
+					if(tempRel!=null) {
+						entity.getRelOrderBlobs().remove(eachRel);
+					}
+				}				
+			}
+			
+			entity.setUserUpdate(currentUsername);
+			entity.setTimeUpdate(dateDB);
+		}		
+		entity = orderJobRepository.save(entity);
+		return OrderJobDto.createDtoFromEntity(entity);
 	}
 
 	@Override
@@ -637,4 +765,37 @@ public class CommonAppRepositoryImpl extends JdbcDaoSupport implements CommonDto
 		}
 		return lista;
 	}
+
+	@Override
+	public TypeDocumentDto findOneTypeDocumentDto(Long id) {
+		return TypeDocumentDto.createDtoFromEntity(typeDocumentRepository.findOne(id));
+	}
+
+	@Override
+	public List<TypeDocumentDto> findAllDto(TypeDocumentDto filter) {
+		TypeDocument entity = TypeDocumentDto.createEntityFromDto(filter);
+		Example<TypeDocument> example = Example.of(entity);
+		List<TypeDocument> listEntity = typeDocumentRepository.findAll(example);
+		if(listEntity==null){
+			return null;
+		}
+		List<TypeDocumentDto> lista = new ArrayList<TypeDocumentDto>();
+		for (TypeDocument each : listEntity) {
+			lista.add(TypeDocumentDto.createDtoFromEntity(each));
+		}
+		return lista;
+	}
+
+	@Override
+	public Long deleteDto(BlobStoreDto entityDto) throws IOException {
+		BlobStore entity = new BlobStore(entityDto.getId());
+		if(entity.getId()!=null){
+			blobStoreRepository.delete(entity.getId());
+		}else{
+			blobStoreRepository.delete(entity);			
+		}		
+		return null;
+	}
+
+
 }

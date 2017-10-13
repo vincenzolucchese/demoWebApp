@@ -1,10 +1,12 @@
 package com.vince.boot.demo.webapp.beAndFe.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
-public abstract class BaseDto implements Serializable {
+public class BaseDto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -16,6 +18,7 @@ public abstract class BaseDto implements Serializable {
 	protected Date yearRefer;
 	
 	protected String state;
+	protected List<BlobStoreDto> listBlobs = new ArrayList<BlobStoreDto>();
 	protected Boolean isConvertInside = false;
 
 	public Long getId() {
@@ -80,6 +83,14 @@ public abstract class BaseDto implements Serializable {
 
 	public void setState(String state) {
 		this.state = state;
+	}
+
+	public List<BlobStoreDto> getListBlobs() {
+		return listBlobs;
+	}
+
+	public void setListBlobs(List<BlobStoreDto> listBlobs) {
+		this.listBlobs = listBlobs;
 	}
 	
 }

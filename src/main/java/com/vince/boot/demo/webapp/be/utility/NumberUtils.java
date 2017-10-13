@@ -8,16 +8,7 @@ import java.text.NumberFormat;
 import java.text.ParsePosition;
 import java.util.Locale;
 
-/**
- * Classe che espone funzioni di utilità legate alle URL.
- * 
- * @author Simone Verlengia
- * @version 1.0.3
- * @comment 1.0.1 Aggiunto metodo isLong(). (Verlengia)
- * @comment 1.0.2 Rivisti ed ampliati tutti i metodi di parsing e controllo dei numeri per gestire il formato italiano.
- * @comment 1.0.3 aggiunti metodi di formattazione in stringa.
- */
-//TODO: ALLINEARE ALTRI VERTICALI
+
 public class NumberUtils {
 	private static final String REGEX_ONLY_DIGIT = "[0-9]+";
 	private static final Locale defaultLocale = Locale.ITALIAN;

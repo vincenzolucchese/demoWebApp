@@ -86,7 +86,7 @@
           	</div>          	
       	</fieldset>
       	
-      	<#if  baseFE.fileDocuments?? &&  baseFE.fileDocuments?has_content >
+      	<#if  baseFE.listBlobs?? &&  baseFE.listBlobs?has_content >
 	  		<div class="table-responsive">
 		        <table class="table table-striped">
 		        <caption>Table documents</caption>
@@ -97,11 +97,11 @@
 		            </tr>
 		          </thead>
 		          <tbody>
-		          	<#list baseFE.fileDocuments as child>
+		          	<#list baseFE.listBlobs as child>
 					    <tr>
 		                   <#if child.id??>
-		                   <@spring.formHiddenInput "baseFE.fileDocuments["+child?index+"].id"/>
-		                   <@spring.formHiddenInput "baseFE.fileDocuments["+child?index+"].filename"/>
+		                   <@spring.formHiddenInput "baseFE.listBlobs["+child?index+"].id"/>
+		                   <@spring.formHiddenInput "baseFE.listBlobs["+child?index+"].filename"/>
 						    <td>${child.filename}</td>
 			                <td>
 			                  	<button class="btn btn-info btn-sm" name="Download" type="submit" value="Download_${child.id}">
@@ -114,7 +114,7 @@
 							    </#if>
 		                  	</td>
 						   <#else>
-						      <td><@spring.formInput "baseFE.fileDocuments["+child?index+"].file" 'class="form-control"' "file" /></td>
+						      <td><@spring.formInput "baseFE.listBlobs["+child?index+"].multipartFile" 'class="form-control"' "file" /></td>
 			                  <td>
 		                      	<button class="btn btn-primary btn-sm" name="Upload" type="submit" value="Upload">
 							      <span class="glyphicon glyphicon-upload"></span> Upload

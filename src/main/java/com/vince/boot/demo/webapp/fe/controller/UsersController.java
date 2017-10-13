@@ -157,7 +157,7 @@ public class UsersController extends BaseController {
 
 	@PostMapping(PREFIX_USERS+SUFFIX_CRUD)
 	public String postRequest(ModelMap model, @Valid @ModelAttribute("baseFE") UserAppDto baseFE, BindingResult result,
-			HttpServletRequest request) {
+			HttpServletRequest request) throws IOException {
 		
 		String action = request.getParameter("submit");
 		
@@ -174,9 +174,9 @@ public class UsersController extends BaseController {
 				model.addAttribute("roles", getAllRoles());
 				return PREFIX_USERS+SUFFIX_CRUD;
 			}
-			commonDtoRepository.saveUserAppDto(baseFE, getCurrentUsername());			
-		}
-		
+			
+			commonDtoRepository.saveUserAppDto(baseFE, getCurrentUsername(), baseFE.getListBlobs());			
+		}		
 		return "redirect:Search/msgOK";
 	}
 

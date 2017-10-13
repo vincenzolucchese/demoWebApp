@@ -6,15 +6,7 @@ import java.io.StringWriter;
 import java.nio.charset.Charset;
 import java.text.ParseException;
 
-/**
- * Classe che espone funzioni di utilità legate alle stringhe.
- * 
- * @author Simone Verlengia
- * @version 1.2.0
- * @comment 1.1.0 Aggiunto metodo isValidCodiceFiscaleAzienda (Verlengia)
- * @comment 1.2.0 Aggiunti metodi convertAccentToApostrophe, normalizeItalianCityName, upperCaseItalianCityName. (Verlengia)
- * @comment 1.2.1 Aggiunti metodi {@link #isSubstantiallyEqual(String, String)} e {@link #removeAccent(String)}. (Verlengia)
- */
+
 public class StringUtils {
 	
 	StringUtils() {

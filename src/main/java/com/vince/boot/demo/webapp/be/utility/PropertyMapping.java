@@ -2,14 +2,6 @@ package com.vince.boot.demo.webapp.be.utility;
 
 import java.lang.reflect.Method;
 
-/**
- * Classe contenitore che raggruppa le informazioni necessarie ad eseguire il mapping
- * (finalizzato alla copia) delle proprietà semplici da un tipo di oggetto ad un altro.
- *
- * @author  Simone Verlengia
- * @version 1.0.0
- *
- */
 public class PropertyMapping {
 	
 	private Method accessor;

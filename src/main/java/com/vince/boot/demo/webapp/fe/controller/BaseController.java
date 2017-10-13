@@ -8,17 +8,18 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -26,6 +27,7 @@ import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
 import com.google.maps.model.GeocodingResult;
 import com.vince.boot.demo.webapp.be.service.CommonDtoRepository;
+import com.vince.boot.demo.webapp.be.utility.ArraysUtils;
 import com.vince.boot.demo.webapp.beAndFe.dto.BaseDto;
 import com.vince.boot.demo.webapp.beAndFe.dto.BlobStoreDto;
 import com.vince.boot.demo.webapp.beAndFe.dto.ClientAppDto;
@@ -93,16 +95,16 @@ public abstract class BaseController {
     }
     
     protected void addEmptyBlob(BaseDto baseFE) {
-//    	boolean canAdd = true;
-//    	for (BlobStoreDto each : baseFE.getFileDocuments()) {
-//			if(each.getId()==null) {
-//				canAdd = false;
-//				break;
-//			}
-//		}
-//    	if(canAdd) {
-//    		baseFE.getFileDocuments().add(new BlobStoreDto());    		
-//    	}
+    	boolean canAdd = true;
+    	for (BlobStoreDto each : baseFE.getListBlobs()) {
+			if(each.getId()==null) {
+				canAdd = false;
+				break;
+			}
+		}
+    	if(canAdd) {
+    		baseFE.getListBlobs().add(0, new BlobStoreDto());    		
+    	}
     }
         
     
@@ -115,9 +117,11 @@ public abstract class BaseController {
 	public String deleteDocument(@ModelAttribute("baseFE") BaseDto baseFE, BindingResult result, ModelMap model, 
 			@RequestParam("Delete") String valueDelete) throws IOException{
 
-//		Long id = new Long(valueDelete.substring(valueDelete.lastIndexOf("_")+1, valueDelete.length()));		
-//		BaseDto temp = blobStoreRepository.updateFlag(id, false);		
-//		baseFE.getFileDocuments().remove(temp);
+		Long id = new Long(valueDelete.substring(valueDelete.lastIndexOf("_")+1, valueDelete.length()));
+		BlobStoreDto temp = new BlobStoreDto(id);
+		commonDtoRepository.deleteDto(temp);	
+		
+		baseFE.setListBlobs(ArraysUtils.removeObject(baseFE.getListBlobs(), temp));
 		return getRequest(model, baseFE, new HashMap<String, String>());
 	}
 
@@ -137,31 +141,32 @@ public abstract class BaseController {
 	public String uploadDocument(@ModelAttribute("baseFE") BaseDto baseFE, BindingResult result, 
 			ModelMap model, HttpServletRequest request) throws IOException{
 	
-//		int posix = baseFE.getFileDocuments().size()-1;
-//		MultipartFile multipartFile = baseFE.getFileDocuments().get(posix).getFile();
-//
-//		if(multipartFile.isEmpty()) {
-//			result.rejectValue("fileDocuments["+posix+"].file", "required", null, "required");
-//		}else{
-//			System.out.println(multipartFile.getSize());
-//			if(multipartFile.getSize()>10485760){
-//				result.rejectValue("fileDocuments["+posix+"].file", "required", null, "required");
-//			}
-//		}
-//		
-//		if(result.hasErrors()){
-//			model.addAttribute("allErrors", result.getAllErrors());
-//			model.addAttribute("baseFE", baseFE);
-//			model.addAttribute("clients", getAllClients());
-//			return "";
-//		} else {
-//
-// 			System.out.println("Fetching file");
-//			getCurrentAuth().getName();
-//
-//		} 
-//
-//		blobStoreRepository.saveDocument(baseFE, getCurrentUsername());
+//		int posix = baseFE.getListBlobs().size()-1;
+		int posix = 0;
+		MultipartFile multipartFile = baseFE.getListBlobs().get(posix).getMultipartFile();
+
+		if(multipartFile.isEmpty()) {
+			result.rejectValue("listBlobs["+posix+"].file", "required", null, "required");
+		}else{
+			System.out.println(multipartFile.getSize());
+			if(multipartFile.getSize()>10485760){
+				result.rejectValue("listBlobs["+posix+"].file", "required", null, "required");
+			}
+		}
+		
+		if(result.hasErrors()){
+			model.addAttribute("allErrors", result.getAllErrors());
+			model.addAttribute("baseFE", baseFE);
+			model.addAttribute("clients", getAllClients());
+			return "";
+		} else {
+
+ 			System.out.println("Fetching file");
+			getCurrentAuth().getName();
+
+		}
+		BlobStoreDto blob = commonDtoRepository.saveBlobStoreDto(baseFE.getListBlobs().get(posix), getCurrentUsername());
+		baseFE.getListBlobs().add(blob);
 		return getRequest(model, baseFE, new HashMap<String, String>());
 	}
 

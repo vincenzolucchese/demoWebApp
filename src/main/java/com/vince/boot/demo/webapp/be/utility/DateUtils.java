@@ -6,16 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-/**
- * Classe che espone funzioni di utilità legate alle date.
- * 
- * @author Enrico Gallani
- * @version 1.4
- * @comment 1.1 - revisionati tutti i metodi della classe. (Verlengia)
- * @comment 1.2 - aggiunti metodi {@link #getInfiniteFutureDate()} e {@link #getInfinitePastDate()}. (Verlengia)
- * @comment 1.3 - aggiunti metodi di manipolazione delle date (addYears, addMonths, addDays, etc.). (Verlengia)
- * @comment 1.4 - aggiunti metodi {@link #truncateToDay(Date)}, {@link #isDateWithoutTimePart(Date)}, {@link #formatDateTime(Date)}, {@link #formatTimeStamp(Date)}. (Verlengia)
- */
+
 public class DateUtils {
 	public static final String DATE_FORMAT_DEFAULT = "dd/MM/yyyy";
 	public static final String DATETIME_FORMAT_DEFAULT = "dd/MM/yyyy HH:mm:ss";

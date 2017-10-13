@@ -3,13 +3,7 @@ package com.vince.boot.demo.webapp.be.utility;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-/**
- * Classe che espone funzioni di utilità legate a funzionalità di sistemistiche.
- * 
- * @author Simone Verlengia
- * @version 1.0
- */
-//INTEGRAZIONE-ANEC: classe aggiunta per integrazione ANEC
+
 public class SystemUtils {
 
 	/**

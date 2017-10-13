@@ -1,10 +1,12 @@
 package com.vince.boot.demo.webapp.beAndFe.dto;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.beans.BeanUtils;
 
+import com.vince.boot.demo.webapp.be.entity.RelUserBlob;
 import com.vince.boot.demo.webapp.be.entity.UserApp;
 
 public class UserAppDto extends BaseDto  {
@@ -21,6 +23,35 @@ public class UserAppDto extends BaseDto  {
 
 	private String address;
 	private Set<RelUserBlobDto> relUserBlobs = new HashSet<RelUserBlobDto>(0);
+	
+	/*******************************************
+	 * CONVERTER ENTITY <--> DTO
+	 *******************************************/
+	public static UserAppDto createDtoFromEntity(UserApp entity) {
+		if (entity == null) return null;
+		
+		UserAppDto dto = new UserAppDto();
+		BeanUtils.copyProperties(entity, dto);
+		dto.setRoleUser(RoleUserDto.createDtoFromEntity(entity.getRoleUser()));
+		
+		if(entity.getRelUserBlobs()!=null) {
+			dto.setListBlobs(new ArrayList<BlobStoreDto>());
+			for (RelUserBlob each : entity.getRelUserBlobs()) {
+				dto.getListBlobs().add(BlobStoreDto.createDtoFromEntity(each.getBlobStore()));
+			}			
+		}
+		
+		return dto;
+	}
+
+	public static UserApp createEntityFromDto(UserAppDto dto) {
+		if (dto == null) return null;
+		
+		UserApp entity = new UserApp();
+		BeanUtils.copyProperties(dto, entity);
+		entity.setRoleUser(RoleUserDto.createEntityFromDto(dto.getRoleUser()));
+		return entity;
+	}
 
 	public UserAppDto() {
 	}
@@ -101,26 +132,7 @@ public class UserAppDto extends BaseDto  {
 		this.relUserBlobs = DRelUserBlobs;
 	}
 	
-	/*******************************************
-	 * CONVERTER ENTITY <--> DTO
-	 *******************************************/
-	public static UserAppDto createDtoFromEntity(UserApp entity) {
-		if (entity == null) return null;
-		
-		UserAppDto dto = new UserAppDto();
-		BeanUtils.copyProperties(entity, dto);
-		dto.setRoleUser(RoleUserDto.createDtoFromEntity(entity.getRoleUser()));
-		return dto;
-	}
 
-	public static UserApp createEntityFromDto(UserAppDto dto) {
-		if (dto == null) return null;
-		
-		UserApp entity = new UserApp();
-		BeanUtils.copyProperties(dto, entity);
-		entity.setRoleUser(RoleUserDto.createEntityFromDto(dto.getRoleUser()));
-		return entity;
-	}
 
 
 }

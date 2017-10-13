@@ -3,11 +3,6 @@ package com.vince.boot.demo.webapp.be.utility;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Classe di tipo generic che realizza una struttura ad albero.
- * @author   Simone Verlengia
- * @version  1.0.0
- */
 public class TreeNode<T> {
 	
 	        private T data;

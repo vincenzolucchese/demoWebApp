@@ -1,12 +1,11 @@
 package com.vince.boot.demo.webapp.be.utility;
 
-/**
- * Classe che espone funzioni di utilità legate agli Array.
- * 
- * @author Simone Verlengia
- * @version 1.0
- */
-//INTEGRAZIONE-ANEC: classe aggiunta per integrazione ANEC
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import com.vince.boot.demo.webapp.beAndFe.dto.BaseDto;
+
 public class ArraysUtils {
 	
 	/**
@@ -29,4 +28,13 @@ public class ArraysUtils {
 		return false;
 	}
 	
+	
+	public static <T extends BaseDto> List<T> removeObject(List<T> array, BaseDto item) {
+		List<T> collection = new ArrayList<T>();
+		for (T element : array) {
+			if (!item.getId().equals(element.getId()))
+				collection.add(element);
+		}
+		return collection;
+	}
 }

@@ -1,6 +1,7 @@
 package com.vince.boot.demo.webapp.beAndFe.dto;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -28,9 +29,7 @@ public class BlobStoreDto extends BaseDto {
 	private Set<RelClientBlobDto> relClientBlobs = new HashSet<RelClientBlobDto>(0);
 
 	private MultipartFile multipartFile;
-	
-	protected List<BlobStoreDto> fileDocuments = new ArrayList<BlobStoreDto>();
-	
+
 	
 	public BlobStoreDto() {
 	}
@@ -38,6 +37,36 @@ public class BlobStoreDto extends BaseDto {
 	public BlobStoreDto(Long id) {
 		super.id = id;
 	}
+	
+	/*******************************************
+	 * CONVERTER ENTITY <--> DTO
+	 *******************************************/
+	public static BlobStoreDto createDtoFromEntity(BlobStore entity) {
+		if (entity == null) return null;
+		
+		BlobStoreDto dto = new BlobStoreDto();
+		BeanUtils.copyProperties(entity, dto);		
+		// copy objects
+		
+		dto.setTypeDocument(TypeDocumentDto.createDtoFromEntity(entity.getTypeDocument()));
+		return dto;
+	}
+
+	public static BlobStore createEntityFromDto(BlobStoreDto dto) throws IOException {
+		if (dto == null) return null;
+		
+		BlobStore entity = new BlobStore();
+		BeanUtils.copyProperties(dto, entity);
+		// copy objects
+		entity.setBlobData(dto.getMultipartFile().getBytes());
+		entity.setContentType(dto.getMultipartFile().getContentType());
+		entity.setDescription(dto.getMultipartFile().getOriginalFilename());
+		entity.setFilename(dto.getMultipartFile().getOriginalFilename());
+		entity.setFlagActive('1');
+		entity.setTypeDocument(TypeDocumentDto.createEntityFromDto(dto.getTypeDocument()));
+		return entity;
+	}
+
 
 	public TypeDocumentDto getTypeDocument() {
 		return this.typeDocument;
@@ -118,37 +147,5 @@ public class BlobStoreDto extends BaseDto {
 	public void setMultipartFile(MultipartFile multipartFile) {
 		this.multipartFile = multipartFile;
 	}
-
-	public List<BlobStoreDto> getFileDocuments() {
-		return fileDocuments;
-	}
-
-	public void setFileDocuments(List<BlobStoreDto> fileDocuments) {
-		this.fileDocuments = fileDocuments;
-	}
-
-	/*******************************************
-	 * CONVERTER ENTITY <--> DTO
-	 *******************************************/
-	public static BlobStoreDto createDtoFromEntity(BlobStore entity) {
-		if (entity == null) return null;
-		
-		BlobStoreDto dto = new BlobStoreDto();
-		BeanUtils.copyProperties(entity, dto);		
-		// copy objects
-		dto.setTypeDocument(TypeDocumentDto.createDtoFromEntity(entity.getTypeDocument()));
-		return dto;
-	}
-
-	public BlobStore createEntityFromDto(BlobStoreDto dto) {
-		if (dto == null) return null;
-		
-		BlobStore entity = new BlobStore();
-		BeanUtils.copyProperties(dto, entity);
-		// copy objects
-		entity.setTypeDocument(TypeDocumentDto.createEntityFromDto(dto.getTypeDocument()));
-		return entity;
-	}
-
 
 }

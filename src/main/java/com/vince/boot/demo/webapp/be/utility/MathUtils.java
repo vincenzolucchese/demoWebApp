@@ -4,14 +4,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 
-/**
- * Classe che espone funzioni di utilità legate a funzioni matematiche.
- * 
- * @author Simone Verlengia
- * @version 1.0.1
- * @comment 1.0.1 aggiunti metodi per lavorazione a precisione 16 decimali. (Verlengia)
- */
-//TODO: ALLINEARE ALTRI VERTICALI
+
 public class MathUtils {
 	
 	/**

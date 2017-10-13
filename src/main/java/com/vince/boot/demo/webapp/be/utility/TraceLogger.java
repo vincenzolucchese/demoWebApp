@@ -5,19 +5,6 @@ import java.io.Serializable;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-/**
- * Classe che mette a disposizione i metodi statici comuni per il logging
- * dell'applicazione. Questa classe è concepita per poter gestire in modo
- * trasparente sia i Level di log utilizzati dall'API di JavaLog che quella
- * di log4j.
- *
- * @author  ???
- * @version 1.0.3
- * @comment 1.0.1 - aggiunta gestione dei livelli di logging log4j e javalog. (Verlengia)
- * @comment 1.0.2 - corretta gestione livelli log4j, aggiunto livello FATAL. (Verlengia)
- * @comment 1.0.3 - modificato metodi getLoggingValue per ottemperanza segnalazione CAST_198 + CAST_199 + CAST_200 + CAST_201 (CAST_COMMONS). (Verlengia)
- * 
- */
 public class TraceLogger implements Serializable {
 
 	private static final long serialVersionUID = 1L;
