@@ -67,4 +67,35 @@ public class RelUserBlob extends BaseEntity {
 		this.userApp = userApp;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((blobStore == null) ? 0 : blobStore.hashCode());
+		result = prime * result + ((userApp == null) ? 0 : userApp.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RelUserBlob other = (RelUserBlob) obj;
+		if (blobStore == null) {
+			if (other.blobStore != null)
+				return false;
+		} else if (!blobStore.equals(other.blobStore))
+			return false;
+		if (userApp == null) {
+			if (other.userApp != null)
+				return false;
+		} else if (!userApp.equals(other.userApp))
+			return false;
+		return true;
+	}
+
 }

@@ -18,6 +18,7 @@ package com.vince.boot.demo.webapp.be.service.impl;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -164,12 +165,14 @@ public class CommonAppRepositoryImpl extends JdbcDaoSupport implements CommonDto
 			entity.setYearRefer(temp.getYearRefer());
 			
 			if(entity.getRelUserBlobs()!=null) {
+				HashSet<RelUserBlob> hashTemp = new HashSet<RelUserBlob>();
 				for (RelUserBlob eachRel : entity.getRelUserBlobs()) {
-					RelUserBlob tempRel =relUserBlobRepository.findByBlobStore_idAndUserApp_id(eachRel.getBlobStore().getId(), temp.getId());
-					if(tempRel!=null) {
-						entity.getRelUserBlobs().remove(eachRel);
+					RelUserBlob tempRel = relUserBlobRepository.findByBlobStore_idAndUserApp_id(eachRel.getBlobStore().getId(), temp.getId());
+					if(tempRel==null) {
+						hashTemp.add(eachRel);
 					}
-				}				
+				}
+				entity.setRelUserBlobs(hashTemp);
 			}
 			
 			entity.setUserUpdate(currentUsername);
@@ -366,12 +369,14 @@ public class CommonAppRepositoryImpl extends JdbcDaoSupport implements CommonDto
 			entity.setYearRefer(temp.getYearRefer());
 			
 			if(entity.getRelClientBlobs()!=null) {
+				HashSet<RelClientBlob> hashTemp = new HashSet<RelClientBlob>();
 				for (RelClientBlob eachRel : entity.getRelClientBlobs()) {
 					RelClientBlob tempRel = relClientBlobRepository.findByBlobStore_idAndClientApp_id(eachRel.getBlobStore().getId(), temp.getId());
-					if(tempRel!=null) {
-						entity.getRelClientBlobs().remove(eachRel);
+					if(tempRel==null) {
+						hashTemp.add(eachRel);
 					}
-				}				
+				}
+				entity.setRelClientBlobs(hashTemp);
 			}
 			
 			entity.setUserUpdate(currentUsername);
@@ -559,12 +564,14 @@ public class CommonAppRepositoryImpl extends JdbcDaoSupport implements CommonDto
 			entity.setYearRefer(temp.getYearRefer());
 			
 			if(entity.getRelOrderBlobs()!=null) {
+				HashSet<RelOrderBlob> hashTemp = new HashSet<RelOrderBlob>();
 				for (RelOrderBlob eachRel : entity.getRelOrderBlobs()) {
 					RelOrderBlob tempRel = relOrderBlobRepository.findByBlobStore_idAndOrderJob_id(eachRel.getBlobStore().getId(), temp.getId());
-					if(tempRel!=null) {
-						entity.getRelOrderBlobs().remove(eachRel);
+					if(tempRel==null) {
+						hashTemp.add(eachRel);
 					}
-				}				
+				}	
+				entity.setRelOrderBlobs(hashTemp);
 			}
 			
 			entity.setUserUpdate(currentUsername);

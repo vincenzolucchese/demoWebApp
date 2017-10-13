@@ -56,7 +56,7 @@
 			<div class="row placeholders">	            
 				<div class="col-xs-6 placeholder">
 	             <label class="control-label"><@spring.message 'label.order.client' /></label>
-				 <@spring.formSingleSelect "baseFE.clients.id", clients, 'class="form-control"'/>
+				 <@spring.formSingleSelect "baseFE.clientApp.id", clients, 'class="form-control"'/>
 	             <@spring.showErrors "</br>", "form-control alert-danger" />
 	            </div>
 	            <div class="col-xs-6 placeholder">

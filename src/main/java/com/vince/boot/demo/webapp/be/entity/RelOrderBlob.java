@@ -65,5 +65,34 @@ public class RelOrderBlob extends BaseEntity {
 	public void setBlobStore(BlobStore blobStore) {
 		this.blobStore = blobStore;
 	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((blobStore == null) ? 0 : blobStore.hashCode());
+		result = prime * result + ((orderJob == null) ? 0 : orderJob.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RelOrderBlob other = (RelOrderBlob) obj;
+		if (blobStore == null) {
+			if (other.blobStore != null)
+				return false;
+		} else if (!blobStore.equals(other.blobStore))
+			return false;
+		if (orderJob == null) {
+			if (other.orderJob != null)
+				return false;
+		} else if (!orderJob.equals(other.orderJob))
+			return false;
+		return true;
+	}
 
 }
