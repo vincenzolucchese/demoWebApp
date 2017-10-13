@@ -1,6 +1,7 @@
 package com.vince.boot.demo.webapp.beAndFe.dto;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -8,6 +9,8 @@ import java.util.Set;
 import org.springframework.beans.BeanUtils;
 
 import com.vince.boot.demo.webapp.be.entity.OrderJob;
+import com.vince.boot.demo.webapp.be.entity.RelClientBlob;
+import com.vince.boot.demo.webapp.be.entity.RelOrderBlob;
 
 public class OrderJobDto extends BaseDto {
 
@@ -23,7 +26,36 @@ public class OrderJobDto extends BaseDto {
 	private Character flagActive;
 	private String address;
 	private Set<RelOrderBlobDto> relOrderBlobs = new HashSet<RelOrderBlobDto>(0);
+	
+	/*******************************************
+	 * STATIC ENTITY <--> DTO
+	 *******************************************/
+	public static OrderJobDto createDtoFromEntity(OrderJob entity) {
+		if (entity == null) return null;
+		
+		OrderJobDto dto = new OrderJobDto();
+		BeanUtils.copyProperties(entity, dto);
+		dto.setClientApp(ClientAppDto.createDtoFromEntity(entity.getClientApp()));
+		
+		if(entity.getRelOrderBlobs()!=null) {
+			dto.setListBlobs(new ArrayList<BlobStoreDto>());
+			for (RelOrderBlob each : entity.getRelOrderBlobs()) {
+				dto.getListBlobs().add(BlobStoreDto.createDtoFromEntity(each.getBlobStore()));
+			}			
+		}
+		
+		return dto;
+	}
 
+	public static OrderJob createEntityFromDto(OrderJobDto dto) {
+		if (dto == null) return null;
+		
+		OrderJob entity = new OrderJob();
+		BeanUtils.copyProperties(dto, entity);
+		entity.setClientApp(ClientAppDto.createEntityFromDto(dto.getClientApp()));
+		return entity;
+	}
+	
 	public OrderJobDto() {
 	}
 	
@@ -103,25 +135,6 @@ public class OrderJobDto extends BaseDto {
 		this.relOrderBlobs = DRelOrderBlobs;
 	}
 
-	/*******************************************
-	 * STATIC ENTITY <--> DTO
-	 *******************************************/
-	public static OrderJobDto createDtoFromEntity(OrderJob entity) {
-		if (entity == null) return null;
-		
-		OrderJobDto dto = new OrderJobDto();
-		BeanUtils.copyProperties(entity, dto);
-		dto.setClientApp(ClientAppDto.createDtoFromEntity(entity.getClientApp()));
-		return dto;
-	}
 
-	public static OrderJob createEntityFromDto(OrderJobDto dto) {
-		if (dto == null) return null;
-		
-		OrderJob entity = new OrderJob();
-		BeanUtils.copyProperties(dto, entity);
-		entity.setClientApp(ClientAppDto.createEntityFromDto(dto.getClientApp()));
-		return entity;
-	}
 
 }

@@ -1,11 +1,14 @@
 package com.vince.boot.demo.webapp.beAndFe.dto;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.beans.BeanUtils;
 
 import com.vince.boot.demo.webapp.be.entity.ClientApp;
+import com.vince.boot.demo.webapp.be.entity.RelClientBlob;
+import com.vince.boot.demo.webapp.be.entity.RelUserBlob;
 
 public class ClientAppDto extends BaseDto {
 
@@ -21,6 +24,44 @@ public class ClientAppDto extends BaseDto {
 
 	private Set<RelClientBlobDto> relClientBlobs = new HashSet<RelClientBlobDto>(0);
 	private Set<OrderJobDto> orderJobs = new HashSet<OrderJobDto>(0);
+	
+	/*******************************************
+	 * CONVERTER ENTITY <--> DTO
+	 *******************************************/
+	public static ClientAppDto createDtoFromEntity(ClientApp entity) {
+		if (entity == null) return null;
+		
+		ClientAppDto dto = new ClientAppDto();
+		BeanUtils.copyProperties(entity, dto);
+		
+		if(entity.getRelClientBlobs()!=null) {
+			dto.setListBlobs(new ArrayList<BlobStoreDto>());
+			for (RelClientBlob each : entity.getRelClientBlobs()) {
+				dto.getListBlobs().add(BlobStoreDto.createDtoFromEntity(each.getBlobStore()));
+			}			
+		}
+		
+		return dto;
+	}
+	
+	public static ClientApp createEntityFromDto(ClientAppDto dto) {
+		if (dto == null) return null;
+		
+		ClientApp entity = new ClientApp();
+		BeanUtils.copyProperties(dto, entity);
+		
+//		if(isConvertInside) {
+//			if(dtoCast.getOrderJobs()!=null){
+//				HashSet<OrderJob> hash = new HashSet<OrderJob>();
+//				for (OrderJobDto each : dtoCast.getOrderJobs()) {
+//					hash.add((OrderJob) new OrderJobDto().createEntityFromDto(each));
+//				}
+//				entity.setOrderJobs(hash);
+//			}			
+//		}
+		
+		return entity;
+	}
 
 	public ClientAppDto() {
 	}
@@ -99,47 +140,6 @@ public class ClientAppDto extends BaseDto {
 
 	public void setOrderJobs(Set<OrderJobDto> DOrderJobs) {
 		this.orderJobs = DOrderJobs;
-	}
-
-	/*******************************************
-	 * CONVERTER ENTITY <--> DTO
-	 *******************************************/
-	public static ClientAppDto createDtoFromEntity(ClientApp entity) {
-		if (entity == null) return null;
-		
-		ClientAppDto dto = new ClientAppDto();
-		BeanUtils.copyProperties(entity, dto);
-		
-//		if(isConvertInside) {
-//			if(entityCast.getOrderJobs()!=null){
-//				HashSet<OrderJobDto> hash = new HashSet<OrderJobDto>();
-//				for (OrderJob each : entityCast.getOrderJobs()) {
-//					hash.add((OrderJobDto) new OrderJobDto().createDtoFromEntity(each));
-//				}
-//				dto.setOrderJobs(hash);
-//			}
-//		}
-		
-		return dto;
-	}
-	
-	public static ClientApp createEntityFromDto(ClientAppDto dto) {
-		if (dto == null) return null;
-		
-		ClientApp entity = new ClientApp();
-		BeanUtils.copyProperties(dto, entity);
-		
-//		if(isConvertInside) {
-//			if(dtoCast.getOrderJobs()!=null){
-//				HashSet<OrderJob> hash = new HashSet<OrderJob>();
-//				for (OrderJobDto each : dtoCast.getOrderJobs()) {
-//					hash.add((OrderJob) new OrderJobDto().createEntityFromDto(each));
-//				}
-//				entity.setOrderJobs(hash);
-//			}			
-//		}
-		
-		return entity;
 	}
 
 }
