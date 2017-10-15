@@ -9,7 +9,6 @@ import java.util.Set;
 import org.springframework.beans.BeanUtils;
 
 import com.vince.boot.demo.webapp.be.entity.OrderJob;
-import com.vince.boot.demo.webapp.be.entity.RelClientBlob;
 import com.vince.boot.demo.webapp.be.entity.RelOrderBlob;
 
 public class OrderJobDto extends BaseDto {

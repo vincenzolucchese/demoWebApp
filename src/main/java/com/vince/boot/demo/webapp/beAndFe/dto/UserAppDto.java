@@ -60,6 +60,10 @@ public class UserAppDto extends BaseDto  {
 		super.id = id;
 	}
 
+	public UserAppDto(String username) {
+		this.username = username;
+	}
+
 	public RoleUserDto getRoleUser() {
 		return this.roleUser;
 	}

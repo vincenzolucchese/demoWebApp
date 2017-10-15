@@ -69,85 +69,72 @@
           	<div class="row placeholders">          
 	            <div class="col-xs-6 placeholder">
 	             <label class="control-label"><@spring.message 'label.user.firstname' /></label>
-	             <@spring.formInput "baseFE.firstName" 'class="form-control" required' />
+	             <@spring.formInput "baseFE.firstName" 'class="form-control"' />
 	             <@spring.showErrors "</br>", "form-control alert-danger" />
 	            </div>
 	            <div class="col-xs-6 placeholder">
 	             <label class="control-label"><@spring.message 'label.user.lastname'/></label>
-	             <@spring.formInput "baseFE.lastName" 'class="form-control" required' />
+	             <@spring.formInput "baseFE.lastName" 'class="form-control"' />
 	             <@spring.showErrors "</br>", "form-control alert-danger" />
 	            </div>
          	</div>
 	        <div class="row placeholders">
 	            <div class="col-xs-6 placeholder">
 	             <label class="control-label"><@spring.message 'label.user.email' /></label>
-	             <@spring.formInput "baseFE.email" 'class="form-control" required' />
+	             <@spring.formInput "baseFE.email" 'class="form-control"' />
 	             <@spring.showErrors "</br>", "form-control alert-danger" />
 	            </div>
 				<div class="col-xs-6 placeholder">
 	             <label class="control-label"><@spring.message 'label.user.role' /></label>
-				 <@spring.formSingleSelect "baseFE.roleUser.id", roles, 'class="form-control" required'/>
+				 <@spring.formSingleSelect "baseFE.roleUser.id", roles, 'class="form-control"'/>
 	             <@spring.showErrors "</br>", "form-control alert-danger" />
 	            </div>
             </div>
 			<div class="row placeholders">	            
 	            <div class="col-xs-6 placeholder">
 	             <label class="control-label"><@spring.message 'label.user.username' /></label>
-	             <@spring.formInput "baseFE.username" 'class="form-control" required' />
+	             <@spring.formInput "baseFE.username" 'class="form-control"' />
 	             <@spring.showErrors "</br>", "form-control alert-danger" />
 	            </div>
 	            <div class="col-xs-6 placeholder">
 	             <label class="control-label"><@spring.message 'label.user.password' /></label>
-	             <@spring.formInput "baseFE.password" 'class="form-control" required' />
+	             <@spring.formInput "baseFE.password" 'class="form-control"' />
 	             <@spring.showErrors "</br>", "form-control alert-danger" />
 	            </div>            
           	</div>
+			<div class="row placeholders">
+				<div class="col-xs-6 placeholder" id="locationField">
+				 <label class="control-label">Search Address</label>
+			     <input class="form-control" id="autocomplete" placeholder="Enter your address"
+			             onFocus="geolocate()" type="text"></input>
+			    </div>
+			    
+				<div class="col-xs-3 placeholder">
+					 <label class="control-label">Civico</label>
+				     <input class="form-control" id="street_number" disabled="true"></input>
+				     
+				     <label class="control-label">City</label>
+				     <input class="form-control" id="locality" disabled="true"></input>
+				     
+				     <label class="control-label">State</label>
+				     <input class="form-control" id="administrative_area_level_1" disabled="true"></input>
+				 </div>			    
+				
+				<div class="col-xs-3 placeholder">			     
+				     <label class="control-label">Street</label>
+				     <input class="form-control" id="route" disabled="true"></input>	
+				     				   
+				     <label class="control-label">Zip code</label>
+				     <input class="form-control" id="postal_code" disabled="true"></input>		
+				     
+				     <label class="control-label">County</label>
+				     <input class="form-control" id="country" disabled="true"></input>
+			  </div>	           	            
+          	</div>       	
       	</fieldset>
       	
-      	<#if  baseFE.listBlobs?? &&  baseFE.listBlobs?has_content >
-	  		<div class="table-responsive">
-		        <table class="table table-striped">
-		        <caption>Table documents</caption>
-		          <thead>
-		            <tr>
-		              <th>File</th>
-		              <th>Action</th>
-		            </tr>
-		          </thead>
-		          <tbody>
-		          	<#list baseFE.listBlobs as child>
-					    <tr>
-		                   <#if child.id??>
-		                   <@spring.formHiddenInput "baseFE.listBlobs["+child?index+"].id"/>
-		                   <@spring.formHiddenInput "baseFE.listBlobs["+child?index+"].filename"/>
-						    <td>${child.filename}</td>
-			                <td>
-			                  	<button class="btn btn-info btn-sm" name="Download" type="submit" value="Download_${child.id}">
-							      <span class="glyphicon glyphicon-download"></span> Download
-							    </button>
-							    <#if baseFE.state== "C" || baseFE.state=="U">
-				                   	<button class="btn btn-danger btn-sm" name="Delete" type="submit" value="Delete_${child.id}">
-								      <span class="glyphicon glyphicon-remove-circle"></span> Delete
-								    </button> 
-							    </#if>
-		                  	</td>
-						   <#else>
-						      <td><@spring.formInput "baseFE.listBlobs["+child?index+"].multipartFile" 'class="form-control"' "file" /></td>
-			                  <td>
-		                      	<button class="btn btn-primary btn-sm" name="Upload" type="submit" value="Upload">
-							      <span class="glyphicon glyphicon-upload"></span> Upload
-							    </button>	
-			                  </td>	
-						   </#if>               
-					    </tr>
-				    </#list>
-		          </tbody>
-		        </table>
-	        </div>
-	    <#else> 
-		    No Details Available
-		</#if>
-      	
+      	<#include "../common/commoTableAttachment.ftl"  parse=true>
+
       	<hr style="border-top: 3px solid #0f23b1;">
           <div class="col-xs-3 pull-right">
           	<#if baseFE.state== "D" || baseFE.state=="C" || baseFE.state=="U">

@@ -86,49 +86,7 @@
           	</div>          	
       	</fieldset>
       	
-      	<#if  baseFE.listBlobs?? &&  baseFE.listBlobs?has_content >
-	  		<div class="table-responsive">
-		        <table class="table table-striped">
-		        <caption>Table documents</caption>
-		          <thead>
-		            <tr>
-		              <th>File</th>
-		              <th>Action</th>
-		            </tr>
-		          </thead>
-		          <tbody>
-		          	<#list baseFE.listBlobs as child>
-					    <tr>
-		                   <#if child.id??>
-		                   <@spring.formHiddenInput "baseFE.listBlobs["+child?index+"].id"/>
-		                   <@spring.formHiddenInput "baseFE.listBlobs["+child?index+"].filename"/>
-						    <td>${child.filename}</td>
-			                <td>
-			                  	<button class="btn btn-info btn-sm" name="Download" type="submit" value="Download_${child.id}">
-							      <span class="glyphicon glyphicon-download"></span> Download
-							    </button>
-							    <#if baseFE.state== "C" || baseFE.state=="U">
-				                   	<button class="btn btn-danger btn-sm" name="Delete" type="submit" value="Delete_${child.id}">
-								      <span class="glyphicon glyphicon-remove-circle"></span> Delete
-								    </button> 
-							    </#if>
-		                  	</td>
-						   <#else>
-						      <td><@spring.formInput "baseFE.listBlobs["+child?index+"].multipartFile" 'class="form-control"' "file" /></td>
-			                  <td>
-		                      	<button class="btn btn-primary btn-sm" name="Upload" type="submit" value="Upload">
-							      <span class="glyphicon glyphicon-upload"></span> Upload
-							    </button>	
-			                  </td>	
-						   </#if>               
-					    </tr>
-				    </#list>
-		          </tbody>
-		        </table>
-	        </div>
-	    <#else> 
-		    No Details Available
-		</#if>
+		<#include "../common/commoTableAttachment.ftl"  parse=true>
       	
       	<hr style="border-top: 3px solid #0f23b1;">
           <div class="col-xs-3 pull-right">

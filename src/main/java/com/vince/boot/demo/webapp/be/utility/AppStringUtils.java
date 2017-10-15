@@ -7,9 +7,9 @@ import java.nio.charset.Charset;
 import java.text.ParseException;
 
 
-public class StringUtils {
+public class AppStringUtils {
 	
-	StringUtils() {
+	AppStringUtils() {
 		throw new IllegalAccessError("Utility class");
 	}
 	
@@ -51,7 +51,7 @@ public class StringUtils {
 			final long maxBytesLength) {
 	
 		if (originalString == null
-				|| StringUtils.getUtf8Length(originalString) <= maxBytesLength) {
+				|| AppStringUtils.getUtf8Length(originalString) <= maxBytesLength) {
 			return originalString;
 		}
 		int newBytesLength = 0;
@@ -59,7 +59,7 @@ public class StringUtils {
 		String newChar;
 		for (int i = 0; i < originalString.length(); i++) {
 			newChar = originalString.substring(i, i + 1);
-			newBytesLength += StringUtils.getUtf8Length(newChar);
+			newBytesLength += AppStringUtils.getUtf8Length(newChar);
 			if (newBytesLength > maxBytesLength) {
 				break;
 			}
@@ -300,7 +300,7 @@ public class StringUtils {
 			return false;
 	
 		// Crea l'array con le singole email
-		String[] emailsArray = StringUtils.splitMultipleEmailAddressString(value);
+		String[] emailsArray = AppStringUtils.splitMultipleEmailAddressString(value);
 	
 		for (String singleEmail : emailsArray) {
 			if (!isValidSingleEmailAddress(singleEmail))

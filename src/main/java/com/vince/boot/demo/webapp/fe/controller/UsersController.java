@@ -23,12 +23,34 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.vince.boot.demo.webapp.be.utility.AppStringUtils;
 import com.vince.boot.demo.webapp.beAndFe.dto.BaseDto;
+import com.vince.boot.demo.webapp.beAndFe.dto.RoleUserDto;
 import com.vince.boot.demo.webapp.beAndFe.dto.UserAppDto;
+
+import freemarker.template.utility.StringUtil;
 
 
 @Controller
 public class UsersController extends BaseController {
+	
+	@RequestMapping(value= PREFIX_USERS + SUFFIX_CRUD, method=RequestMethod.POST, params="Delete")
+	public String deletedDocumentUser(@ModelAttribute("baseFE") UserAppDto baseFE, BindingResult result, ModelMap model, 
+			@RequestParam("Delete") String valueDelete) throws IOException{
+		return super.deleteDocument(baseFE, result, model, valueDelete);
+	}
+
+	@RequestMapping(value=PREFIX_USERS + SUFFIX_CRUD, method=RequestMethod.POST, params="Download")
+	public String downloaddDocumentUser(@ModelAttribute("baseFE") UserAppDto baseFE, BindingResult result, ModelMap model, 
+			@RequestParam("Download") String valueDownload, HttpServletResponse response) throws IOException{
+		return super.downloadDocument(baseFE, result, model, valueDownload, response);
+	}
+
+	@RequestMapping(value=PREFIX_USERS + SUFFIX_CRUD, method=RequestMethod.POST, params="Upload")
+	public String uploadDocumentUser(@ModelAttribute("baseFE") UserAppDto baseFE, BindingResult result, 
+			ModelMap model, HttpServletRequest request) throws IOException{
+		return super.uploadDocument(baseFE, result, model, request);
+	}
 	
 	@RequestMapping(value = {PREFIX_USERS+SUFFIX_SEARCH, PREFIX_USERS+SUFFIX_SEARCH + "/{msg}" }, method = {RequestMethod.GET, RequestMethod.POST})
 	public String effettuaRicercaAvanzata(
@@ -168,6 +190,7 @@ public class UsersController extends BaseController {
 		if("D".equals(baseFE.getState())) {
 			commonDtoRepository.deleteDto(new UserAppDto(baseFE.getId()));
 		}else {
+			validate(baseFE, result);
 			if(result.hasErrors()){
 				model.put("allErrors", result.getAllErrors());
 				model.put("baseFE", baseFE);
@@ -181,22 +204,65 @@ public class UsersController extends BaseController {
 	}
 
 	
-	@RequestMapping(value= PREFIX_USERS + SUFFIX_CRUD, method=RequestMethod.POST, params="Delete")
-	public String deletedDocumentUser(@ModelAttribute("baseFE") UserAppDto baseFE, BindingResult result, ModelMap model, 
-			@RequestParam("Delete") String valueDelete) throws IOException{
-		return super.deleteDocument(baseFE, result, model, valueDelete);
+	private void validate(UserAppDto baseFE, BindingResult result) {
+	
+		/* firstName */
+		if(StringUtils.isEmpty(baseFE.getFirstName())){
+			result.rejectValue("firstName", "error.field.required",  new String[]{}, "error.field.required");
+		}else{
+			if(baseFE.getFirstName().length()>50){
+				result.rejectValue("firstName", "error.field.max.size", new String[]{"50"}, "error.field.max.size");
+			}
+		}	
+		/* lastName */
+		if(StringUtils.isEmpty(baseFE.getLastName())){
+			result.rejectValue("lastName", "error.field.required",  new String[]{}, "error.field.required");
+		}else{
+			if(baseFE.getLastName().length()>50){
+				result.rejectValue("lastName", "error.field.max.size", new String[]{"50"}, "error.field.max.size");
+			}
+		}	
+		/* username */
+		if(StringUtils.isEmpty(baseFE.getUsername())){
+			result.rejectValue("username", "error.field.required",  new String[]{}, "error.field.required");
+		}else{
+			if(baseFE.getUsername().length()>100){
+				result.rejectValue("username", "error.field.max.size", new String[]{"100"}, "error.field.max.size");
+			}else{
+				UserAppDto temp = commonDtoRepository.findOneDto(new UserAppDto(baseFE.getUsername()));
+				if(temp !=null && temp.equals(baseFE.getUsername())){
+					result.rejectValue("username", "error.username.exists",  new String[]{baseFE.getUsername()}, "error.username.exists");
+				}
+			}
+		}
+		/* password */
+		if(StringUtils.isEmpty(baseFE.getPassword())){
+			result.rejectValue("password", "error.field.required",  new String[]{}, "error.field.required");
+		}else{
+			if(baseFE.getPassword().length()>20){
+				result.rejectValue("password", "error.field.max.size", new String[]{"20"}, "error.field.max.size");
+			}
+		}
+		/* email */
+		if(StringUtils.isEmpty(baseFE.getEmail())){
+			result.rejectValue("email", "error.field.required",  new String[]{}, "error.field.required");
+		}else{
+			if(baseFE.getEmail().length()>100){
+				result.rejectValue("email", "error.field.max.size", new String[]{"100"}, "error.field.max.size");
+			}else{
+				if(!AppStringUtils.isValidSingleEmailAddress(baseFE.getEmail())){
+					result.rejectValue("email", "error.valid.email", new String[]{baseFE.getEmail()}, "error.valid.email");
+				}
+			}
+		}
+		
+		/* roleUser */
+		if(baseFE.getRoleUser().getId()==null){
+			result.rejectValue("roleUser", "error.field.required",  new String[]{}, "error.field.required");
+		}		
+		
 	}
 
-	@RequestMapping(value=PREFIX_USERS + SUFFIX_CRUD, method=RequestMethod.POST, params="Download")
-	public String downloaddDocumentUser(@ModelAttribute("baseFE") UserAppDto baseFE, BindingResult result, ModelMap model, 
-			@RequestParam("Download") String valueDownload, HttpServletResponse response) throws IOException{
-		return super.downloadDocument(baseFE, result, model, valueDownload, response);
-	}
 
-	@RequestMapping(value=PREFIX_USERS + SUFFIX_CRUD, method=RequestMethod.POST, params="Upload")
-	public String uploadDocumentUser(@ModelAttribute("baseFE") UserAppDto baseFE, BindingResult result, 
-			ModelMap model, HttpServletRequest request) throws IOException{
-		return super.uploadDocument(baseFE, result, model, request);
-	}
 
 }
