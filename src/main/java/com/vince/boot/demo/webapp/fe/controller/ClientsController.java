@@ -95,7 +95,7 @@ public class ClientsController extends BaseController {
 //            
 //        } else {
 //            // Return specific index set of list
-//            System.out.println("type:" + type);
+//            logger.debug("type:" + type);
 //            
 //            productList = (PagedListHolder<Users>) req.getSession()
 //                                .getAttribute("phonesList");
@@ -119,7 +119,7 @@ public class ClientsController extends BaseController {
 //	}
 
 	@GetMapping(value = {PREFIX_CLIENTS+SUFFIX_CRUD, PREFIX_CLIENTS+SUFFIX_CRUD + "/{ids}/{type}"})
-	public String getRequest(ModelMap model, BaseDto baseFE, @PathVariable Map<String, String> pathVariablesMap) {
+	public String getRequest(ModelMap model, BaseDto baseFE, BindingResult result, @PathVariable Map<String, String> pathVariablesMap) {
 		String state = baseFE.getState();
 		Long id = null;
 		

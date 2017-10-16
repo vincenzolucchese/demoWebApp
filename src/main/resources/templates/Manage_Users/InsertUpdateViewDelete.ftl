@@ -110,25 +110,25 @@
 			    </div>
 			    
 				<div class="col-xs-3 placeholder">
-					 <label class="control-label">Civico</label>
-				     <input class="form-control" id="street_number" disabled="true"></input>
-				     
-				     <label class="control-label">City</label>
-				     <input class="form-control" id="locality" disabled="true"></input>
-				     
-				     <label class="control-label">State</label>
-				     <input class="form-control" id="administrative_area_level_1" disabled="true"></input>
-				 </div>			    
+	             <label class="control-label"><@spring.message 'label.address.streetnumber' /></label>
+	             <@spring.formInput "baseFE.street_number" 'class="form-control" disabled="true"' />		
+	             
+	             <label class="control-label"><@spring.message 'label.address.city' /></label>
+	             <@spring.formInput "baseFE.locality" 'class="form-control" disabled="true"' />	
+	             	             		     		     
+	             <label class="control-label"><@spring.message 'label.address.state' /></label>
+	             <@spring.formInput "baseFE.administrative_area_level_1" 'class="form-control" disabled="true"' />		
+				</div>			    
 				
-				<div class="col-xs-3 placeholder">			     
-				     <label class="control-label">Street</label>
-				     <input class="form-control" id="route" disabled="true"></input>	
+				<div class="col-xs-3 placeholder">	
+	             <label class="control-label"><@spring.message 'label.address.street' /></label>
+	             <@spring.formInput "baseFE.route" 'class="form-control" disabled="true"' />	
+	             						     
+	             <label class="control-label"><@spring.message 'label.address.zipcode' /></label>
+	             <@spring.formInput "baseFE.postal_code" 'class="form-control" disabled="true"' />	
 				     				   
-				     <label class="control-label">Zip code</label>
-				     <input class="form-control" id="postal_code" disabled="true"></input>		
-				     
-				     <label class="control-label">County</label>
-				     <input class="form-control" id="country" disabled="true"></input>
+	             <label class="control-label"><@spring.message 'label.address.country' /></label>
+	             <@spring.formInput "baseFE.country" 'class="form-control" disabled="true"' />		
 			  </div>	           	            
           	</div>       	
       	</fieldset>

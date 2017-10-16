@@ -25,10 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.vince.boot.demo.webapp.be.utility.AppStringUtils;
 import com.vince.boot.demo.webapp.beAndFe.dto.BaseDto;
-import com.vince.boot.demo.webapp.beAndFe.dto.RoleUserDto;
 import com.vince.boot.demo.webapp.beAndFe.dto.UserAppDto;
-
-import freemarker.template.utility.StringUtil;
 
 
 @Controller
@@ -119,7 +116,7 @@ public class UsersController extends BaseController {
             
         } else {
             // Return specific index set of list
-            System.out.println("type:" + type);
+            logger.debug("type:" + type);
             
             productList = (PagedListHolder<UserAppDto>) req.getSession()
                                 .getAttribute("phonesList");
@@ -143,7 +140,7 @@ public class UsersController extends BaseController {
 //	}
 
 	@GetMapping(value = {PREFIX_USERS+SUFFIX_CRUD, PREFIX_USERS+SUFFIX_CRUD + "/{ids}/{type}"})
-	public String getRequest(ModelMap model, BaseDto baseFE, @PathVariable Map<String, String> pathVariablesMap) {
+	public String getRequest(ModelMap model, BaseDto baseFE, BindingResult result, @PathVariable Map<String, String> pathVariablesMap) {
 		String state = baseFE.getState();
 		Long id = null;
 		

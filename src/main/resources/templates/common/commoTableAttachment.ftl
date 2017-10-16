@@ -27,7 +27,10 @@
 							    </#if>
 		                  	</td>
 						   <#else>
-						      <td><@spring.formInput "baseFE.listBlobs["+child?index+"].multipartFile" 'class="form-control"' "file" /></td>
+						      <td>
+						      	<@spring.formInput "baseFE.listBlobs["+child?index+"].multipartFile" 'class="form-control"' "file" />
+						     	<@spring.showErrors "</br>", "form-control alert-danger" />
+						      </td>
 			                  <td>
 		                      	<button class="btn btn-primary btn-sm" name="Upload" type="submit" value="Upload">
 							      <span class="glyphicon glyphicon-upload"></span> Upload

@@ -66,8 +66,6 @@ $(".headerCollasabile").click(function () {
         locality: 'long_name',
         administrative_area_level_1: 'long_name',
         country: 'long_name',
-        administrative_area_level_2: 'long_name',
-        administrative_area3: 'long_name',
         postal_code: 'short_name'
       };
 

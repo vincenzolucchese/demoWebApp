@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.ModelMap;
@@ -44,6 +45,9 @@ public abstract class BaseController {
 	
 	public static final String SUFFIX_SEARCH = "Search";
 	public static final String SUFFIX_CRUD = "InsertUpdateViewDelete";
+	
+	@Value("${spring.http.multipart.max-request-size}")
+	String fileMaxSize;
 	
 	@Autowired
 	GeoApiContext context;
@@ -85,7 +89,7 @@ public abstract class BaseController {
 			results = GeocodingApi.geocode(context,
 					"via chimenti 127,alcamo").await();
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
-			System.out.println(gson.toJson(results[0].addressComponents)); 
+			logger.debug(gson.toJson(results[0].addressComponents)); 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -112,7 +116,7 @@ public abstract class BaseController {
      * MANAGE FILE
      ********************************************/
     
-    public abstract String getRequest(ModelMap model, BaseDto baseFE, Map<String, String> mappa);
+    public abstract String getRequest(ModelMap model, BaseDto baseFE, BindingResult result, Map<String, String> mappa);
     
 	public String deleteDocument(@ModelAttribute("baseFE") BaseDto baseFE, BindingResult result, ModelMap model, 
 			@RequestParam("Delete") String valueDelete) throws IOException{
@@ -122,7 +126,7 @@ public abstract class BaseController {
 		commonDtoRepository.deleteDto(temp);	
 		
 		baseFE.setListBlobs(ArraysUtils.removeObject(baseFE.getListBlobs(), temp));
-		return getRequest(model, baseFE, new HashMap<String, String>());
+		return getRequest(model, baseFE, result, new HashMap<String, String>());
 	}
 
 	public String downloadDocument(@ModelAttribute("baseFE") BaseDto baseFE, BindingResult result, ModelMap model, 
@@ -146,11 +150,11 @@ public abstract class BaseController {
 		MultipartFile multipartFile = baseFE.getListBlobs().get(posix).getMultipartFile();
 
 		if(multipartFile.isEmpty()) {
-			result.rejectValue("listBlobs["+posix+"].file", "required", null, "required");
+			result.rejectValue("listBlobs["+posix+"].multipartFile", "error.file.select", null, "error.file.select");
 		}else{
-			System.out.println(multipartFile.getSize());
+			logger.debug(""+ multipartFile.getSize());
 			if(multipartFile.getSize()>10485760){
-				result.rejectValue("listBlobs["+posix+"].file", "required", null, "required");
+				result.rejectValue("listBlobs["+posix+"].multipartFile", "error.system.maxfile.size", new String[]{fileMaxSize}, "error.system.maxfile.size");
 			}
 		}
 		
@@ -158,16 +162,16 @@ public abstract class BaseController {
 			model.addAttribute("allErrors", result.getAllErrors());
 			model.addAttribute("baseFE", baseFE);
 			model.addAttribute("clients", getAllClients());
-			return "";
+			return getRequest(model, baseFE, result, new HashMap<String, String>());
 		} else {
 
- 			System.out.println("Fetching file");
+ 			logger.debug("Fetching file");
 			getCurrentAuth().getName();
 
 		}
 		BlobStoreDto blob = commonDtoRepository.saveBlobStoreDto(baseFE.getListBlobs().get(posix), getCurrentUsername());
 		baseFE.getListBlobs().add(blob);
-		return getRequest(model, baseFE, new HashMap<String, String>());
+		return getRequest(model, baseFE, result, new HashMap<String, String>());
 	}
 
 }

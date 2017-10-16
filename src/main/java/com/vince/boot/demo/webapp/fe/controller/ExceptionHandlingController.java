@@ -38,7 +38,7 @@ package com.vince.boot.demo.webapp.fe.controller;
 //  @ExceptionHandler(Exception.class)
 //  public void nonFound() {
 //	  // Nothing to do
-//	  System.out.println("");
+//	  logger.debug("");
 //  }
 //  
 //  // Specify name of a specific view that will be used to display the error:
