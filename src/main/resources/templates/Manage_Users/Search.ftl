@@ -3,7 +3,7 @@
 
 <@layout.standardPage title="Home">
 
-<#-- <@spring.bind "utente" /> -->
+<@spring.bind "baseFE" />
   
    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
       <h1 class="page-header">Search User</h1>
@@ -18,6 +18,20 @@
                Operation success.
             </div>
     	</#if>  	
+		
+		<form action="<@spring.url '/Manage_Users/Search' />" method="POST">
+      	<div class="row placeholders"> 
+      		<div class="col-xs-9 placeholder">       
+			<label class="control-label"><@spring.message 'label.user.simplefilter' /></label>
+			<div class="input-group">
+			 <@spring.formInput "baseFE.filterSimpleSearch" 'class="form-control"' />
+             <@spring.showErrors "</br>", "form-control alert-danger" />
+			    <span class="input-group-btn">
+			        <button class="btn btn-info" name="submit" type="submit" value="Search">Search</button>
+			    </span>
+			</div>            
+         </div>
+     	</div>
 		
 	    <h2 class="sub-header">Table Users</h2>
 	    <#if "${listBeanTable}"??  > 
@@ -84,6 +98,8 @@
 		<#else> 
 		    No Details Available
 		</#if>
+		
+		</form>
 
     </div>
     

@@ -20,6 +20,9 @@ public class BaseDto implements Serializable {
 	protected String state;
 	protected List<BlobStoreDto> listBlobs = new ArrayList<BlobStoreDto>();
 	protected Boolean isConvertInside = false;
+	
+	protected String filterSimpleSearch="";
+	
 
 	public Long getId() {
 		return this.id;
@@ -91,6 +94,14 @@ public class BaseDto implements Serializable {
 
 	public void setListBlobs(List<BlobStoreDto> listBlobs) {
 		this.listBlobs = listBlobs;
+	}
+
+	public String getFilterSimpleSearch() {
+		return filterSimpleSearch;
+	}
+
+	public void setFilterSimpleSearch(String filterSimpleSearch) {
+		this.filterSimpleSearch = filterSimpleSearch;
 	}
 	
 }

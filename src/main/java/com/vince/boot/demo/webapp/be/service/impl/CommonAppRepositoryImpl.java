@@ -35,10 +35,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.vince.boot.demo.webapp.be.entity.BlobStore;
 import com.vince.boot.demo.webapp.be.entity.ClientApp;
 import com.vince.boot.demo.webapp.be.entity.OrderJob;
+import com.vince.boot.demo.webapp.be.entity.QUserApp;
 import com.vince.boot.demo.webapp.be.entity.RelClientBlob;
 import com.vince.boot.demo.webapp.be.entity.RelOrderBlob;
 import com.vince.boot.demo.webapp.be.entity.RelUserBlob;
@@ -316,9 +319,18 @@ public class CommonAppRepositoryImpl extends JdbcDaoSupport implements CommonDto
 		Pageable pageable = PageableUtils.constructPageSpecification(i, displayTagObjectsPerPage.intValue(), sort, Boolean.valueOf(b));
 		Page<UserApp> entityPage = null;
 
-		UserApp entity = UserAppDto.createEntityFromDto(searchBean);
-		Example<UserApp> example = Example.of(entity);
-		entityPage = userAppRepository.findAll(example, pageable);
+		if(!StringUtils.isEmpty(searchBean.getFilterSimpleSearch())) {
+			QUserApp qdsl = QUserApp.dUserApp;
+			BooleanExpression expression = qdsl.firstName.like(searchBean.getFilterSimpleSearch());
+			expression.or(qdsl.lastName.like(searchBean.getFilterSimpleSearch()));
+			expression.or(qdsl.username.like(searchBean.getFilterSimpleSearch()));
+			expression.or(qdsl.lastName.like(searchBean.getFilterSimpleSearch()));			
+			entityPage = userAppRepository.findAll(expression, pageable);
+		}else {
+			UserApp entity = UserAppDto.createEntityFromDto(searchBean);
+			Example<UserApp> example = Example.of(entity);
+			entityPage = userAppRepository.findAll(example, pageable);			
+		}
 		
 		if(entityPage == null) {
 			return null;
@@ -739,6 +751,7 @@ public class CommonAppRepositoryImpl extends JdbcDaoSupport implements CommonDto
 	}
 
 	@Override
+	@Transactional
 	public UserAppDto findOneUserAppDto(Long id) {
 		return UserAppDto.createDtoFromEntity(userAppRepository.findOne(id));
 	}

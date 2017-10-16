@@ -76,6 +76,7 @@ public class UsersController extends BaseController {
 
 		request.getSession().setAttribute("listBeanTable",  listBeanTable);
 		
+		model.addAttribute("baseFE", searchBean);
 		return PREFIX_USERS+SUFFIX_SEARCH;
 	}
 	
