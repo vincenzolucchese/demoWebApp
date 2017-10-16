@@ -7,9 +7,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.vince.boot.demo.webapp.beAndFe.dto.RoleUserDto;
 import com.vince.boot.demo.webapp.beAndFe.dto.UserAppDto;
 
 @RunWith(SpringRunner.class)
@@ -35,8 +37,11 @@ public class BusinessTestsUserApp extends BusinessTests {
 		for(int i = 0; i<20 ; ++i) {
 			int a = i +1;
 			UserAppDto each = new UserAppDto();
+			BeanUtils.copyProperties(temp, each);
+			each.setRoleUser(new RoleUserDto(1l));
 			each.setId(null);
 			each.setUsername("ciaone"+i);
+			each.setRelUserBlobs(null);
 			lista.add(each);
 		}
 		

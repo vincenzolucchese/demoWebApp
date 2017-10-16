@@ -19,6 +19,9 @@ public class RoleUserDto extends BaseDto {
 
 	public RoleUserDto() {
 	}
+	public RoleUserDto(Long id) {
+		super.id = id;
+	}
 
 	public String getRoleCode() {
 		return this.roleCode;

@@ -3,7 +3,7 @@
 
 <@layout.standardPage title="Home">
 
-<@spring.bind "baseFE" />
+<@spring.bind "searchForm" />
   
    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
       <h1 class="page-header">Search User</h1>
@@ -24,7 +24,7 @@
       		<div class="col-xs-9 placeholder">       
 			<label class="control-label"><@spring.message 'label.user.simplefilter' /></label>
 			<div class="input-group">
-			 <@spring.formInput "baseFE.filterSimpleSearch" 'class="form-control"' />
+			 <@spring.formInput "searchForm.filterSimpleSearch" 'class="form-control"' />
              <@spring.showErrors "</br>", "form-control alert-danger" />
 			    <span class="input-group-btn">
 			        <button class="btn btn-info" name="submit" type="submit" value="Search">Search</button>
@@ -66,7 +66,7 @@
 				  <ul class="pagination justify-content-center">
 				  	
 				  	<#if listBeanTable.firstPage > 
-						<li class="page-item disabled">
+						<li class="page-item ">
 					      <a class="page-link" href="#" tabindex="-1">Previous</a>
 					    </li>
 					<#else>
@@ -83,11 +83,11 @@
 				 	</#list>
 
 					<#if listBeanTable.lastPage>
-					    <li class="page-item disabled">
-					      <a class="page-link" href="#">Next</a>
+					    <li class="page-item ">
+					      <button class="btn" name="Next" type="submit" value="Next">Next</button>
 					    </li>
 					<#else>
-						<li class="page-item disabled">
+						<li class="page-item ">
 					      <a class="page-link" href="<@spring.url '/Manage_Users/Search/next' />">Next</a>
 					    </li>						
 					</#if>				    

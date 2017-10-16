@@ -2,7 +2,6 @@ package com.vince.boot.demo.webapp.fe.controller;
 
 import java.io.IOException;
 import java.security.Principal;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,8 +20,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
+import com.mysql.fabric.xmlrpc.base.Params;
 import com.vince.boot.demo.webapp.be.utility.AppStringUtils;
 import com.vince.boot.demo.webapp.beAndFe.dto.BaseDto;
 import com.vince.boot.demo.webapp.beAndFe.dto.UserAppDto;
@@ -49,8 +48,9 @@ public class UsersController extends BaseController {
 		return super.uploadDocument(baseFE, result, model, request);
 	}
 	
-	@RequestMapping(value = {PREFIX_USERS+SUFFIX_SEARCH, PREFIX_USERS+SUFFIX_SEARCH + "/{msg}" }, method = {RequestMethod.GET, RequestMethod.POST})
-	public String effettuaRicercaAvanzata(
+	@RequestMapping(value = {PREFIX_USERS+SUFFIX_SEARCH, PREFIX_USERS+SUFFIX_SEARCH + "/{msg}" }, 
+			method = {RequestMethod.GET})
+	public String getRicercaAvanzata(
 			@PathVariable Map<String, String> pathVariablesMap, 
 			final @RequestParam(required = false) String page,
 			@RequestParam(required = false) String sort,
@@ -76,69 +76,28 @@ public class UsersController extends BaseController {
 
 		request.getSession().setAttribute("listBeanTable",  listBeanTable);
 		
-		model.addAttribute("baseFE", searchBean);
+		model.addAttribute("searchForm", searchBean);
 		return PREFIX_USERS+SUFFIX_SEARCH;
 	}
-	
-//	@RequestMapping(value = {"PREFIX_USERS/SUFFIX_SEARCH/{type}","PREFIX_USERS/SUFFIX_SEARCH"}, method = RequestMethod.GET)
-    public ModelAndView all(
-            @PathVariable Map<String, String> pathVariablesMap, 
-            HttpServletRequest req) {
-        
-        PagedListHolder<UserAppDto> productList = null;
-        
-        String type = pathVariablesMap.get("type");
-        
-        if(null == type) {
-            // First Request, Return first set of list
-            List<UserAppDto> phonesList = commonDtoRepository.findAllDto(new UserAppDto());
-            
-            productList = new PagedListHolder<UserAppDto>();
-            productList.setSource(phonesList);
-            
-            req.getSession().setAttribute("phonesList",  productList);
 
-            
-        } else if("next".equals(type)) {
-            // Return next set of list
-            productList = (PagedListHolder<UserAppDto>) req.getSession()
-                                .getAttribute("phonesList");
-            
-            productList.nextPage();
-
-            
-        } else if("prev".equals(type)) {
-            // Return previous set of list
-            productList = (PagedListHolder<UserAppDto>) req.getSession()
-                                .getAttribute("phonesList");
-            
-            productList.previousPage();
-
-            
-        } else {
-            // Return specific index set of list
-            logger.debug("type:" + type);
-            
-            productList = (PagedListHolder<UserAppDto>) req.getSession()
-                                .getAttribute("phonesList");
-            
-            int pageNum = Integer.parseInt(type);
-            
-            productList.setPage(pageNum);
-        }
-                    
-        ModelAndView mv = new ModelAndView(PREFIX_USERS+SUFFIX_SEARCH);
-        
-        return  mv;
-    }
 
 	
-//	@GetMapping("/PREFIX_USERS/SUFFIX_SEARCH")
-//	public String searchUtenteGetRequest(Model model, Pageable pageable) {
-//		
-//
-//		return "PREFIX_USERS/SUFFIX_SEARCH";
-//	}
+	@RequestMapping(value = {PREFIX_USERS+SUFFIX_SEARCH }, 
+			method = {RequestMethod.POST}, params={"Next"})
+	public String postRicercaAvanzata(
+			@PathVariable Map<String, String> pathVariablesMap, 
+			final @RequestParam(required = false) String page,
+			@RequestParam(required = false) String sort,
+			@RequestParam(required = false) String dir,
+			@RequestParam(required = false, name = "ricercaAvanzata", defaultValue = "false") Boolean ricercaAvanzataFlag,
+			ModelMap model,
+			@ModelAttribute("searchForm") UserAppDto searchBean,
+			Principal principal,
+			HttpServletRequest request) {
+		request.getParameterNames();
+		return getRicercaAvanzata(pathVariablesMap, page, sort, dir, ricercaAvanzataFlag, model, searchBean, principal, request);	
+	}
+
 
 	@GetMapping(value = {PREFIX_USERS+SUFFIX_CRUD, PREFIX_USERS+SUFFIX_CRUD + "/{ids}/{type}"})
 	public String getRequest(ModelMap model, BaseDto baseFE, BindingResult result, @PathVariable Map<String, String> pathVariablesMap) {
