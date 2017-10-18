@@ -28,7 +28,7 @@ import com.vince.boot.demo.webapp.beAndFe.dto.ClientAppDto;
 @Controller
 public class ClientsController extends BaseController {
 	
-	@RequestMapping(value = {PREFIX_CLIENTS+SUFFIX_SEARCH, PREFIX_CLIENTS+SUFFIX_SEARCH+"/{msg}" }, method = {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = {PREFIX_CLIENTS+SUFFIX_SEARCH, PREFIX_CLIENTS+SUFFIX_SEARCH + "/{" + SUFFIX_PARAMS_SEARCH + "}"}, method = {RequestMethod.GET, RequestMethod.POST})
 	public String effettuaRicercaAvanzata(
 			@PathVariable Map<String, String> pathVariablesMap, 
 			final @RequestParam(required = false) String page,
@@ -45,7 +45,7 @@ public class ClientsController extends BaseController {
 		
 		PagedListHolder<ClientAppDto> listBeanTable = null;		
 		String type = pathVariablesMap.get("type");
-		String msg = pathVariablesMap.get("msg");
+		String msg = pathVariablesMap.get(SUFFIX_PARAMS_SEARCH);
 		
 		if("msgOK".equals(msg)) {
 			model.addAttribute("msgOK", msg);

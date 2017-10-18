@@ -29,7 +29,7 @@ import com.vince.boot.demo.webapp.beAndFe.dto.OrderJobDto;
 @Controller
 public class OrdersController extends BaseController {
 	
-	@RequestMapping(value = {PREFIX_ORDERS+SUFFIX_SEARCH, PREFIX_ORDERS+SUFFIX_SEARCH + "/{msg}" }, method = {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = {PREFIX_ORDERS+SUFFIX_SEARCH, PREFIX_ORDERS+SUFFIX_SEARCH + "/{" + SUFFIX_PARAMS_SEARCH + "}" }, method = {RequestMethod.GET, RequestMethod.POST})
 	public String effettuaRicercaAvanzata(
 			@PathVariable Map<String, String> pathVariablesMap, 
 			final @RequestParam(required = false) String page,
@@ -46,7 +46,7 @@ public class OrdersController extends BaseController {
 		
 		PagedListHolder<OrderJobDto> listBeanTable = null;		
 		String type = pathVariablesMap.get("type");
-		String msg = pathVariablesMap.get("msg");
+		String msg = pathVariablesMap.get(SUFFIX_PARAMS_SEARCH);
 		
 		if("msgOK".equals(msg)) {
 			model.addAttribute("msgOK", msg);

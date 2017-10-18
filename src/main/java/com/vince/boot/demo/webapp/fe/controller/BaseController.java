@@ -46,6 +46,8 @@ public abstract class BaseController {
 	public static final String SUFFIX_SEARCH = "Search";
 	public static final String SUFFIX_CRUD = "InsertUpdateViewDelete";
 	
+	public static final String SUFFIX_PARAMS_SEARCH = "msg";
+	
 	@Value("${spring.http.multipart.max-request-size}")
 	String fileMaxSize;
 	

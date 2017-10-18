@@ -2,6 +2,7 @@ package com.vince.boot.demo.webapp.fe.controller;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,8 +21,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import com.mysql.fabric.xmlrpc.base.Params;
 import com.vince.boot.demo.webapp.be.utility.AppStringUtils;
 import com.vince.boot.demo.webapp.beAndFe.dto.BaseDto;
 import com.vince.boot.demo.webapp.beAndFe.dto.UserAppDto;
@@ -48,7 +47,7 @@ public class UsersController extends BaseController {
 		return super.uploadDocument(baseFE, result, model, request);
 	}
 	
-	@RequestMapping(value = {PREFIX_USERS+SUFFIX_SEARCH, PREFIX_USERS+SUFFIX_SEARCH + "/{msg}" }, 
+	@RequestMapping(value = {PREFIX_USERS+SUFFIX_SEARCH, PREFIX_USERS+SUFFIX_SEARCH + "/{" + SUFFIX_PARAMS_SEARCH + "}" }, 
 			method = {RequestMethod.GET})
 	public String getRicercaAvanzata(
 			@PathVariable Map<String, String> pathVariablesMap, 
@@ -65,14 +64,53 @@ public class UsersController extends BaseController {
 		String dirLocale = dir;
 		
 		PagedListHolder<UserAppDto> listBeanTable = null;		
-		String type = pathVariablesMap.get("type");
-		String msg = pathVariablesMap.get("msg");
+		String msg = pathVariablesMap.get(SUFFIX_PARAMS_SEARCH);
 		
 		if("msgOK".equals(msg)) {
 			model.addAttribute("msgOK", msg);
 		}
+		 
+//        if(null == type) {
+//            // First Request, Return first set of list
+//            List<UserApp> phonesList = (List<UserApp>) usersRepository.findAll();
+//            
+//            productList = new PagedListHolder<UserApp>();
+//            productList.setSource(phonesList);
+//            
+//            req.getSession().setAttribute("phonesList",  productList);
+//
+//            
+//        } else if("next".equals(type)) {
+//            // Return next set of list
+//            productList = (PagedListHolder<UserApp>) req.getSession()
+//                                .getAttribute("phonesList");
+//            
+//            productList.nextPage();
+//
+//            
+//        } else if("prev".equals(type)) {
+//            // Return previous set of list
+//            productList = (PagedListHolder<UserApp>) req.getSession()
+//                                .getAttribute("phonesList");
+//            
+//            productList.previousPage();
+//
+//            
+//        } else {
+//            // Return specific index set of list
+//            System.out.println("type:" + type);
+//            
+//            productList = (PagedListHolder<UserApp>) req.getSession()
+//                                .getAttribute("phonesList");
+//            
+//            int pageNum = Integer.parseInt(type);
+//            
+//            productList.setPage(pageNum);
+//        }
 		
 		listBeanTable = commonDtoRepository.findDtoPagedByCriteria(searchBean, 0, 10, "timeInsert", false);
+		
+//		listBeanTable.setPage();
 
 		request.getSession().setAttribute("listBeanTable",  listBeanTable);
 		
@@ -80,6 +118,59 @@ public class UsersController extends BaseController {
 		return PREFIX_USERS+SUFFIX_SEARCH;
 	}
 
+//	@RequestMapping(value = {"PREFIX_USERS/SUFFIX_SEARCH/{type}","PREFIX_USERS/SUFFIX_SEARCH"}, method = RequestMethod.GET)
+//    public ModelAndView all(
+//            @PathVariable Map<String, String> pathVariablesMap, 
+//            HttpServletRequest req) {
+//        
+//        PagedListHolder<UserApp> productList = null;
+//        
+//        String type = pathVariablesMap.get("type");
+//        
+//        if(null == type) {
+//            // First Request, Return first set of list
+//            List<UserApp> phonesList = (List<UserApp>) usersRepository.findAll();
+//            
+//            productList = new PagedListHolder<UserApp>();
+//            productList.setSource(phonesList);
+//            
+//            req.getSession().setAttribute("phonesList",  productList);
+//
+//            
+//        } else if("next".equals(type)) {
+//            // Return next set of list
+//            productList = (PagedListHolder<UserApp>) req.getSession()
+//                                .getAttribute("phonesList");
+//            
+//            productList.nextPage();
+//
+//            
+//        } else if("prev".equals(type)) {
+//            // Return previous set of list
+//            productList = (PagedListHolder<UserApp>) req.getSession()
+//                                .getAttribute("phonesList");
+//            
+//            productList.previousPage();
+//
+//            
+//        } else {
+//            // Return specific index set of list
+//            System.out.println("type:" + type);
+//            
+//            productList = (PagedListHolder<UserApp>) req.getSession()
+//                                .getAttribute("phonesList");
+//            
+//            int pageNum = Integer.parseInt(type);
+//            
+//            productList.setPage(pageNum);
+//        }
+//                    
+//        ModelAndView mv = new ModelAndView(PREFIX_USERS+SUFFIX_SEARCH);
+//        
+//        return  mv;
+//    }
+
+	
 
 	
 	@RequestMapping(value = {PREFIX_USERS+SUFFIX_SEARCH }, 
