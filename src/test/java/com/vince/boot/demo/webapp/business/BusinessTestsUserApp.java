@@ -34,7 +34,7 @@ public class BusinessTestsUserApp extends BusinessTests {
 		UserAppDto temp = commonAppRepositoryImpl.findOneUserAppDto(new Long(1));
 		
 		List<UserAppDto> lista = new ArrayList<UserAppDto>();
-		for(int i = 0; i<20 ; ++i) {
+		for(int i = 30; i<2000 ; ++i) {
 			int a = i +1;
 			UserAppDto each = new UserAppDto();
 			BeanUtils.copyProperties(temp, each);

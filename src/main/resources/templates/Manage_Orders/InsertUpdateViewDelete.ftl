@@ -133,7 +133,7 @@
           	        	
       	</fieldset>
       	
-		<#include "../common/commoTableAttachment.ftl"  parse=true>
+		<#include "../common/commonTableAttachment.ftl"  parse=true>
       	
       	<hr style="border-top: 3px solid #0f23b1;">
           <div class="col-xs-3 pull-right">

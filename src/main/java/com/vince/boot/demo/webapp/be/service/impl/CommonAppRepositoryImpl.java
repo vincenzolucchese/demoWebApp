@@ -344,6 +344,7 @@ public class CommonAppRepositoryImpl extends JdbcDaoSupport implements CommonDto
 		for (UserApp eachEntity : entityPage) {
 			listaDto.add(UserAppDto.createDtoFromEntity(eachEntity));
 		}
+		beanPage.setPage(entityPage.getNumber());
 		beanPage.setSource(listaDto);
 		return beanPage;
 	}

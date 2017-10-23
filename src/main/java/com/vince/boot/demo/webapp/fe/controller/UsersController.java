@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
@@ -48,7 +49,7 @@ public class UsersController extends BaseController {
 	}
 	
 	@RequestMapping(value = {PREFIX_USERS+SUFFIX_SEARCH, PREFIX_USERS+SUFFIX_SEARCH + "/{" + SUFFIX_PARAMS_SEARCH + "}" }, 
-			method = {RequestMethod.GET})
+			method = {RequestMethod.GET, RequestMethod.POST})
 	public String getRicercaAvanzata(
 			@PathVariable Map<String, String> pathVariablesMap, 
 			final @RequestParam(required = false) String page,
@@ -108,9 +109,12 @@ public class UsersController extends BaseController {
 //            productList.setPage(pageNum);
 //        }
 		
+		if(StringUtils.isEmpty(msg)){
+			msg = "0";
+		}
 
 		
-		listBeanTable = commonDtoRepository.findDtoPagedByCriteria(searchBean, 0, 10, "timeInsert", false);
+		listBeanTable = commonDtoRepository.findDtoPagedByCriteria(searchBean, Integer.parseInt(msg), PagedListHolder.DEFAULT_PAGE_SIZE, "timeInsert", false);
 		
 //		listBeanTable.setPage();
 
