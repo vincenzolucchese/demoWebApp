@@ -2,14 +2,12 @@ package com.vince.boot.demo.webapp.fe.controller;
 
 import java.io.IOException;
 import java.security.Principal;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
-import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
@@ -21,8 +19,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import com.vince.boot.demo.webapp.be.utility.AppStringUtils;
 import com.vince.boot.demo.webapp.beAndFe.dto.BaseDto;
+import com.vince.boot.demo.webapp.beAndFe.dto.MyPagedListHolder;
 import com.vince.boot.demo.webapp.beAndFe.dto.UserAppDto;
 
 
@@ -63,7 +63,7 @@ public class UsersController extends BaseController {
 		String sortLocale = sort;
 		String dirLocale = dir;
 		
-		PagedListHolder<UserAppDto> listBeanTable = null;		
+		MyPagedListHolder<UserAppDto> listBeanTable = null;		
 		String msg = pathVariablesMap.get(SUFFIX_PARAMS_SEARCH);
 		
 		if("msgOK".equals(msg)) {
@@ -74,7 +74,7 @@ public class UsersController extends BaseController {
 //            // First Request, Return first set of list
 //            List<UserApp> phonesList = (List<UserApp>) usersRepository.findAll();
 //            
-//            productList = new PagedListHolder<UserApp>();
+//            productList = new MyPagedListHolder<UserApp>();
 //            productList.setSource(phonesList);
 //            
 //            req.getSession().setAttribute("phonesList",  productList);
@@ -82,7 +82,7 @@ public class UsersController extends BaseController {
 //            
 //        } else if("next".equals(type)) {
 //            // Return next set of list
-//            productList = (PagedListHolder<UserApp>) req.getSession()
+//            productList = (MyPagedListHolder<UserApp>) req.getSession()
 //                                .getAttribute("phonesList");
 //            
 //            productList.nextPage();
@@ -90,7 +90,7 @@ public class UsersController extends BaseController {
 //            
 //        } else if("prev".equals(type)) {
 //            // Return previous set of list
-//            productList = (PagedListHolder<UserApp>) req.getSession()
+//            productList = (MyPagedListHolder<UserApp>) req.getSession()
 //                                .getAttribute("phonesList");
 //            
 //            productList.previousPage();
@@ -100,13 +100,15 @@ public class UsersController extends BaseController {
 //            // Return specific index set of list
 //            System.out.println("type:" + type);
 //            
-//            productList = (PagedListHolder<UserApp>) req.getSession()
+//            productList = (MyPagedListHolder<UserApp>) req.getSession()
 //                                .getAttribute("phonesList");
 //            
 //            int pageNum = Integer.parseInt(type);
 //            
 //            productList.setPage(pageNum);
 //        }
+		
+
 		
 		listBeanTable = commonDtoRepository.findDtoPagedByCriteria(searchBean, 0, 10, "timeInsert", false);
 		
@@ -123,7 +125,7 @@ public class UsersController extends BaseController {
 //            @PathVariable Map<String, String> pathVariablesMap, 
 //            HttpServletRequest req) {
 //        
-//        PagedListHolder<UserApp> productList = null;
+//        MyPagedListHolder<UserApp> productList = null;
 //        
 //        String type = pathVariablesMap.get("type");
 //        
@@ -131,7 +133,7 @@ public class UsersController extends BaseController {
 //            // First Request, Return first set of list
 //            List<UserApp> phonesList = (List<UserApp>) usersRepository.findAll();
 //            
-//            productList = new PagedListHolder<UserApp>();
+//            productList = new MyPagedListHolder<UserApp>();
 //            productList.setSource(phonesList);
 //            
 //            req.getSession().setAttribute("phonesList",  productList);
@@ -139,7 +141,7 @@ public class UsersController extends BaseController {
 //            
 //        } else if("next".equals(type)) {
 //            // Return next set of list
-//            productList = (PagedListHolder<UserApp>) req.getSession()
+//            productList = (MyPagedListHolder<UserApp>) req.getSession()
 //                                .getAttribute("phonesList");
 //            
 //            productList.nextPage();
@@ -147,7 +149,7 @@ public class UsersController extends BaseController {
 //            
 //        } else if("prev".equals(type)) {
 //            // Return previous set of list
-//            productList = (PagedListHolder<UserApp>) req.getSession()
+//            productList = (MyPagedListHolder<UserApp>) req.getSession()
 //                                .getAttribute("phonesList");
 //            
 //            productList.previousPage();
@@ -157,7 +159,7 @@ public class UsersController extends BaseController {
 //            // Return specific index set of list
 //            System.out.println("type:" + type);
 //            
-//            productList = (PagedListHolder<UserApp>) req.getSession()
+//            productList = (MyPagedListHolder<UserApp>) req.getSession()
 //                                .getAttribute("phonesList");
 //            
 //            int pageNum = Integer.parseInt(type);

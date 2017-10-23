@@ -27,8 +27,8 @@ import javax.sql.DataSource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.support.PagedListHolder;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -62,6 +62,7 @@ import com.vince.boot.demo.webapp.be.service.UserAppRepository;
 import com.vince.boot.demo.webapp.be.utility.PageableUtils;
 import com.vince.boot.demo.webapp.beAndFe.dto.BlobStoreDto;
 import com.vince.boot.demo.webapp.beAndFe.dto.ClientAppDto;
+import com.vince.boot.demo.webapp.beAndFe.dto.MyPagedListHolder;
 import com.vince.boot.demo.webapp.beAndFe.dto.OrderJobDto;
 import com.vince.boot.demo.webapp.beAndFe.dto.RoleUserDto;
 import com.vince.boot.demo.webapp.beAndFe.dto.TypeDocumentDto;
@@ -314,7 +315,7 @@ public class CommonAppRepositoryImpl extends JdbcDaoSupport implements CommonDto
 
 	@Override
 	@Transactional
-	public PagedListHolder<UserAppDto> findDtoPagedByCriteria(UserAppDto searchBean, int i,
+	public MyPagedListHolder<UserAppDto> findDtoPagedByCriteria(UserAppDto searchBean, int i,
 			Integer displayTagObjectsPerPage, String sort, boolean b) {
 		Pageable pageable = PageableUtils.constructPageSpecification(i, displayTagObjectsPerPage.intValue(), sort, Boolean.valueOf(b));
 		Page<UserApp> entityPage = null;
@@ -335,11 +336,15 @@ public class CommonAppRepositoryImpl extends JdbcDaoSupport implements CommonDto
 		if(entityPage == null) {
 			return null;
 		}
+		
+		MyPagedListHolder<UserAppDto> beanPage = new MyPagedListHolder<UserAppDto>();
+		BeanUtils.copyProperties(entityPage, beanPage);
+		
 		ArrayList<UserAppDto> listaDto = new ArrayList<UserAppDto>();
 		for (UserApp eachEntity : entityPage) {
 			listaDto.add(UserAppDto.createDtoFromEntity(eachEntity));
 		}
-		PagedListHolder<UserAppDto> beanPage = new PagedListHolder<UserAppDto>(listaDto);
+		beanPage.setSource(listaDto);
 		return beanPage;
 	}
 
@@ -519,7 +524,7 @@ public class CommonAppRepositoryImpl extends JdbcDaoSupport implements CommonDto
 	}
 
 	@Override
-	public PagedListHolder<ClientAppDto> findDtoPagedByCriteria(ClientAppDto searchBean, int i,
+	public MyPagedListHolder<ClientAppDto> findDtoPagedByCriteria(ClientAppDto searchBean, int i,
 			Integer displayTagObjectsPerPage, String sort, boolean b) {
 		Pageable pageable = PageableUtils.constructPageSpecification(i, displayTagObjectsPerPage.intValue(), sort, Boolean.valueOf(b));
 		Page<ClientApp> entityPage = null;
@@ -535,7 +540,10 @@ public class CommonAppRepositoryImpl extends JdbcDaoSupport implements CommonDto
 		for (ClientApp eachEntity : entityPage) {
 			listaDto.add(ClientAppDto.createDtoFromEntity(eachEntity));
 		}
-		PagedListHolder<ClientAppDto> beanPage = new PagedListHolder<ClientAppDto>(listaDto);
+		MyPagedListHolder<ClientAppDto> beanPage = new MyPagedListHolder<ClientAppDto>();
+		BeanUtils.copyProperties(entityPage, beanPage);
+		beanPage.setSource(listaDto);
+		
 		return beanPage;
 	}
 
@@ -714,7 +722,7 @@ public class CommonAppRepositoryImpl extends JdbcDaoSupport implements CommonDto
 	}
 
 	@Override
-	public PagedListHolder<OrderJobDto> findDtoPagedByCriteria(OrderJobDto searchBean, int i,
+	public MyPagedListHolder<OrderJobDto> findDtoPagedByCriteria(OrderJobDto searchBean, int i,
 			Integer displayTagObjectsPerPage, String sort, boolean b) {
 		Pageable pageable = PageableUtils.constructPageSpecification(i, displayTagObjectsPerPage.intValue(), sort, Boolean.valueOf(b));
 		Page<OrderJob> entityPage = null;
@@ -730,7 +738,9 @@ public class CommonAppRepositoryImpl extends JdbcDaoSupport implements CommonDto
 		for (OrderJob eachEntity : entityPage) {
 			listaDto.add(OrderJobDto.createDtoFromEntity(eachEntity));
 		}
-		PagedListHolder<OrderJobDto> beanPage = new PagedListHolder<OrderJobDto>(listaDto);
+		MyPagedListHolder<OrderJobDto> beanPage = new MyPagedListHolder<OrderJobDto>();
+		BeanUtils.copyProperties(entityPage, beanPage);
+		beanPage.setSource(listaDto);
 		return beanPage;
 	}
 

@@ -4,10 +4,9 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.beans.support.PagedListHolder;
-
 import com.vince.boot.demo.webapp.beAndFe.dto.BlobStoreDto;
 import com.vince.boot.demo.webapp.beAndFe.dto.ClientAppDto;
+import com.vince.boot.demo.webapp.beAndFe.dto.MyPagedListHolder;
 import com.vince.boot.demo.webapp.beAndFe.dto.OrderJobDto;
 import com.vince.boot.demo.webapp.beAndFe.dto.RoleUserDto;
 import com.vince.boot.demo.webapp.beAndFe.dto.TypeDocumentDto;
@@ -51,7 +50,7 @@ public interface CommonDtoRepository {
 	UserAppDto findOneDto(UserAppDto filter);
 	List<UserAppDto> findAllDto(UserAppDto filter);
 	
-	PagedListHolder<UserAppDto> findDtoPagedByCriteria(UserAppDto searchBean, int i, Integer displayTagObjectsPerPage, String sort, boolean b) ;
+	MyPagedListHolder<UserAppDto> findDtoPagedByCriteria(UserAppDto searchBean, int i, Integer displayTagObjectsPerPage, String sort, boolean b) ;
 	Long deleteDto(UserAppDto entityDto);
 	
 	/*
@@ -69,7 +68,7 @@ public interface CommonDtoRepository {
 	ClientAppDto findOneDto(ClientAppDto filter);
 	List<ClientAppDto> findAllDto(ClientAppDto filter);
 	
-	PagedListHolder<ClientAppDto> findDtoPagedByCriteria(ClientAppDto searchBean, int i, Integer displayTagObjectsPerPage, String sort, boolean b) ;
+	MyPagedListHolder<ClientAppDto> findDtoPagedByCriteria(ClientAppDto searchBean, int i, Integer displayTagObjectsPerPage, String sort, boolean b) ;
 	Long deleteDto(ClientAppDto entityDto);
 	
 	/*
@@ -87,7 +86,7 @@ public interface CommonDtoRepository {
 	OrderJobDto findOneDto(OrderJobDto filter);
 	List<OrderJobDto> findAllDto(OrderJobDto filter);
 	
-	PagedListHolder<OrderJobDto> findDtoPagedByCriteria(OrderJobDto searchBean, int i, Integer displayTagObjectsPerPage, String sort, boolean b) ;
+	MyPagedListHolder<OrderJobDto> findDtoPagedByCriteria(OrderJobDto searchBean, int i, Integer displayTagObjectsPerPage, String sort, boolean b) ;
 	Long deleteDto(OrderJobDto entityDto);
 	
 }

@@ -64,7 +64,9 @@
 	            </table>
 	            <nav aria-label="Page navigation example">
 				  <ul class="pagination justify-content-center">
-				  	
+				  		<li class="page-item ">
+					      <a class="">Total elements: ${listBeanTable.totalElements}</a>
+					    </li>
 				  	<#if listBeanTable.firstPage > 
 						<li class="page-item ">
 					      <a class="page-link" href="#" tabindex="-1">Previous</a>

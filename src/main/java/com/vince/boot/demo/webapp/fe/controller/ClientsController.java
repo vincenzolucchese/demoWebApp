@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
-import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
@@ -23,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.vince.boot.demo.webapp.beAndFe.dto.BaseDto;
 import com.vince.boot.demo.webapp.beAndFe.dto.ClientAppDto;
+import com.vince.boot.demo.webapp.beAndFe.dto.MyPagedListHolder;
 
 
 @Controller
@@ -43,7 +43,7 @@ public class ClientsController extends BaseController {
 		String sortLocale = sort;
 		String dirLocale = dir;
 		
-		PagedListHolder<ClientAppDto> listBeanTable = null;		
+		MyPagedListHolder<ClientAppDto> listBeanTable = null;		
 		String type = pathVariablesMap.get("type");
 		String msg = pathVariablesMap.get(SUFFIX_PARAMS_SEARCH);
 		
@@ -63,7 +63,7 @@ public class ClientsController extends BaseController {
 //            @PathVariable Map<String, String> pathVariablesMap, 
 //            HttpServletRequest req) {
 //        
-//        PagedListHolder<Users> productList = null;
+//        MyPagedListHolder<Users> productList = null;
 //        
 //        String type = pathVariablesMap.get("type");
 //        
@@ -71,7 +71,7 @@ public class ClientsController extends BaseController {
 //            // First Request, Return first set of list
 //            List<Users> phonesList = (List<Users>) usersRepository.findAll();
 //            
-//            productList = new PagedListHolder<Users>();
+//            productList = new MyPagedListHolder<Users>();
 //            productList.setSource(phonesList);
 //            
 //            req.getSession().setAttribute("phonesList",  productList);
@@ -79,7 +79,7 @@ public class ClientsController extends BaseController {
 //            
 //        } else if("next".equals(type)) {
 //            // Return next set of list
-//            productList = (PagedListHolder<Users>) req.getSession()
+//            productList = (MyPagedListHolder<Users>) req.getSession()
 //                                .getAttribute("phonesList");
 //            
 //            productList.nextPage();
@@ -87,7 +87,7 @@ public class ClientsController extends BaseController {
 //            
 //        } else if("prev".equals(type)) {
 //            // Return previous set of list
-//            productList = (PagedListHolder<Users>) req.getSession()
+//            productList = (MyPagedListHolder<Users>) req.getSession()
 //                                .getAttribute("phonesList");
 //            
 //            productList.previousPage();
@@ -97,7 +97,7 @@ public class ClientsController extends BaseController {
 //            // Return specific index set of list
 //            logger.debug("type:" + type);
 //            
-//            productList = (PagedListHolder<Users>) req.getSession()
+//            productList = (MyPagedListHolder<Users>) req.getSession()
 //                                .getAttribute("phonesList");
 //            
 //            int pageNum = Integer.parseInt(type);
