@@ -83,8 +83,8 @@
 					    </li>
 					</#if>
 					
-					<#list 1..10 as loop>
-						<li class="page-item"><a class="page-link" href="<@spring.url '/Manage_Users/Search' />/${loop?index}">${loop?index+1}</a></li>						
+					<#list listBeanTable.pagesLinkable as loop>
+						<li class="page-item"><a class="page-link" href="<@spring.url '/Manage_Users/Search' />/${loop-1}">${loop}</a></li>						
 				 	</#list>
 
 					<#if listBeanTable.lastPage>
