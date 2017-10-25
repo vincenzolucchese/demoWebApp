@@ -27,31 +27,6 @@
 	            Are you sure to delete this entity?.
 	        </div>
 		</#if> 	        
-    	   	
-	    <#--
-	    <form id="fileuploadForm" action="<@spring.url '/Manage_Users/fileupload' />" method="POST" enctype="multipart/form-data" class="cleanform">
-		   <div class="row placeholders">          
-	            <div class="col-xs-3 placeholder">
-	              <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="100" height="100" class="img-responsive" alt="Generic placeholder thumbnail">
-	              <h4>Label</h4>
-	              <span class="text-muted">Something else</span>
-	            </div>
-	            <div class="col-xs-6 placeholder">
-	            
-		            	<h4>File</h4>
-		            	<div class="col-xs-8">
-							<@spring.formInput "baseFE.file.file" 'class="form-control"' "file" />
-						</div>
-						<div class="container">
-							<button class="btn btn-sm btn-primary pull-left" name="submit" type="submit" value="Upload">Upload</button>
-							<button class="btn btn-sm btn-primary pull-left" name="submit" type="submit" value="Upload">Upload</button>
-						</div>
-					
-	            </div>
-           	
-     		</div>	
-		</form>
-		-->
 
 		<form action="<@spring.url '/Manage_Users/InsertUpdateViewDelete' />" method="POST" enctype="multipart/form-data">
 
@@ -111,24 +86,24 @@
 			    
 				<div class="col-xs-3 placeholder">
 	             <label class="control-label"><@spring.message 'label.address.streetnumber' /></label>
-	             <@spring.formInput "baseFE.street_number" 'class="form-control" disabled="true"' />		
+	             <@spring.formInput "baseFE.street_number" 'class="form-control" readonly="readonly"' />			
 	             
 	             <label class="control-label"><@spring.message 'label.address.city' /></label>
-	             <@spring.formInput "baseFE.locality" 'class="form-control" disabled="true"' />	
+	             <@spring.formInput "baseFE.locality" 'class="form-control" readonly="readonly"' />	
 	             	             		     		     
 	             <label class="control-label"><@spring.message 'label.address.state' /></label>
-	             <@spring.formInput "baseFE.administrative_area_level_1" 'class="form-control" disabled="true"' />		
+	             <@spring.formInput "baseFE.administrative_area_level_1" 'class="form-control" readonly="readonly"' />			
 				</div>			    
 				
 				<div class="col-xs-3 placeholder">	
 	             <label class="control-label"><@spring.message 'label.address.street' /></label>
-	             <@spring.formInput "baseFE.route" 'class="form-control" disabled="true"' />	
+	             <@spring.formInput "baseFE.route" 'class="form-control" readonly="readonly"' />		
 	             						     
 	             <label class="control-label"><@spring.message 'label.address.zipcode' /></label>
-	             <@spring.formInput "baseFE.postal_code" 'class="form-control" disabled="true"' />	
+	             <@spring.formInput "baseFE.postal_code" 'class="form-control" readonly="readonly"' />	
 				     				   
 	             <label class="control-label"><@spring.message 'label.address.country' /></label>
-	             <@spring.formInput "baseFE.country" 'class="form-control" disabled="true"' />		
+	             <@spring.formInput "baseFE.country" 'class="form-control" readonly="readonly"' />				
 			  </div>	           	            
           	</div>       	
       	</fieldset>
@@ -141,13 +116,13 @@
 				<button class="btn btn-default btn-primary" name="submit" type="submit" value="Insert">Save</button>	
 			</#if>
 			<#if baseFE.state!="C">	     		
-     			<#-- <button class="btn btn-default btn-primary" name="submit" type="submit" value="backToList">Back</button>
-     			-->
      			<a href="<@spring.url '/Manage_Users/Search' />" class="btn btn-info" role="button">Back</a>
      		</#if>
      	  </div>
     	</form>
-
     </div>
+    
+    <#-- include all js required here -->
+    <#include "/common/js/maps.ftl" >
     
 </@layout.standardPage>    

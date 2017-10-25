@@ -23,6 +23,10 @@ public class BaseDto implements Serializable {
 	
 	protected String filterSimpleSearch="";
 	
+	/* for session impl */
+	protected String pageSearchSession = "0";
+	
+	
 
 	public Long getId() {
 		return this.id;
@@ -102,6 +106,14 @@ public class BaseDto implements Serializable {
 
 	public void setFilterSimpleSearch(String filterSimpleSearch) {
 		this.filterSimpleSearch = filterSimpleSearch;
+	}
+
+	public String getPageSearchSession() {
+		return pageSearchSession;
+	}
+
+	public void setPageSearchSession(String pageSearchSession) {
+		this.pageSearchSession = pageSearchSession;
 	}
 	
 }

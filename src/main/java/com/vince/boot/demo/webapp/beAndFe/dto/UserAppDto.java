@@ -32,6 +32,7 @@ public class UserAppDto extends BaseDto  {
 	private String postal_code="";  
 	private String country="";  
 	
+
 	/*******************************************
 	 * CONVERTER ENTITY <--> DTO
 	 *******************************************/
