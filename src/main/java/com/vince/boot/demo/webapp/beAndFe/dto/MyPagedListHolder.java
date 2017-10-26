@@ -50,16 +50,14 @@ public class MyPagedListHolder<E> extends PagedListHolder<E>{
 		int fine = DEFAULT_MAX_LINKED_PAGES;
 		
 		if(page+1 + DEFAULT_MAX_LINKED_PAGES <= totalPages) {
-			inizio = page+1 - ( ((page+1) % DEFAULT_MAX_LINKED_PAGES) > 1 ? (page+1) % DEFAULT_MAX_LINKED_PAGES : 0);
-			
-			inizio = (page - (page % DEFAULT_MAX_LINKED_PAGES));			
-			fine = inizio + DEFAULT_MAX_LINKED_PAGES;
+			inizio = (page+1 - (page % DEFAULT_MAX_LINKED_PAGES));			
+			fine = inizio + DEFAULT_MAX_LINKED_PAGES - 1;
 		}
 		else {
 			inizio = (totalPages-DEFAULT_MAX_LINKED_PAGES)>1 ? totalPages-DEFAULT_MAX_LINKED_PAGES : 1 ;
 			fine = totalPages;
 		}		
-		return IntStream.rangeClosed(inizio+1, fine).toArray();
+		return IntStream.rangeClosed(inizio, fine).toArray();
 	}
 	
 

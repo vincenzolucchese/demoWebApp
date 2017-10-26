@@ -2,6 +2,7 @@ package com.vince.boot.demo.webapp.fe.controller;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.text.NumberFormat;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.vince.boot.demo.webapp.be.utility.AppStringUtils;
+import com.vince.boot.demo.webapp.be.utility.NumberUtils;
 import com.vince.boot.demo.webapp.beAndFe.dto.BaseDto;
 import com.vince.boot.demo.webapp.beAndFe.dto.MyPagedListHolder;
 import com.vince.boot.demo.webapp.beAndFe.dto.UserAppDto;
@@ -71,16 +73,19 @@ public class UsersController extends BaseController {
 			model.addAttribute("msgOK", msg);
 		}
 		
-		if(StringUtils.isEmpty(msg)||"msgOK".equals(msg) ){
+		if(StringUtils.isEmpty(msg)){
 			msg = "0";
+		}else{
 			/* manage session */
 			UserAppDto searchBeanSession = (UserAppDto) request.getSession().getAttribute(searchBean.getClass().toString());
 			if(searchBeanSession!=null) {
 				searchBean = searchBeanSession;
-				msg = searchBeanSession.getPageSearchSession();
-			}
+				Integer.parseInt(msg);
+				if(!NumberUtils.isLong(msg)){
+					msg = searchBeanSession.getPageSearchSession();
+				}				
+			}		
 		}
-		
 		
 		listBeanTable = commonDtoRepository.findDtoPagedByCriteria(searchBean, Integer.parseInt(msg), PagedListHolder.DEFAULT_PAGE_SIZE, "timeInsert", false);
 		model.addAttribute("listBeanTable",  listBeanTable);		

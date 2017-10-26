@@ -322,10 +322,9 @@ public class CommonAppRepositoryImpl extends JdbcDaoSupport implements CommonDto
 
 		if(!StringUtils.isEmpty(searchBean.getFilterSimpleSearch())) {
 			QUserApp qdsl = QUserApp.dUserApp;
-			BooleanExpression expression = qdsl.firstName.like(searchBean.getFilterSimpleSearch());
-			expression.or(qdsl.lastName.like(searchBean.getFilterSimpleSearch()));
-			expression.or(qdsl.username.like(searchBean.getFilterSimpleSearch()));
-			expression.or(qdsl.lastName.like(searchBean.getFilterSimpleSearch()));			
+			BooleanExpression expression = qdsl.firstName.likeIgnoreCase("%"+searchBean.getFilterSimpleSearch()+"%");
+			expression = expression.or(qdsl.lastName.likeIgnoreCase("%"+searchBean.getFilterSimpleSearch()+"%"));
+			expression = expression.or(qdsl.username.likeIgnoreCase("%"+searchBean.getFilterSimpleSearch()+"%"));
 			entityPage = userAppRepository.findAll(expression, pageable);
 		}else {
 			UserApp entity = UserAppDto.createEntityFromDto(searchBean);

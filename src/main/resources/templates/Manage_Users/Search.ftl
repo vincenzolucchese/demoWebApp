@@ -35,7 +35,7 @@
      	</div>
 		
 	    <h2 class="sub-header">Table Users</h2>
-	    <#if "${listBeanTable}"??  > 
+	    <#if listBeanTable?? && listBeanTable.source?? && listBeanTable.source?has_content  > 
 		      <div class="table-responsive">
 	            <table class="table table-striped">
 	              <thead>

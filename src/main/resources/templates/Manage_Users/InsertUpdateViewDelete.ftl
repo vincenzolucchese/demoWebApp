@@ -116,7 +116,7 @@
 				<button class="btn btn-default btn-primary" name="submit" type="submit" value="Insert">Save</button>	
 			</#if>
 			<#if baseFE.state!="C">	     		
-     			<a href="<@spring.url '/Manage_Users/Search' />" class="btn btn-info" role="button">Back</a>
+     			<a href="<@spring.url '/Manage_Users/Search/backToList' />" class="btn btn-info" role="button">Back</a>
      		</#if>
      	  </div>
     	</form>
