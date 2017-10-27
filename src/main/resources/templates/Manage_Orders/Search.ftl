@@ -34,6 +34,7 @@
          </div>
      	</div>    			
 	   
+	   <h2 class="sub-header">Table Order</h2>
 	    <#if listBeanTable?? && listBeanTable.source?? && listBeanTable.source?has_content  >
 	    <label>Table Order</label>
 		      <div class="table-responsive">

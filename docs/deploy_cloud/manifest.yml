@@ -1,9 +1,9 @@
 ---
 applications:
-- name: demoBootVince
+- name: demoWebAppVince
   memory: 1024M
   buildpack: java_buildpack
   routes:
-  - route: demoBootVince.cfapps.io
+  - route: demoWebAppVince.cfapps.io
   services:
   - dataSource
