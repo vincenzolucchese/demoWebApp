@@ -49,8 +49,10 @@
 	            </div>
 	            <div class="col-xs-6 placeholder" id="sandbox-container">
 	             <label class="control-label"><@spring.message 'label.order.dataScadenza'/></label>
+	             <#-- 
 	             <@spring.formInput "baseFE.dataScadenza" 'class="form-control"' />
 	             <@spring.showErrors "</br>", "form-control alert-danger" />
+	              -->
 	            </div>
          	</div>
 			<div class="row placeholders">	            
@@ -80,57 +82,47 @@
 			<div class="row placeholders">	            
 				<div class="col-xs-6 placeholder">
 	             <label class="control-label">Year</label>
+	             <#-- 
 				 <@spring.formInput "baseFE.yearRefer", 'class="form-control"' 'date'/>
 	             <@spring.showErrors "</br>", "form-control alert-danger" />
+	              -->
 	            </div>
          	</div>   
-			<div class="row placeholders">	            
-				
+			<div class="row placeholders">
 				<div class="col-xs-6 placeholder" id="locationField">
-				 <label class="control-label">Address</label>
+				 <label class="control-label">Search Address</label>
 			     <input class="form-control" id="autocomplete" placeholder="Enter your address"
 			             onFocus="geolocate()" type="text"></input>
 			    </div>
 			    
 				<div class="col-xs-3 placeholder">
-				 <label class="control-label">Civico</label>
-			     <input class="form-control" id="street_number" disabled="true"></input>
-			     
-			     <label class="control-label">City</label>
-			     <input class="form-control" id="locality" disabled="true"></input>
-			     
-			     <label class="control-label">State</label>
-			     <input class="form-control" id="administrative_area_level_1" disabled="true"></input>
-			     
-			     <label class="control-label">???</label>
-			     <input class="form-control" id="administrative_area_level_2" disabled="true"></input>			     
-				 </div>			    
+	             <label class="control-label"><@spring.message 'label.address.streetnumber' /></label>
+	             <@spring.formInput "baseFE.street_number" 'class="form-control" readonly="readonly"' />			
+	             
+	             <label class="control-label"><@spring.message 'label.address.city' /></label>
+	             <@spring.formInput "baseFE.locality" 'class="form-control" readonly="readonly"' />	
+	             	             		     		     
+	             <label class="control-label"><@spring.message 'label.address.state' /></label>
+	             <@spring.formInput "baseFE.administrative_area_level_1" 'class="form-control" readonly="readonly"' />			
+				</div>			    
 				
-				<div class="col-xs-3 placeholder">  
-			     
-			     <label class="control-label">Street</label>
-			     <input class="form-control" id="route" disabled="true"></input>	
-			     				   
-			     <label class="control-label">Zip code</label>
-			     <input class="form-control" id="postal_code" disabled="true"></input>		
-			     
-			     <label class="control-label">County</label>
-			     <input class="form-control" id="country" disabled="true"></input>
-			     
-			     <label class="control-label">???</label>
-			     <input class="form-control" id=administrative_area3 disabled="true"></input>			     
-        
-				 </div>
-	           	            
-          	</div>           	         	       	
+				<div class="col-xs-3 placeholder">	
+	             <label class="control-label"><@spring.message 'label.address.street' /></label>
+	             <@spring.formInput "baseFE.route" 'class="form-control" readonly="readonly"' />		
+	             						     
+	             <label class="control-label"><@spring.message 'label.address.zipcode' /></label>
+	             <@spring.formInput "baseFE.postal_code" 'class="form-control" readonly="readonly"' />	
+				     				   
+	             <label class="control-label"><@spring.message 'label.address.country' /></label>
+	             <@spring.formInput "baseFE.country" 'class="form-control" readonly="readonly"' />				
+			  </div>        	         	       	
 			<div class="row placeholders">	  
 			 	<div class="col-xs-12 placeholder">
 	             <label class="control-label"><@spring.message 'label.client.notes' /></label>
 	             <@spring.formTextarea "baseFE.notes" 'class="form-control"' />
 	             <@spring.showErrors "</br>", "form-control alert-danger" />
              	</div>           
-          	</div>  
-          	        	
+          	</div>           	        	
       	</fieldset>
       	
 		<#include "../common/commonTableAttachment.ftl"  parse=true>
@@ -143,11 +135,13 @@
 			<#if baseFE.state!="C">	     		
      			<#-- <button class="btn btn-default btn-primary" name="submit" type="submit" value="backToList">Back</button>
      			-->
-     			<a href="<@spring.url '/Manage_Orders/Search' />" class="btn btn-info" role="button">Back</a>
+     			<a href="<@spring.url '/Manage_Orders/Search/backToList' />" class="btn btn-info" role="button">Back</a>
      		</#if>
      	  </div>
     	</form>
 
     </div>
+    <#-- include all js required here -->
+    <#include "/common/js/maps.ftl" >    
     
 </@layout.standardPage>    

@@ -2,7 +2,6 @@ package com.vince.boot.demo.webapp.fe.controller;
 
 import java.io.IOException;
 import java.security.Principal;
-import java.text.NumberFormat;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -71,6 +70,7 @@ public class UsersController extends BaseController {
 		
 		if("msgOK".equals(msg)) {
 			model.addAttribute("msgOK", msg);
+			msg = "0";
 		}
 		
 		if(StringUtils.isEmpty(msg)){
@@ -80,7 +80,6 @@ public class UsersController extends BaseController {
 			UserAppDto searchBeanSession = (UserAppDto) request.getSession().getAttribute(searchBean.getClass().toString());
 			if(searchBeanSession!=null) {
 				searchBean = searchBeanSession;
-				Integer.parseInt(msg);
 				if(!NumberUtils.isLong(msg)){
 					msg = searchBeanSession.getPageSearchSession();
 				}				

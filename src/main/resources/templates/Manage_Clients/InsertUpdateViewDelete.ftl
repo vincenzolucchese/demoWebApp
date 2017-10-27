@@ -55,11 +55,6 @@
          	</div>
 	        <div class="row placeholders">
 	            <div class="col-xs-6 placeholder">
-	             <label class="control-label"><@spring.message 'label.client.address' /></label>
-	             <@spring.formInput "baseFE.address" 'class="form-control" required' />
-	             <@spring.showErrors "</br>", "form-control alert-danger" />
-	            </div>
-	            <div class="col-xs-6 placeholder">
 	             <label class="control-label"><@spring.message 'label.client.zipcode' /></label>
 	             <@spring.formInput "baseFE.zipcode" 'class="form-control" required' />
 	             <@spring.showErrors "</br>", "form-control alert-danger" />
@@ -77,6 +72,35 @@
 	             <@spring.showErrors "</br>", "form-control alert-danger" />
 	            </div>            
           	</div>
+			<div class="row placeholders">
+				<div class="col-xs-6 placeholder" id="locationField">
+				 <label class="control-label">Search Address</label>
+			     <input class="form-control" id="autocomplete" placeholder="Enter your address"
+			             onFocus="geolocate()" type="text"></input>
+			    </div>
+			    
+				<div class="col-xs-3 placeholder">
+	             <label class="control-label"><@spring.message 'label.address.streetnumber' /></label>
+	             <@spring.formInput "baseFE.street_number" 'class="form-control" readonly="readonly"' />			
+	             
+	             <label class="control-label"><@spring.message 'label.address.city' /></label>
+	             <@spring.formInput "baseFE.locality" 'class="form-control" readonly="readonly"' />	
+	             	             		     		     
+	             <label class="control-label"><@spring.message 'label.address.state' /></label>
+	             <@spring.formInput "baseFE.administrative_area_level_1" 'class="form-control" readonly="readonly"' />			
+				</div>			    
+				
+				<div class="col-xs-3 placeholder">	
+	             <label class="control-label"><@spring.message 'label.address.street' /></label>
+	             <@spring.formInput "baseFE.route" 'class="form-control" readonly="readonly"' />		
+	             						     
+	             <label class="control-label"><@spring.message 'label.address.zipcode' /></label>
+	             <@spring.formInput "baseFE.postal_code" 'class="form-control" readonly="readonly"' />	
+				     				   
+	             <label class="control-label"><@spring.message 'label.address.country' /></label>
+	             <@spring.formInput "baseFE.country" 'class="form-control" readonly="readonly"' />				
+			  </div>	           	            
+          	</div>           	
 			<div class="row placeholders">	  
 			 	<div class="col-xs-12 placeholder">
 	             <label class="control-label"><@spring.message 'label.client.notes' /></label>
@@ -96,11 +120,14 @@
 			<#if baseFE.state!="C">	     		
      			<#-- <button class="btn btn-default btn-primary" name="submit" type="submit" value="backToList">Back</button>
      			-->
-     			<a href="<@spring.url '/Manage_Clients/Search' />" class="btn btn-info" role="button">Back</a>
+     			<a href="<@spring.url '/Manage_Clients/Search/backToList' />" class="btn btn-info" role="button">Back</a>
      		</#if>
      	  </div>
     	</form>
 
     </div>
+    
+    <#-- include all js required here -->
+    <#include "/common/js/maps.ftl" >
     
 </@layout.standardPage>    
