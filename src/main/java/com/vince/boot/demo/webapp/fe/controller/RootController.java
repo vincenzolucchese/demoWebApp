@@ -11,6 +11,16 @@ public class RootController {
     public String homeLogin() {
         return "/login";
     }
+    
+    @GetMapping(value = {"/indexAdmin"})
+    public String homeAdmin() {
+        return "/indexAdmin";
+    }
+    
+    @GetMapping(value = {"/indexFreelancer"})
+    public String homeIndex() {
+        return "/indexFreelancer";
+    }
 
     @GetMapping("/homeProtected")
     public String homeProtected() {
