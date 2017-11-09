@@ -12,24 +12,27 @@
  -->
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-  
-  	<title>Vince</title>
-
-  	<link rel="stylesheet" type="text/css" href="<@spring.url '/bootstrap/css/bootstrap.min.css'/>" />
-  	<link rel="stylesheet" type="text/css" href="<@spring.url '/css/style.css'/>" />
-	<#-- Bootstrap Date-Picker Plugin -->
-	<link rel="stylesheet" type="text/css" href="<@spring.url '/datepicker/css/bootstrap-datepicker3.css'/>" />	
-  	
-  
+	  <meta charset="utf-8">
+	  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	  <meta name="description" content="">
+	  <meta name="author" content="">
+	  <title>Vince</title>
+	  <!-- Bootstrap core CSS-->
+	  <link rel="stylesheet" type="text/css" href="<@spring.url '/adminBoot/vendor/bootstrap/css/bootstrap.min.css'/>" />
+	  <!-- Custom fonts for this template-->
+	  <link rel="stylesheet" type="text/css" href="<@spring.url '/adminBoot/vendor/font-awesome/css/font-awesome.min.css'/>" />
+	  <!-- Page level plugin CSS-->
+	  <link rel="stylesheet" type="text/css" href="<@spring.url '/adminBoot/vendor/datatables/dataTables.bootstrap4.css'/>" />
+	  <!-- Custom styles for this template-->
+	  <link rel="stylesheet" type="text/css" href="<@spring.url '/adminBoot/css/sb-admin.css'/>" />
+      <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 </head>
-<body>
-   <#include "header.ftl"  parse=true>
+
+   <#-- <#include "headerVince.ftl"  parse=true>
+   -->
    <#nested/>
-   <#include "footer.ftl"  parse=true>     
-</body>
+   <#-- <#include "footerVince.ftl"  parse=true>
+    -->     
 </html>
 </#macro>
