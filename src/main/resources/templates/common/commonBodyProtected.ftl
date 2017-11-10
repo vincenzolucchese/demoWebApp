@@ -267,16 +267,19 @@
 		<#nested/>
 		
       </div>
+		</br></br></br>
     </div>
     <!-- /.container-fluid-->
     <!-- /.content-wrapper-->
-    <footer class="sticky-footer">
+    
+	<footer class="sticky-footer">
       <div class="container">
         <div class="text-center">
           <small>Copyright © Your Website 2017</small>
         </div>
       </div>
     </footer>
+    
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
       <i class="fa fa-angle-up"></i>

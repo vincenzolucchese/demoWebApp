@@ -1,5 +1,4 @@
 <#include "/common/commonBodyProtected.ftl" />
-
 <@commonBodyProtected>
 
 <@spring.bind "baseFE" />
@@ -51,38 +50,44 @@
 	             <@spring.showErrors "</br>", "form-control alert-danger" />
 	            </div>
          	</div>
-	        <div class="row placeholders">
-	            <div class="col-xl-6 placeholder">
+         	<p></p>
+         	
+	        <div class="row">
+	            <div class="col-xl-6">
 	             <label class="control-label"><@spring.message 'label.user.email' /></label>
 	             <@spring.formInput "baseFE.email" 'class="form-control"' />
 	             <@spring.showErrors "</br>", "form-control alert-danger" />
 	            </div>
-				<div class="col-xl-6 placeholder">
+				<div class="col-xl-6">
 	             <label class="control-label"><@spring.message 'label.user.role' /></label>
 				 <@spring.formSingleSelect "baseFE.roleUser.id", roles, 'class="form-control"'/>
 	             <@spring.showErrors "</br>", "form-control alert-danger" />
 	            </div>
             </div>
-			<div class="row placeholders">	            
-	            <div class="col-xl-6 placeholder">
+            <p></p>
+            
+			<div class="row">	            
+	            <div class="col-xl-6">
 	             <label class="control-label"><@spring.message 'label.user.username' /></label>
 	             <@spring.formInput "baseFE.username" 'class="form-control"' />
 	             <@spring.showErrors "</br>", "form-control alert-danger" />
 	            </div>
-	            <div class="col-xl-6 placeholder">
+	            <div class="col-xl-6">
 	             <label class="control-label"><@spring.message 'label.user.password' /></label>
 	             <@spring.formInput "baseFE.password" 'class="form-control"' />
 	             <@spring.showErrors "</br>", "form-control alert-danger" />
 	            </div>            
           	</div>
-			<div class="row placeholders">
-				<div class="col-xl-6 placeholder" id="locationField">
+          	<p></p>
+          	
+			<div class="row">
+				<div class="col-xl-6" id="locationField">
 				 <label class="control-label">Search Address</label>
 			     <input class="form-control" id="autocomplete" placeholder="Enter your address"
 			             onFocus="geolocate()" type="text"></input>
 			    </div>
 			    
-				<div class="col-xl-3 placeholder">
+				<div class="col-xl-3">
 	             <label class="control-label"><@spring.message 'label.address.streetnumber' /></label>
 	             <@spring.formInput "baseFE.street_number" 'class="form-control" readonly="readonly"' />			
 	             
@@ -93,7 +98,7 @@
 	             <@spring.formInput "baseFE.administrative_area_level_1" 'class="form-control" readonly="readonly"' />			
 				</div>			    
 				
-				<div class="col-xl-3 placeholder">	
+				<div class="col-xl-3">	
 	             <label class="control-label"><@spring.message 'label.address.street' /></label>
 	             <@spring.formInput "baseFE.route" 'class="form-control" readonly="readonly"' />		
 	             						     
@@ -103,7 +108,8 @@
 	             <label class="control-label"><@spring.message 'label.address.country' /></label>
 	             <@spring.formInput "baseFE.country" 'class="form-control" readonly="readonly"' />				
 			  </div>	           	            
-          	</div>       	
+          	</div>  
+          	<p></p>     	
       	</fieldset>
       	
       	<#include "../common/commonTableAttachment.ftl"  parse=true>
@@ -118,7 +124,6 @@
      		</#if>
      	  </div>
     	</form>
-    </div>
     
     <#-- include all js required here -->
     <#include "/common/js/maps.ftl" >
