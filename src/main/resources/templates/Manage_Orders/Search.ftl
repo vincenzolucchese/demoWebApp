@@ -54,9 +54,9 @@
 		                  <td>${(child.dataScadenza??)?then(child.dataScadenza, '')}</td>
 		                  <td>${(child.clientApp?? && child.clientApp.name??)?then(child.clientApp.name, '')}</td>
 		                  <td>
-		                  	<a class="glyphicon glyphicon-zoom-in" href="<@spring.url '/Manage_Orders/InsertUpdateViewDelete/'/>${child.id?string.computer}/R" title="Read"></a>
-		                    <a class="glyphicon glyphicon-pencil" href="<@spring.url '/Manage_Orders/InsertUpdateViewDelete/'/>${child.id?string.computer}/U" title="Update"></a>
-		                    <a class="glyphicon glyphicon-off" href="<@spring.url '/Manage_Orders/InsertUpdateViewDelete/'/>${child.id?string.computer}/D" title="Delete"></a>		                  
+		                  	<a class="fa fa-info-circle" href="<@spring.url '/Manage_Orders/InsertUpdateViewDelete/'/>${child.id?string.computer}/R" title="Read"></a>
+		                    <a class="fa fa-pencil-square" href="<@spring.url '/Manage_Orders/InsertUpdateViewDelete/'/>${child.id?string.computer}/U" title="Update"></a>
+		                    <a class="fa fa-trash" href="<@spring.url '/Manage_Orders/InsertUpdateViewDelete/'/>${child.id?string.computer}/D" title="Delete"></a>		                  
 		                  </td>
 					    </tr>
 				    </#list>
@@ -68,8 +68,9 @@
 	          </div>
 		<#else> 
 		    No Details Available
-		</#if>
-
-    </div>
+		</#if>	
+		</div>
+		</div>	
+		</form>
     
-</@layout.standardPage>    
+</@commonBodyProtected>   

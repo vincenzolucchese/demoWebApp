@@ -1,13 +1,10 @@
-<#import "/common/standardPage.ftl" as layout>
-<#import "/spring.ftl" as spring />
 <#import "/common/commonPagination.ftl" as pagination>
-
-<@layout.standardPage title="Home">
+<#include "/common/commonBodyProtected.ftl" />
+<@commonBodyProtected>
 
 <@spring.bind "searchForm" />
-  
-   <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-      <h1 class="page-header">Search Client</h1>
+
+      <h1>Search Client</h1>
           
       	<#if allErrors??>
             <div class="alert alert-danger">
@@ -55,9 +52,9 @@
 		                  <td>${(child.phone??)?then(child.phone, '')}</td>
 		                  <td>${(child.email??)?then(child.email, '')}</td>
 		                  <td>
-		                  	<a class="glyphicon glyphicon-zoom-in" href="<@spring.url '/Manage_Clients/InsertUpdateViewDelete/'/>${child.id?string.computer}/R" title="Read"></a>
-		                    <a class="glyphicon glyphicon-pencil" href="<@spring.url '/Manage_Clients/InsertUpdateViewDelete/'/>${child.id?string.computer}/U" title="Update"></a>
-		                    <a class="glyphicon glyphicon-off" href="<@spring.url '/Manage_Clients/InsertUpdateViewDelete/'/>${child.id?string.computer}/D" title="Delete"></a>		                  
+		                  	<a class="fa fa-info-circle" href="<@spring.url '/Manage_Clients/InsertUpdateViewDelete/'/>${child.id?string.computer}/R" title="Read"></a>
+		                    <a class="fa fa-pencil-square" href="<@spring.url '/Manage_Clients/InsertUpdateViewDelete/'/>${child.id?string.computer}/U" title="Update"></a>
+		                    <a class="fa fa-trash" href="<@spring.url '/Manage_Clients/InsertUpdateViewDelete/'/>${child.id?string.computer}/D" title="Delete"></a>		                  
 		                  </td>
 					    </tr>
 				    </#list>
@@ -69,8 +66,9 @@
 	          </div>
 		<#else> 
 		    No Details Available
-		</#if>
-
-    </div>
+		</#if>	
+		</div>
+		</div>	
+		</form>
     
-</@layout.standardPage>    
+</@commonBodyProtected>   

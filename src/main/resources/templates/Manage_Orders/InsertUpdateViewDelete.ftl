@@ -1,7 +1,5 @@
-<#import "/common/standardPage.ftl" as layout>
-<#import "/spring.ftl" as spring />
-
-<@layout.standardPage title="Home">
+<#include "/common/commonBodyProtected.ftl" />
+<@commonBodyProtected>
 
 <@spring.bind "baseFE" />
 
@@ -14,8 +12,7 @@
 	<#assign titlePrefix="Update">		
 </#if>
   
-   <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-      <h1 class="page-header">${titlePrefix} Order</h1>
+  <h1>${titlePrefix} Order</h1>
           
       	<#if allErrors??>
             <div class="alert alert-danger">
@@ -41,8 +38,8 @@
 		</#if>
 
 		<fieldset ${attributeDisabled} >
-          	<div class="row placeholders">          
-	            <div class="col-xs-6 placeholder">
+          	<div class="row">          
+	            <div class="col-xl-6">
 	             <label class="control-label"><@spring.message 'label.order.codeOrder' /></label>
 	             <@spring.formInput "baseFE.codeOrder" 'class="form-control"' />
 	             <@spring.showErrors "</br>", "form-control alert-danger" />
@@ -55,32 +52,38 @@
 	              -->
 	            </div>
          	</div>
-			<div class="row placeholders">	            
-				<div class="col-xs-6 placeholder">
+         	<p></p>
+         	
+			<div class="row">	            
+				<div class="col-xl-6">
 	             <label class="control-label"><@spring.message 'label.order.client' /></label>
 				 <@spring.formSingleSelect "baseFE.clientApp.id", clients, 'class="form-control"'/>
 	             <@spring.showErrors "</br>", "form-control alert-danger" />
 	            </div>
-	            <div class="col-xs-6 placeholder">
+	            <div class="col-xl-6">
 	             <label class="control-label">Pre Amount</label>
 	             <@spring.formInput "baseFE.preAmount" 'class="form-control"' 'number' />
 	             <@spring.showErrors "</br>", "form-control alert-danger" />
 	            </div>	            
           	</div>
-			<div class="row placeholders">	            
-				<div class="col-xs-6 placeholder">
+          	<p></p>
+          	
+			<div class="row">	            
+				<div class="col-xl-6">
 	             <label class="control-label">Final Amount</label>
 				 <@spring.formInput "baseFE.finalAmount", 'class="form-control"' 'number'/>
 	             <@spring.showErrors "</br>", "form-control alert-danger" />
 	            </div>
-	            <div class="col-xs-6 placeholder">
+	            <div class="col-xl-6">
 	             <label class="control-label">Is Active</label>
 	             <@spring.formCheckbox "baseFE.flagActive" 'class="form-control"' />
 	             <@spring.showErrors "</br>", "form-control alert-danger" />
 	            </div>	            
-          	</div>   
-			<div class="row placeholders">	            
-				<div class="col-xs-6 placeholder">
+          	</div>  
+          	<p></p>
+          	 
+			<div class="row">	            
+				<div class="col-xl-6">
 	             <label class="control-label">Year</label>
 	             <#-- 
 				 <@spring.formInput "baseFE.yearRefer", 'class="form-control"' 'date'/>
@@ -88,14 +91,16 @@
 	              -->
 	            </div>
          	</div>   
-			<div class="row placeholders">
-				<div class="col-xs-6 placeholder" id="locationField">
+         	<p></p>
+         	
+			<div class="row">
+				<div class="col-xl-6" id="locationField">
 				 <label class="control-label">Search Address</label>
 			     <input class="form-control" id="autocomplete" placeholder="Enter your address"
 			             onFocus="geolocate()" type="text"></input>
 			    </div>
 			    
-				<div class="col-xs-3 placeholder">
+				<div class="col-xl-3">
 	             <label class="control-label"><@spring.message 'label.address.streetnumber' /></label>
 	             <@spring.formInput "baseFE.street_number" 'class="form-control" readonly="readonly"' />			
 	             
@@ -106,7 +111,7 @@
 	             <@spring.formInput "baseFE.administrative_area_level_1" 'class="form-control" readonly="readonly"' />			
 				</div>			    
 				
-				<div class="col-xs-3 placeholder">	
+				<div class="col-xl-3">	
 	             <label class="control-label"><@spring.message 'label.address.street' /></label>
 	             <@spring.formInput "baseFE.route" 'class="form-control" readonly="readonly"' />		
 	             						     
@@ -115,14 +120,18 @@
 				     				   
 	             <label class="control-label"><@spring.message 'label.address.country' /></label>
 	             <@spring.formInput "baseFE.country" 'class="form-control" readonly="readonly"' />				
-			  </div>        	         	       	
-			<div class="row placeholders">	  
+			  </div> 
+			 </div>
+			 <p></p>
+			        	         	       	
+			<div class="row">	  
 			 	<div class="col-xs-12 placeholder">
 	             <label class="control-label"><@spring.message 'label.client.notes' /></label>
 	             <@spring.formTextarea "baseFE.notes" 'class="form-control"' />
 	             <@spring.showErrors "</br>", "form-control alert-danger" />
              	</div>           
-          	</div>           	        	
+          	</div>   
+          	<p></p>        	        	
       	</fieldset>
       	
 		<#include "../common/commonTableAttachment.ftl"  parse=true>
@@ -144,4 +153,4 @@
     <#-- include all js required here -->
     <#include "/common/js/maps.ftl" >    
     
-</@layout.standardPage>    
+</@commonBodyProtected>     

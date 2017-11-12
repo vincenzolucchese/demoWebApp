@@ -128,4 +128,4 @@
     <#-- include all js required here -->
     <#include "/common/js/maps.ftl" >
     
-</@commonBodyProtected>    
+</@commonBodyProtected> 
