@@ -1,13 +1,10 @@
-<#import "/common/standardPage.ftl" as layout>
-<#import "/spring.ftl" as spring />
 <#import "/common/commonPagination.ftl" as pagination>
-
-<@layout.standardPage title="Home">
+<#include "/common/commonBodyProtected.ftl" />
+<@commonBodyProtected>
 
 <@spring.bind "searchForm" />
   
-   <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-      <h1 class="page-header">Search Order</h1>
+      <h1>Search Order</h1>
           
       	<#if allErrors??>
             <div class="alert alert-danger">
@@ -21,8 +18,8 @@
     	</#if>  
     	
 		<form action="<@spring.url '/Manage_Orders/Search' />" method="POST">
-      	<div class="row placeholders"> 
-      		<div class="col-xs-9 placeholder">       
+      	<div class="row"> 
+      		<div class="col-xl-9">       
 			<label class="control-label"><@spring.message 'label.user.simplefilter' /></label>
 			<div class="input-group">
 			 <@spring.formInput "searchForm.filterSimpleSearch" 'class="form-control"' />
@@ -32,11 +29,13 @@
 			    </span>
 			</div>            
          </div>
-     	</div>    			
-	   
-	   <h2 class="sub-header">Table Order</h2>
+     	</div> 
+     	</br>
+     	  			
+	  <div class="row"> 
+	   	<div class="col-xl-12">   
+	    <h2 class="sub-header">Table Order</h2>
 	    <#if listBeanTable?? && listBeanTable.source?? && listBeanTable.source?has_content  >
-	    <label>Table Order</label>
 		      <div class="table-responsive">
 	            <table class="table table-striped">
 	              <thead>
@@ -66,10 +65,10 @@
 				<@pagination.standardPagination urlAction="/Manage_Orders/Search" />
 									           
 	          </div>
-		<#else> 
-		    No Details Available
-		</#if>	
-		</div>
+			<#else> 
+			    No Details Available
+			</#if>	
+			</div>
 		</div>	
 		</form>
     

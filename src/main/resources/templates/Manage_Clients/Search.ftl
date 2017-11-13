@@ -18,8 +18,8 @@
     	</#if>  
     	
 		<form action="<@spring.url '/Manage_Clients/Search' />" method="POST">
-      	<div class="row placeholders"> 
-      		<div class="col-xs-9 placeholder">       
+      	<div class="row"> 
+      		<div class="col-xl-9">       
 			<label class="control-label"><@spring.message 'label.user.simplefilter' /></label>
 			<div class="input-group">
 			 <@spring.formInput "searchForm.filterSimpleSearch" 'class="form-control"' />
@@ -29,8 +29,11 @@
 			    </span>
 			</div>            
          </div>
-     	</div>    			
+     	</div> 
+     	</br>   			
 		
+	<div class="row"> 
+	    <div class="col-xl-12"> 		
 	    <h2 class="sub-header">Table Client</h2>
 	    <#if listBeanTable?? && listBeanTable.source?? && listBeanTable.source?has_content  >
 		      <div class="table-responsive">
@@ -64,10 +67,10 @@
 				<@pagination.standardPagination urlAction="/Manage_Clients/Search" />
 				           
 	          </div>
-		<#else> 
-		    No Details Available
-		</#if>	
-		</div>
+			<#else> 
+			    No Details Available
+			</#if>	
+			</div>
 		</div>	
 		</form>
     

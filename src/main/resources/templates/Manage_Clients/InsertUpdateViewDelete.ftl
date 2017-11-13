@@ -59,6 +59,8 @@
 	             <@spring.showErrors "</br>", "form-control alert-danger" />
 	            </div>
             </div>
+            <p></p>
+            
 			<div class="row">	            
 	            <div class="col-xl-6">
 	             <label class="control-label"><@spring.message 'label.client.phone' /></label>
@@ -110,7 +112,8 @@
 	             <@spring.formTextarea "baseFE.notes" 'class="form-control" required' />
 	             <@spring.showErrors "</br>", "form-control alert-danger" />
              	</div>           
-          	</div>          	
+          	</div>   
+          	<p></p>        	
       	</fieldset>
       	
 		<#include "../common/commonTableAttachment.ftl"  parse=true>
@@ -128,8 +131,6 @@
      	  </div>
     	</form>
 
-    </div>
-    
     <#-- include all js required here -->
     <#include "/common/js/maps.ftl" >
     

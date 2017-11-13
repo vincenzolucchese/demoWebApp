@@ -125,7 +125,7 @@
 			 <p></p>
 			        	         	       	
 			<div class="row">	  
-			 	<div class="col-xs-12 placeholder">
+			 	<div class="col-xl-12">
 	             <label class="control-label"><@spring.message 'label.client.notes' /></label>
 	             <@spring.formTextarea "baseFE.notes" 'class="form-control"' />
 	             <@spring.showErrors "</br>", "form-control alert-danger" />
@@ -149,7 +149,6 @@
      	  </div>
     	</form>
 
-    </div>
     <#-- include all js required here -->
     <#include "/common/js/maps.ftl" >    
     

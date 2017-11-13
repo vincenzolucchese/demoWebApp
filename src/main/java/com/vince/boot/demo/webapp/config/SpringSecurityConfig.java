@@ -39,12 +39,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers("/user/**").hasAnyRole("USER")
 		.anyRequest().authenticated()
 		.and()
-		.formLogin()
-		.loginPage("/login").defaultSuccessUrl("/homeProtected", true)
-		.permitAll()
+		.formLogin().loginPage("/login").defaultSuccessUrl("/homeProtected", true).permitAll()
 		.and()
-		.logout()
-		.permitAll()
+		.logout().permitAll()
 		.and()
 		.exceptionHandling().accessDeniedHandler(accessDeniedHandler);
 	}
