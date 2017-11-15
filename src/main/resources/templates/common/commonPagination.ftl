@@ -14,7 +14,7 @@
       </a>
     </div>
 	
-	<ul class="pagination justify-content-center">
+	<ul class="pagination">
 	<#if (listBeanTable.totalPages > 10) >
 	  	<#if listBeanTable.pagesLinkable?first == 1 > 
 			<li class="page-item disabled">
