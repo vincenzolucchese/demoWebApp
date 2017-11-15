@@ -1,3 +1,5 @@
+
+<#import "/spring.ftl" as spring />
 <!DOCTYPE html>
 <html lang="en">
 
@@ -283,7 +285,7 @@
                 <div class="modal-body">
                   <h2>Project Title</h2>
                   <hr class="star-primary">
-                  <a href="http://localhost:8080/login">
+                  <a href="<@spring.url '/homeProtected/' />">
                   	<img class="img-fluid img-centered" src="../freelancer/img/portfolio/cabin.png" alt="">
                   </a>
                   <p>Use this area of the page to describe your project. The icon above is part of a free icon set by
