@@ -3,7 +3,7 @@
 <body class="bg-dark">
   <div class="container">
     <div class="card card-login mx-auto mt-5">
-      <div class="card-header">Login</div>
+      <div class="card-header">Order Manager App - Login</div>
       <div class="card-body">
         <form class="form-signin" action="<@spring.url '/login' />" method='POST'>
           <div class="form-group">

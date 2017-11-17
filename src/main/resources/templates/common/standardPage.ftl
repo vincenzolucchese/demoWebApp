@@ -2,7 +2,7 @@
 <#assign security=JspTaglibs["/META-INF/security.tld"] />
 
 
-<#macro standardPage title="Vince">
+<#macro standardPage title="Order Manager App">
 <!DOCTYPE html>
 <html lang="it">
 <#-- NON FUNGE
@@ -17,7 +17,7 @@
 	  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	  <meta name="description" content="">
 	  <meta name="author" content="">
-	  <title>Vince</title>
+	  <title>Order Manager App</title>
 	  <!-- Bootstrap core CSS-->
 	  <link rel="stylesheet" type="text/css" href="<@spring.url '/adminBoot/vendor/bootstrap/css/bootstrap.min.css'/>" />
 	  <!-- Custom fonts for this template-->

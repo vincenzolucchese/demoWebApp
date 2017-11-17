@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Freelancer - Start Bootstrap Theme</title>
+    <title>Vince - WebApps</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../freelancer/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -30,7 +30,7 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
       <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="#page-top">Start Bootstrap</a>
+        <a class="navbar-brand js-scroll-trigger" href="#page-top">WinApps</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           Menu
           <i class="fa fa-bars"></i>
@@ -56,9 +56,10 @@
       <div class="container">
         <img class="img-fluid" src="../freelancer/img/profile.png" alt="">
         <div class="intro-text">
-          <span class="name">Start Bootstrap</span>
+          <span class="name">Start WinApps</span>
           <hr class="star-light">
-          <span class="skills">Web Developer - Graphic Artist - User Experience Designer</span>
+          <span class="skills">Sw Engineer - Java Architect - Sw Analyst - 
+          Web Developer - Graphic Artist - User Experience Designer</span>
         </div>
       </div>
     </header>
@@ -73,7 +74,9 @@
             <a class="portfolio-link" href="#portfolioModal1" data-toggle="modal">
               <div class="caption">
                 <div class="caption-content">
-                  <i class="fa fa-search-plus fa-3x"></i>
+                  <i class="fa fa-search-plus fa-3x">
+                  <p>Order Manager</p>
+                  </i>
                 </div>
               </div>
               <img class="img-fluid" src="../freelancer/img/portfolio/cabin.png" alt="">
@@ -281,9 +284,9 @@
           </div>
           <div class="container">
             <div class="row">
-              <div class="col-lg-8 mx-auto">
+              <div class="col-lg-5 mx-auto">
                 <div class="modal-body">
-                  <h2>Project Title</h2>
+                  <h2>Order Manager App</h2>
                   <hr class="star-primary">
                   <a href="<@spring.url '/homeProtected/' />">
                   	<img class="img-fluid img-centered" src="../freelancer/img/portfolio/cabin.png" alt="">
