@@ -4,6 +4,6 @@ applications:
   memory: 1024M
   buildpack: java_buildpack
   routes:
-  - route: demoWebAppVince.cfapps.io
+  - route: demoWebAppWince.cfapps.io
   services:
   - dataSource
